@@ -1,14 +1,26 @@
 #include <iostream>
-#include <fstream>
 using namespace std;
 
 int main() {
-    // Create and open a text file
-    ofstream MyFile("filename.txt");
+    char c;
+    bool isLowercaseVowel, isUppercaseVowel;
 
-    // Write to the file
-    MyFile << "Files can be tricky, but it is fun enough!";
+    cout << "Enter an alphabet: ";
+    cin >> c;
 
-    // Close the file
-    MyFile.close();
+    // evaluates to 1 (true) if c is a lowercase vowel
+    isLowercaseVowel = (c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u');
+
+    // evaluates to 1 (true) if c is an uppercase vowel
+    isUppercaseVowel = (c == 'A' || c == 'E' || c == 'I' || c == 'O' || c == 'U');
+
+    // show error message if c is not an alphabet
+    if (!isalpha(c))
+      printf("Error! Non-alphabetic character.");
+    else if (isLowercaseVowel || isUppercaseVowel)
+        cout << c << " is a vowel.";
+    else
+        cout << c << " is a consonant.";
+
+    return 0;
 }

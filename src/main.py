@@ -2,7 +2,7 @@
 Most of the block comments in this repository originate from the C++ Working Draft N4860
 """
 
-from ply.lex import lex
+import ply.lex as lex
 from characters import *
 from comments import *
 from identifiers import *
@@ -31,7 +31,7 @@ if __name__ == '__main__':
     with open('test.cpp', encoding='utf8') as f:
         input = f.read()
 
-    lexer = lex(debug=False)
+    lexer = lex.lex(debug=False)
     lexer.input(input)
 
     for token in lexer:
