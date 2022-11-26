@@ -16,13 +16,13 @@ from lexhtmlgenerator import LexHTMLGenerator
 
 tokens = [
     'LITERAL',
+    'KEYWORD',
     'IDENTIFIER',
     'SEPARATOR',
     'OPERATOR_OR_PUNCTUATOR',
     'PREPROCESSING_OPERATOR',
     'COMMENT_SINGLE_LINE',
     'COMMENT_MULTI_LINE',
-    *(keyword.upper() for keyword in keywords)
 ]
 
 # Error handling rule
@@ -53,4 +53,4 @@ if __name__ == '__main__':
     for token in lexer:
         hg.create_html_token(token)
 
-    hg.write_html('output/index.html')
+    hg.write_html('output/output.html')

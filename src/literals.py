@@ -87,7 +87,10 @@ integer_literal = r'((' + binary_literal + '|' +oct_literal + '|'+dec_literal+'|
 def t_INTEGER_LITERAL(t):
 
 
-    t.value = int(t.value)
+    try:
+        t.value = int(t.value)
+    except:
+        pass
 
     return t
 
