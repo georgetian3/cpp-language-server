@@ -85,7 +85,12 @@ integer_suffix = r'([uU]|[lL]|ll|LL|[uU][lL]|[lL][uU]|[uU]ll|ll[uU]|[uU]LL|LL[uU
 integer_literal = r'((' + binary_literal + '|' +oct_literal + '|'+dec_literal+'|'+hex_literal+')'+integer_suffix+')' 
 @TOKEN(integer_literal)
 def t_INTEGER_LITERAL(t):
-    print(t.value)
+
+
+    t.value = int(t.value)
+
+    return t
+
     t.value = t.value.replace('u','')
     t.value = t.value.replace('U','')
     t.value = t.value.replace('L','')
