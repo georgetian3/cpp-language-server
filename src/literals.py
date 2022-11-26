@@ -159,6 +159,50 @@ hexadecimal-escape-sequence :
     \\x hexadecimal-digit
     hexadecimal-escape-sequence hexadecimal-digit
 """
+
+
+
+
+
+
+
+
+
+
+"""
+5.13.5 String literals [lex.string]
+string-literal:
+    encoding-prefixopt " s-char-sequenceopt "
+    encoding-prefixopt R raw-string
+s-char-sequence :
+    s-char
+    s-char-sequence s-char
+s-char:
+    any member of the basic source character set except the double-quote ", backslash \, or new-line character
+    escape-sequence
+    universal-character-name
+raw-string:
+    " d-char-sequenceopt ( r-char-sequenceopt ) d-char-sequenceopt "
+r-char-sequence :
+    r-char
+    r-char-sequence r-char
+r-char:
+    any member of the source character set, except a right parenthesis ) followed by
+    the initial d-char-sequence (which may be empty) followed by a double quote ".
+d-char-sequence :
+    d-char
+    d-char-sequence d-char
+d-char:
+    any member of the basic source character set except:
+    space, the left parenthesis (, the right parenthesis ), the backslash \, and the control characters
+    representing horizontal tab, vertical tab, form feed, and newline.
+
+"""
+d_char = r"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_{}[]#<>%:;.?*+-/^&|~!=,\"\'"
+d_char_sequence = r""
+basic_s_char = r""
+r_char = r" \t\v\f\nabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_{}[]#()<>%:;.?*+-/^&|~!=,\"\'\\"+ d_char_sequence + r'\"'
+
 if __name__ == '__main__':
     l=lex.lex()
     input = "0x100'001'010"
