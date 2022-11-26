@@ -68,20 +68,24 @@ long-long-suffix : one of
     ll LL
 """
 binary_digit = r'([01])'
-oactal_digit = r'([0-7])'
+octal_digit = r'([0-7])'
 nonzero_digit = r'([1-9]'
 hex_pre = r'(0x|0X)'
 bin_pre = r'(0b|0B)'
+oct_pre = r'(0)'
 hex_digit = r'([0-9a-fA-F])'
-
 binary_literal = r'('+ bin_pre + binary_digit + r'*)'
+oct_literal = r'('+oct_pre + octal_digit +r'*)'
 @TOKEN(binary_literal)
 def t_BINART_LITERAL(t):
     t.value = int(t.value,2)
     return t
+@TOKEN(oct_literal)
 def t_OCT_LITERAL(t):
-    r'b'
+    t.value = int(t.value,8)
     return t
+def t_error(t):
+    t.lexer.skip(1)
 #def t_LITERAL
 
 
@@ -118,7 +122,7 @@ hexadecimal-escape-sequence :
 """
 if __name__ == '__main__':
     l=lex.lex()
-    input = '0b0011'
+    input = '0b11+011'
     l.input(input)
     for tok in l:
         print(tok)
