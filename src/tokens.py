@@ -22,13 +22,13 @@ token_tree = {
         keyword: keyword for keyword in keywords
     },
     'literal': {
-        'integer': {},
-        'character': {},
-        'floating_point': {},
-        'string': {},
-        'boolean': {},
-        'pointer': {},
-        'user_defined': {},
+        'integer': None,
+        'character': None,
+        'floating_point': None,
+        'string': None,
+        'boolean': None,
+        'pointer': None,
+        'user_defined': None,
     },
     'operator_or_punctuator': {
         'alternative': alternative_tokens,
