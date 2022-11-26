@@ -1,6 +1,6 @@
 import lex
 from lex import TOKEN
-tokens = ('BINART_LITERAL','OCT_LITERAL')
+tokens = ('BINART_LITERAL','OCT_LITERAL','DEC_LITERAL','HEX_LITERAL')
 """
 5.13 Literals
 
@@ -69,13 +69,16 @@ long-long-suffix : one of
 """
 binary_digit = r'([01])'
 octal_digit = r'([0-7])'
-nonzero_digit = r'([1-9]'
+nonzero_digit = r'([1-9])'
+digit = r'([0-9])'
 hex_pre = r'(0x|0X)'
 bin_pre = r'(0b|0B)'
 oct_pre = r'(0)'
 hex_digit = r'([0-9a-fA-F])'
-binary_literal = r'('+ bin_pre + binary_digit + r'*)'
-oct_literal = r'('+oct_pre + octal_digit +r'*)'
+binary_literal = r'('+ bin_pre + binary_digit + r'+)'
+oct_literal = r'('+oct_pre + octal_digit +r'+)'
+dec_literal = r'('+nonzero_digit+digit+r'*)'
+hex_literal = r'('+hex_pre+hex_digit+r'*)'
 @TOKEN(binary_literal)
 def t_BINART_LITERAL(t):
     t.value = int(t.value,2)
@@ -84,6 +87,15 @@ def t_BINART_LITERAL(t):
 def t_OCT_LITERAL(t):
     t.value = int(t.value,8)
     return t
+@TOKEN(hex_literal)
+def t_HEX_LITERAL(t):
+    t.value = int(t.value,16)
+    return t
+@TOKEN(dec_literal)
+def t_DEC_LITERAL(t):
+    t.value = int(t.value)
+    return t
+
 def t_error(t):
     t.lexer.skip(1)
 #def t_LITERAL
@@ -122,7 +134,7 @@ hexadecimal-escape-sequence :
 """
 if __name__ == '__main__':
     l=lex.lex()
-    input = '0b11+011'
+    input = '0b11+110+011+0X11'
     l.input(input)
     for tok in l:
         print(tok)
