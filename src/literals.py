@@ -1,5 +1,5 @@
-import lex
-from lex import TOKEN
+
+from ply.lex import TOKEN, lex
 tokens = ('BINART_LITERAL','OCT_LITERAL','DEC_LITERAL','HEX_LITERAL')
 """
 5.13 Literals

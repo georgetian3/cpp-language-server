@@ -2,7 +2,7 @@
 Most of the block comments in this repository originate from the C++ Working Draft N4860
 """
 
-from lex import lex
+from ply.lex import lex
 from characters import *
 from comments import *
 from identifiers import *
@@ -16,18 +16,14 @@ tokens = [
     'IDENTIFIER',
     'SEPARATOR',
     'OPERATOR_OR_PUNCTUATOR',
+    'PREPROCESSING_OPERATOR',
     *(keyword.upper() for keyword in keywords)
 ]
-
-
-
 
 # Error handling rule
 def t_error(t):
     print("Illegal character '%s'" % t.value[0])
     t.lexer.skip(1)
-    
-
 
 
 if __name__ == '__main__':

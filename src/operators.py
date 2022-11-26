@@ -10,7 +10,7 @@ operator_or_punctuators = [
     '{', '}', '[', ']', '(', ')', '<:', ':>', '<%', '%>', ';', ':', '...', '?', '::', '.', '.*', '->', '->*', '~', '!', '+', '-', '*', '/', '%', '^', '&', '|', '=', '+=', '-=', '*=', '/=', '%=', '^=', '&=', '|=', '==', '!=', '<', '>', '<=', '>=', '<=>', '&&', '||', '<<', '>>', '<<=', '>>=', '++', '--', ',', 'and', 'or', 'xor', 'not', 'bitand', 'bitor', 'compl', 'and_eq', 'or_eq', 'xor_eq', 'not_eq'
 ]
 
-__special_chars = set(['.', '+', '*', '?', '^', '$', '(', ')', '[', ']', '{', '}', '|', '\\'])
+__special_chars = set(['.', '+', '*', '?', '^', '$', '(', ')', '[', ']', '{', '}', '|', '\\', '#'])
 
 def escape_special_chars(s):
     output = []
@@ -22,11 +22,13 @@ def escape_special_chars(s):
     return ''.join(output)
 
 
+def regex_or(l):
+    return f"{'|'.join(escape_special_chars(x) for x in l)}"
 
-t_OPERATOR_OR_PUNCTUATOR = f"{'|'.join(escape_special_chars(x) for x in operator_or_punctuators)}"
+t_PREPROCESSING_OPERATOR = regex_or(preprocessing_operators)
+t_OPERATOR_OR_PUNCTUATOR = regex_or(operator_or_punctuators)
 
 
 
 if __name__ == '__main__':
-    print(t_OPERATOR_OR_PUNCTUATOR)
     pass
