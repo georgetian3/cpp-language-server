@@ -1,26 +1,22 @@
 #include <iostream>
 using namespace std;
 
+#define DEBUG true
+
 int main() {
-    char c;
-    bool isLowercaseVowel, isUppercaseVowel;
+    char c = 'c';
+    bool b = true;
+    int i = 1;
+    char* s = "string";
+    float f = 3.14;
+    double d = 1.61;
 
-    cout << "Enter an alphabet: ";
-    cin >> c;
+    i *= b || i && c;
 
-    // evaluates to 1 (true) if c is a lowercase vowel
-    isLowercaseVowel = (c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u');
+    for (; i < 10; i++) {
+        if (DEBUG) {
+            cout << c << b << i << s << (f + d / i);
+        }
+    }
 
-    // evaluates to 1 (true) if c is an uppercase vowel
-    isUppercaseVowel = (c == 'A' || c == 'E' || c == 'I' || c == 'O' || c == 'U');
-
-    // show error message if c is not an alphabet
-    if (!isalpha(c))
-      printf("Error! Non-alphabetic character.");
-    else if (isLowercaseVowel || isUppercaseVowel)
-        cout << c << " is a vowel.";
-    else
-        cout << c << " is a consonant.";
-
-    return 0;
 }

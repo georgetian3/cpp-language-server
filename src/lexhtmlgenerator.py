@@ -27,7 +27,7 @@ class LexHTMLGenerator:
             return
         value = token.value
         #print('Value:', value)
-        if re.fullmatch('\s+', value):
+        if type(value) == str and re.fullmatch('\s+', value):
             value = value.replace('\n', '<br>')
             value = value.replace(' ', '&nbsp')
             self.__tokens.append(value)

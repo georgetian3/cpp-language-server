@@ -28,4 +28,4 @@ names_disallowed = ['\u0300-\u036F', '\u1DC0-\u1DFF', '\u20D0-\u20FF', '\uFE20-\
 
 
 # currently not standard compliant, TODO: change later
-t_IDENTIFIER = r'[A-Za-z_][A-Za-z0-9_]*'
+identifier = r'[A-Za-z_][A-Za-z0-9_]*'
