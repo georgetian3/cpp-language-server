@@ -67,10 +67,10 @@ long-suffix : one of
 long-long-suffix : one of
     ll LL
 """
-binary_digit = r'([01])'
-octal_digit = r'([0-7])'
-nonzero_digit = r'([1-9])'
-digit = r'([0-9])'
+binary_digit = r"(['01])"
+octal_digit = r"([0-7'])"
+nonzero_digit = r"([1-9'])"
+digit = r"([0-9'])"
 hex_pre = r'(0x|0X)'
 bin_pre = r'(0b|0B)'
 oct_pre = r'(0)'
@@ -86,6 +86,12 @@ integer_suffix = r'([uU]|[lL]|ll|LL|[uU][lL]|[lL][uU]|[uU]ll|ll[uU]|[uU]LL|LL[uU
 integer_literal = r'((' + binary_literal + '|' +oct_literal + '|'+dec_literal+'|'+hex_literal+')'+integer_suffix+')' 
 @TOKEN(integer_literal)
 def t_INTEGER_LITERAL(t):
+    print(t.value)
+    t.value = t.value.replace('u','')
+    t.value = t.value.replace('U','')
+    t.value = t.value.replace('L','')
+    t.value = t.value.replace('l','')
+    t.value = t.value.replace("'",'')
     if t.value == '0':
         return 0
     if t.value[0]=='0':
@@ -155,7 +161,7 @@ hexadecimal-escape-sequence :
 """
 if __name__ == '__main__':
     l=lex.lex()
-    input = '0b11+110+011+0X11'
+    input = "0b10'11ul+110'1lu+011ull+0X11llu"
     l.input(input)
     for tok in l:
         print(tok)
