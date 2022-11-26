@@ -7,6 +7,16 @@ from tokens import *
 import argparse
 
 
+# Define a rule so we can track line numbers
+def t_newline(t):
+    r'\n+'
+    t.lexer.lineno += len(t.value)
+
+# Error handling rule
+def t_error(t):
+    print("Illegal character '%s'" % t.value[0])
+    t.lexer.skip(1)
+
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument('source_file', help='Source file to be lexed')
@@ -27,6 +37,7 @@ if __name__ == '__main__':
 
     hg = LexHTMLGenerator()
     for token in lexer:
-        hg.create_html_token(token)
+       print(token)
+       #hg.create_html_token(token)
 
     hg.write_html('output/output.html')

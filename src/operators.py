@@ -33,8 +33,8 @@ Each operator-or-punctuator is converted to a single token in translation phase 
 """
 
 preprocessing_operators = {
-    'pphash': '#',
-    'ppdhash': '##', # TODO: find official name
+    'pphash': r'#',
+    'ppdhash': r'##', # TODO: find official name
 
 }
 operator_or_punctuators = {
@@ -111,16 +111,7 @@ operator_or_punctuators = {
     '': 'not_eq'
 '''
 
-""" __special_chars = set(['.', '+', '*', '?', '^', '$', '(', ')', '[', ']', '{', '}', '|', '\\', '#'])
-
-def escape_special_chars(s):
-    output = []
-    for char in s:
-        if char in __special_chars:
-            output += '\\' + char
-        else:
-            output += char
-    return ''.join(output)
+""" 
 
 
 def regex_or(l):
