@@ -1,6 +1,6 @@
 import lex
 from lex import TOKEN
-tokens = ('BINART_LITERAL','OCT_LITERAL','DEC_LITERAL','HEX_LITERAL')
+tokens = ('BINART_LITERAL','OCT_LITERAL','DEC_LITERAL','HEX_LITERAL','INTEGER_LITERAL')
 """
 5.13 Literals
 
@@ -79,6 +79,27 @@ binary_literal = r'('+ bin_pre + binary_digit + r'+)'
 oct_literal = r'('+oct_pre + octal_digit +r'+)'
 dec_literal = r'('+nonzero_digit+digit+r'*)'
 hex_literal = r'('+hex_pre+hex_digit+r'*)'
+unsigned_suffix = r'([uU])'
+long_suffix = r'([lL])'
+long_long_suffix = r'(ll|LL)'
+integer_suffix = r'([uU]|[lL]|ll|LL|[uU][lL]|[lL][uU]|[uU]ll|ll[uU]|[uU]LL|LL[uU])?' 
+integer_literal = r'((' + binary_literal + '|' +oct_literal + '|'+dec_literal+'|'+hex_literal+')'+integer_suffix+')' 
+@TOKEN(integer_literal)
+def t_INTEGER_LITERAL(t):
+    if t.value == '0':
+        return 0
+    if t.value[0]=='0':
+        if t.value[1]=='b'or t.value[1]=='B':
+            t.value = int(t.value,2)
+        elif t.value[1]=='x' or t.value[1]=='X':
+            t.value = int(t.value,16)
+        else:
+            t.value = int(t.value,8)
+    else:
+        t.value = int(t.value)
+    return t
+
+
 @TOKEN(binary_literal)
 def t_BINART_LITERAL(t):
     t.value = int(t.value,2)
