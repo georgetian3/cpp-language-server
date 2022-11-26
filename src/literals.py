@@ -81,7 +81,7 @@ c-char-sequence :
     c-char
     c-char-sequence c-char
 c-char :
-    any member of the basic source character set except the single-quote ’, backslash \, or new-line character
+    any member of the basic source character set except the single-quote ’, backslash \\, or new-line character
     escape-sequence
     universal-character-name
 escape-sequence :
@@ -92,10 +92,10 @@ simple-escape-sequence : one of
     \’ \" \? \\
     \a \b \f \n \r \t \v
 octal-escape-sequence :
-    \ octal-digit
-    \ octal-digit octal-digit
-    \ octal-digit octal-digit octal-digit
+    \\ octal-digit
+    \\ octal-digit octal-digit
+    \\ octal-digit octal-digit octal-digit
 hexadecimal-escape-sequence :
-    \x hexadecimal-digit
+    \\x hexadecimal-digit
     hexadecimal-escape-sequence hexadecimal-digit
 """
