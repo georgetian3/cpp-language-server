@@ -1,5 +1,5 @@
 """
-5.4 Proprocessing tokenss
+5.4 Proprocessing tokens
 """
 
 """
@@ -33,32 +33,3 @@ alternative_tokens = {
 
 There are five kinds of tokens: identifiers, keywords, literals, 18 operators, and other separators. Blanks, horizontal and vertical tabs, newlines, formfeeds, and comments (collectively, “white space”), as described below, are ignored except as they serve to separate tokens. [ Note: Some white space is required to separate otherwise adjacent identifiers, keywords, numeric literals, and alternative tokens containing alphabetic characters. — end note ]
 """
-
-tokens = [
-    'IDENTIFIER',
-    'KEYWORD',
-    'LITERAL',
-    'OPERATOR',
-    'SEPARATOR',
-    'MISC',
-]
-
-# Error handling rule
-def t_error(t):
-    print("Illegal character '%s'" % t.value[0])
-    t.lexer.skip(1)
-
-def t_IDENTIFIER(t):
-    r'[A-Za-z_][A-Za-z0-9_]*'
-
-def t_KEYWORD(t):
-    r'[A-Za-z_][A-Za-z0-9_]*'
-    
-def t_LITERAL(t):
-    r'[A-Za-z_][A-Za-z0-9_]*'
-    
-def t_OPERATOR(t):
-    r'[A-Za-z_][A-Za-z0-9_]*'
-    
-def t_SEPARATOR(t):
-    r'[A-Za-z_][A-Za-z0-9_]*'
