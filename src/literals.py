@@ -1,3 +1,6 @@
+import lex
+from lex import TOKEN
+tokens = ('BINART_LITERAL','OCT_LITERAL')
 """
 5.13 Literals
 
@@ -64,7 +67,21 @@ long-suffix : one of
 long-long-suffix : one of
     ll LL
 """
+binary_digit = r'([01])'
+oactal_digit = r'([0-7])'
+nonzero_digit = r'([1-9]'
+hex_pre = r'(0x|0X)'
+bin_pre = r'(0b|0B)'
+hex_digit = r'([0-9a-fA-F])'
 
+binary_literal = r'('+ bin_pre + binary_digit + r'*)'
+@TOKEN(binary_literal)
+def t_BINART_LITERAL(t):
+    t.value = int(t.value,2)
+    return t
+def t_OCT_LITERAL(t):
+    r'b'
+    return t
 #def t_LITERAL
 
 
@@ -99,3 +116,9 @@ hexadecimal-escape-sequence :
     \\x hexadecimal-digit
     hexadecimal-escape-sequence hexadecimal-digit
 """
+if __name__ == '__main__':
+    l=lex.lex()
+    input = '0b0011'
+    l.input(input)
+    for tok in l:
+        print(tok)
