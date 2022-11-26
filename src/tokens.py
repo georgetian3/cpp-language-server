@@ -70,6 +70,9 @@ def generate_tokens(token_tree, path=''):
             else:
                 globals()['t' + new_path] = token_tree[token]
             tokens.append(new_path[1:])
+        elif type(token_tree[token]) == function:
+            # TODO: ???
+            pass
         else:
             print('???')
             exit()
