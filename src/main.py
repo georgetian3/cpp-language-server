@@ -26,7 +26,7 @@ tokens is context-dependent. [Example: See the handling of < within a #include p
 with open('test.cpp', encoding='utf8') as f:
     input = f.read()
 
-lexer = lex()
+lexer = lex(debug=False)
 lexer.input(input)
 
 for token in lexer:
