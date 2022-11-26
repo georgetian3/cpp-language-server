@@ -23,7 +23,8 @@ class LexHTMLGenerator:
 
     def create_html_token(self, token):
         if token.type not in self.colors:
-            print('HTML invalid type:', token)
+            #print('HTML invalid type:', token)
+            self.__tokens.append(f'<span data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-html="true" title="{token.type}">{token.value}</span>')
             return
         value = token.value
         #print('Value:', value)
@@ -32,7 +33,7 @@ class LexHTMLGenerator:
             value = value.replace(' ', '&nbsp')
             self.__tokens.append(value)
         else:
-            self.__tokens.append(f'<span class="{token.type}" data-bs-toggle="tooltip" data-bs-html="true" title="{token.type}">{token.value}</span>')
+            self.__tokens.append(f'<span class="{token.type}" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-html="true" title="{token.type}">{token.value}</span>')
 
     def write_html(self, filename):
         with open(filename, 'w', encoding='utf8') as f:
@@ -45,6 +46,9 @@ class LexHTMLGenerator:
             <link href="bootstrap.min.css" rel="stylesheet">
             <script src="bootstrap.bundle.min.js"></script>
             <style>
+                .tooltip {
+                    --#{$prefix}tooltip-max-width: #{1000px};
+                }
                 code {
                     color: #ffffff;
                     line-height: 1.2;

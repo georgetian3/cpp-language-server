@@ -1,8 +1,9 @@
+
 from characters import *
 from comments import *
 from identifiers import identifier
 from keywords import keywords
-from literals import *
+#from literals import *
 from operators import preprocessing_operators, operator_or_punctuators
 
 from pprint import pprint
@@ -14,20 +15,19 @@ from pprint import pprint
 There are five kinds of tokens: identifiers, keywords, literals, operators, and other separators. Blanks, horizontal and vertical tabs, newlines, formfeeds, and comments (collectively, “white space”), as described below, are ignored except as they serve to separate tokens. [ Note: Some white space is required to separate otherwise adjacent identifiers, keywords, numeric literals, and alternative tokens containing alphabetic characters. — end note ]
 """
 
-
 token_tree = {
-    'identifier': identifier,
+    'preprocessing': 'adfasdfas', # TODO
     'keyword': {
         keyword: keyword for keyword in keywords
     },
     'literal': {
-        'integer': '[0-9]+',
-        'character': '\'[A-Za-z]?\'',
-        'floating_point': '[0-9]+.[0-9]+',
-        'string': '"[A-Za-z]*"',
-        'boolean': 'true|false',
-        'pointer': '->',
-        'user_defined': 'sdfsdfsd',
+        'floating_point': '[0-9]+\.[0-9]+', # TODO
+        'integer': '[0-9]+', # TODO
+        'character': '\'[A-Za-z]?\'', # TODO
+        'string': '"[A-Za-z]*"', # TODO
+        'boolean': 'true|false', # TODO
+        'pointer': '->', # TODO
+        'user_defined': 'sdfsdfsd', # TODO
     },
     'operator_or_punctuator': {
         #'alternative': alternative_tokens,
@@ -36,11 +36,12 @@ token_tree = {
     },
     'separator': {
         'comment': {
-            'multi_line': '//$',
-            'single_line': '/*.?*/',
+            'single_line': '//.*',
+            'multi_line': '/\*.*?\*/',
         },
-        'space': '\s',
+        'space': '\s', # TODO
     },
+    'identifier': identifier,
 }
 
 
@@ -64,11 +65,16 @@ def generate_tokens(token_tree, path=''):
         if type(token_tree[token]) == dict:
             generate_tokens(token_tree[token], new_path)
         elif type(token_tree[token]) == str:
-            globals()['t' + new_path] = escape_special_chars(token_tree[token])
+            if 'OPERATOR_OR_PUNCTUATOR' in path:
+                globals()['t' + new_path] = escape_special_chars(token_tree[token])
+            else:
+                globals()['t' + new_path] = token_tree[token]
             tokens.append(new_path[1:])
+        else:
+            print('???')
+            exit()
 
 generate_tokens(token_tree)
 
-#pprint(tokens)
-#pprint(globals())
-
+pprint(tokens)
+pprint(globals())

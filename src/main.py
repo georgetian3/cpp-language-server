@@ -3,6 +3,7 @@ Most of the block comments in this repository originate from the C++ Working Dra
 """
 
 from lexhtmlgenerator import LexHTMLGenerator
+import ply.lex as lex
 from tokens import *
 import argparse
 
@@ -37,7 +38,7 @@ if __name__ == '__main__':
 
     hg = LexHTMLGenerator()
     for token in lexer:
-       print(token)
-       #hg.create_html_token(token)
+        print(token)
+        hg.create_html_token(token)
 
     hg.write_html('output/output.html')
