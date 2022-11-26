@@ -1,6 +1,5 @@
-
 from ply.lex import TOKEN, lex
-tokens = ('BINART_LITERAL','OCT_LITERAL','DEC_LITERAL','HEX_LITERAL')
+tokens = ('BINART_LITERAL','OCT_LITERAL','DEC_LITERAL','HEX_LITERAL','INTEGER_LITERAL')
 """
 5.13 Literals
 
@@ -67,10 +66,10 @@ long-suffix : one of
 long-long-suffix : one of
     ll LL
 """
-binary_digit = r'([01])'
-octal_digit = r'([0-7])'
-nonzero_digit = r'([1-9])'
-digit = r'([0-9])'
+binary_digit = r"(['01])"
+octal_digit = r"([0-7'])"
+nonzero_digit = r"([1-9'])"
+digit = r"([0-9'])"
 hex_pre = r'(0x|0X)'
 bin_pre = r'(0b|0B)'
 oct_pre = r'(0)'
@@ -79,6 +78,33 @@ binary_literal = r'('+ bin_pre + binary_digit + r'+)'
 oct_literal = r'('+oct_pre + octal_digit +r'+)'
 dec_literal = r'('+nonzero_digit+digit+r'*)'
 hex_literal = r'('+hex_pre+hex_digit+r'*)'
+unsigned_suffix = r'([uU])'
+long_suffix = r'([lL])'
+long_long_suffix = r'(ll|LL)'
+integer_suffix = r'([uU]|[lL]|ll|LL|[uU][lL]|[lL][uU]|[uU]ll|ll[uU]|[uU]LL|LL[uU])?' 
+integer_literal = r'((' + binary_literal + '|' +oct_literal + '|'+dec_literal+'|'+hex_literal+')'+integer_suffix+')' 
+@TOKEN(integer_literal)
+def t_INTEGER_LITERAL(t):
+    print(t.value)
+    t.value = t.value.replace('u','')
+    t.value = t.value.replace('U','')
+    t.value = t.value.replace('L','')
+    t.value = t.value.replace('l','')
+    t.value = t.value.replace("'",'')
+    if t.value == '0':
+        return 0
+    if t.value[0]=='0':
+        if t.value[1]=='b'or t.value[1]=='B':
+            t.value = int(t.value,2)
+        elif t.value[1]=='x' or t.value[1]=='X':
+            t.value = int(t.value,16)
+        else:
+            t.value = int(t.value,8)
+    else:
+        t.value = int(t.value)
+    return t
+
+
 @TOKEN(binary_literal)
 def t_BINART_LITERAL(t):
     t.value = int(t.value,2)
@@ -134,7 +160,7 @@ hexadecimal-escape-sequence :
 """
 if __name__ == '__main__':
     l=lex.lex()
-    input = '0b11+110+011+0X11'
+    input = "0b10'11ul+110'1lu+011ull+0X11llu"
     l.input(input)
     for tok in l:
         print(tok)
