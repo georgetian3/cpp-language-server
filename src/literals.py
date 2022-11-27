@@ -1,6 +1,6 @@
 from ply.lex import TOKEN
 import ply.lex as lex
-tokens = ('BINART_LITERAL','OCT_LITERAL','DEC_LITERAL','HEX_LITERAL','INTEGER_LITERAL','CHARACTER_LITERAL','STRING_LITERAL','FRAC_CONSTANTs')
+tokens = ('DEC_FLOAT_LITERAL','BINART_LITERAL','OCT_LITERAL','DEC_LITERAL','HEX_LITERAL','INTEGER_LITERAL','CHARACTER_LITERAL','STRING_LITERAL','FRAC_CONSTANT')
 """
 5.13 Literals
 
@@ -17,7 +17,47 @@ literal :
     pointer-literal
     user-defined-literal
 """
-
+'''
+floating-point-literal :
+decimal-floating-point-literal
+hexadecimal-floating-point-literal
+decimal-floating-point-literal :
+fractional-constant exponent-partopt floating-point-suffixopt
+digit-sequence exponent-part floating-point-suffixopt
+hexadecimal-floating-point-literal :
+hexadecimal-prefix hexadecimal-fractional-constant binary-exponent-part floating-point-suffixopt
+hexadecimal-prefix hexadecimal-digit-sequence binary-exponent-part floating-point-suffixopt
+fractional-constant :
+digit-sequenceopt . digit-sequence
+digit-sequence .
+hexadecimal-fractional-constant :
+hexadecimal-digit-sequenceopt . hexadecimal-digit-sequence
+hexadecimal-digit-sequence .
+exponent-part :
+e signopt digit-sequence
+E signopt digit-sequence
+binary-exponent-part :
+p signopt digit-sequence
+P signopt digit-sequence
+sign : one of
++ -
+digit-sequence :
+digit
+digit-sequence ’opt digit
+floating-point-suffix : one of
+f l F L
+'''
+float_point_suffix = r'([flFL]?)'
+sign = r'([+-]?)'
+digit = r'([0-9]+)'
+binary_exponent = r'([pP]'+sign+digit+')'
+exp_exponent =r'([Ee]'+sign+digit+')?'
+frac_constant = r'(('+sign+digit+'?\.'+digit+')|'+'('+sign+digit+'\.'+'))'
+dec_float_literal = r'('+frac_constant + exp_exponent + float_point_suffix +r')'
+print(dec_float_literal)
+@TOKEN(dec_float_literal)
+def t_DEC_FLOAT_LITERAL(t):
+    return t
 
 
 """
@@ -86,41 +126,41 @@ integer_suffix = r'([uU]|[lL]|ll|LL|[uU][lL]|[lL][uU]|[uU]ll|ll[uU]|[uU]LL|LL[uU
 integer_literal = r'((' + binary_literal + '|' +hex_literal + '|'+oct_literal+'|'+dec_literal+')'+integer_suffix+')' 
 @TOKEN(integer_literal)
 def t_INTEGER_LITERAL(t):
-    t.value = t.value.replace('u','')
-    t.value = t.value.replace('U','')
-    t.value = t.value.replace('L','')
-    t.value = t.value.replace('l','')
-    t.value = t.value.replace("'",'')
-    if t.value == '0':
-        t.value = 0
-        return t
-    if t.value[0]=='0':
-        if t.value[1]=='b'or t.value[1]=='B':
-            t.value = int(t.value,2)
-        elif t.value[1]=='x' or t.value[1]=='X':
-            t.value = int(t.value,16)
-        else:
-            t.value = int(t.value,8)
-    else:
-        t.value = int(t.value)
+    # t.value = t.value.replace('u','')
+    # t.value = t.value.replace('U','')
+    # t.value = t.value.replace('L','')
+    # t.value = t.value.replace('l','')
+    # t.value = t.value.replace("'",'')
+    # if t.value == '0':
+    #     t.value = 0
+    #     return t
+    # if t.value[0]=='0':
+    #     if t.value[1]=='b'or t.value[1]=='B':
+    #         t.value = int(t.value,2)
+    #     elif t.value[1]=='x' or t.value[1]=='X':
+    #         t.value = int(t.value,16)
+    #     else:
+    #         t.value = int(t.value,8)
+    # else:
+    #     t.value = int(t.value)
     return t
 
 
 @TOKEN(binary_literal)
 def t_BINART_LITERAL(t):
-    t.value = int(t.value,2)
+    # t.value = int(t.value,2)
     return t
 @TOKEN(oct_literal)
 def t_OCT_LITERAL(t):
-    t.value = int(t.value,8)
+    # t.value = int(t.value,8)
     return t
 @TOKEN(hex_literal)
 def t_HEX_LITERAL(t):
-    t.value = int(t.value,16)
+    # t.value = int(t.value,16)
     return t
 @TOKEN(dec_literal)
 def t_DEC_LITERAL(t):
-    t.value = int(t.value)
+    # t.value = int(t.value)
     return t
 
 def t_error(t):
@@ -129,42 +169,6 @@ def t_error(t):
 
 
 
-'''
-floating-point-literal :
-decimal-floating-point-literal
-hexadecimal-floating-point-literal
-decimal-floating-point-literal :
-fractional-constant exponent-partopt floating-point-suffixopt
-digit-sequence exponent-part floating-point-suffixopt
-hexadecimal-floating-point-literal :
-hexadecimal-prefix hexadecimal-fractional-constant binary-exponent-part floating-point-suffixopt
-hexadecimal-prefix hexadecimal-digit-sequence binary-exponent-part floating-point-suffixopt
-fractional-constant :
-digit-sequenceopt . digit-sequence
-digit-sequence .
-hexadecimal-fractional-constant :
-hexadecimal-digit-sequenceopt . hexadecimal-digit-sequence
-hexadecimal-digit-sequence .
-exponent-part :
-e signopt digit-sequence
-E signopt digit-sequence
-binary-exponent-part :
-p signopt digit-sequence
-P signopt digit-sequence
-sign : one of
-+ -
-digit-sequence :
-digit
-digit-sequence ’opt digit
-floating-point-suffix : one of
-f l F L
-'''
-float_point_suffix = r'([flFL]?)'
-sign = r'([+-]?)'
-digit = r'([0-9]+)'
-binary_exponent = r'([pP]'+sign+digit+')'
-exp_exponent =r'([Ee]'+sign+digit+')'
-frac_constant = r'(('+sign+digit+'.'+digit+')|'+'('+sign+digit+'.'+'))'
 
 """
 5.13.3 Character literals
@@ -196,16 +200,16 @@ hexadecimal-escape-sequence :
     hexadecimal-escape-sequence hexadecimal-digit
 """
 
-hexdecimal_escape_sequence = r"(\x"+r"("+hex_digit+r"+))"
-octal_escape_sequence = r"(("+r"\\"+octal_digit+r")|("+r"\\"+octal_digit+octal_digit+r")|("+r"\\"+octal_digit+octal_digit+octal_digit+r"))"
-simple_escape_sequence = r"[\'\"\?\\\a\b\f\n\r\t\v]"
-escape_sequence = r"(("+simple_escape_sequence+r")|("+octal_escape_sequence+r")|("+hexdecimal_escape_sequence+r"))"
-hex_quad = r"("+hex_digit+hex_digit+hex_digit+hex_digit+r")"
-universal_character_name = r"((\u"+hex_quad+r")|(\U"+hex_quad+hex_quad+r")"
-c_char = r"([ \t\v\fa-zA-Z0-9_{}[]#\(\)<>%:;\.\?\*\+\-/\^&\|~!=,\"]|("+escape_sequence+r")|("+universal_character_name+r"))"
-c_char_sequence=r"("+c_char+r"+)"
-encoding_prefix=r"((u8)|(u)|(U)|(L))"
-t_CHARACTER_LITERAL=r"("+encoding_prefix+r"\'"+c_char_sequence+r"\')"
+# hexdecimal_escape_sequence = r"(\x"+r"("+hex_digit+r"+))"
+# octal_escape_sequence = r"(("+r"\\"+octal_digit+r")|("+r"\\"+octal_digit+octal_digit+r")|("+r"\\"+octal_digit+octal_digit+octal_digit+r"))"
+# simple_escape_sequence = r"[\'\"\?\\\a\b\f\n\r\t\v]"
+# escape_sequence = r"(("+simple_escape_sequence+r")|("+octal_escape_sequence+r")|("+hexdecimal_escape_sequence+r"))"
+# hex_quad = r"("+hex_digit+hex_digit+hex_digit+hex_digit+r")"
+# universal_character_name = r"((\u"+hex_quad+r")|(\U"+hex_quad+hex_quad+r")"
+# c_char = r"([ \t\v\fa-zA-Z0-9_{}[]#\(\)<>%:;\.\?\*\+\-/\^&\|~!=,\"]|("+escape_sequence+r")|("+universal_character_name+r"))"
+# c_char_sequence=r"("+c_char+r"+)"
+# encoding_prefix=r"((u8)|(u)|(U)|(L))"
+# t_CHARACTER_LITERAL=r"("+encoding_prefix+r"\'"+c_char_sequence+r"\')"
 
 
 
@@ -240,19 +244,19 @@ d-char:
 
 """
 
-d_char = r"([a-zA-Z0-9_\{\}\[\]#<>%:;\.\?\*\+\-/\^&\|~!=,\"\'])"
-d_char_sequence = r"("+ d_char + r"+)"
-r_char = r"([ \t\v\f\na-zA-Z0-9_\{\}\[\]#\(<>%:;\.\?\*\+\-/\^&\|~!=,\"\'\\])"+ d_char_sequence + r"\""
-r_char_sequence = r"("+ r_char + r"+)"
-raw_string = r"\" " + d_char_sequence + r"\(" + r_char_sequence + r"\)" + d_char_sequence + r"\""
-s_char = r"([ \t\v\fa-zA-Z0-9_\{\}\[\]#\(\)<>%:;\.\?\*\+\-/\^&\|~!=,\']|("+escape_sequence+r")|("+universal_character_name+r"))"
-s_char_sequence = r"("+s_char+r"+)"
-t_STRING_LITERAL = r"(("+encoding_prefix+r"\""+s_char_sequence+r"\")|("+encoding_prefix+r"R"+raw_string+r"))"
+# d_char = r"([a-zA-Z0-9_\{\}\[\]#<>%:;\.\?\*\+\-/\^&\|~!=,\"\'])"
+# d_char_sequence = r"("+ d_char + r"+)"
+# r_char = r"([ \t\v\f\na-zA-Z0-9_\{\}\[\]#\(<>%:;\.\?\*\+\-/\^&\|~!=,\"\'\\])"+ d_char_sequence + r"\""
+# r_char_sequence = r"("+ r_char + r"+)"
+# raw_string = r"\" " + d_char_sequence + r"\(" + r_char_sequence + r"\)" + d_char_sequence + r"\""
+# s_char = r"([ \t\v\fa-zA-Z0-9_\{\}\[\]#\(\)<>%:;\.\?\*\+\-/\^&\|~!=,\']|("+escape_sequence+r")|("+universal_character_name+r"))"
+# s_char_sequence = r"("+s_char+r"+)"
+# t_STRING_LITERAL = r"(("+encoding_prefix+r"\""+s_char_sequence+r"\")|("+encoding_prefix+r"R"+raw_string+r"))"
 
 
 if __name__ == '__main__':
     l=lex.lex()
-    input = "0x100'001'010"
+    input = "-.123321e6f"
     l.input(input)
     for tok in l:
         print(tok)
