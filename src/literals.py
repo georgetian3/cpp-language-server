@@ -160,16 +160,16 @@ hexadecimal-escape-sequence :
     hexadecimal-escape-sequence hexadecimal-digit
 """
 
-hexdecimal_escape_sequence = r"(\x"+r"("+hex_digit+r"+))"
+hexdecimal_escape_sequence = r"((\\x)"+r"("+hex_digit+r"+))"
 octal_escape_sequence = r"(("+r"\\"+octal_digit+r")|("+r"\\"+octal_digit+octal_digit+r")|("+r"\\"+octal_digit+octal_digit+octal_digit+r"))"
-simple_escape_sequence = r"[\'\"\?\\\a\b\f\n\r\t\v]"
+simple_escape_sequence = r"([\'\"\?\\\a\b\f\n\r\t\v])"
 escape_sequence = r"(("+simple_escape_sequence+r")|("+octal_escape_sequence+r")|("+hexdecimal_escape_sequence+r"))"
 hex_quad = r"("+hex_digit+hex_digit+hex_digit+hex_digit+r")"
-universal_character_name = r"((\u"+hex_quad+r")|(\U"+hex_quad+hex_quad+r")"
-c_char = r"([ \t\v\fa-zA-Z0-9_{}[]#\(\)<>%:;\.\?\*\+\-/\^&\|~!=,\"]|("+escape_sequence+r")|("+universal_character_name+r"))"
+universal_character_name = r"((\\u"+hex_quad+r")|(\\U"+hex_quad+hex_quad+r"))"
+c_char = r"(([ \t\v\fa-zA-Z0-9_\{\}\[\]\#\(\)<>%:;\.\?\*\+\-/\^&\|~!=,\"])|("+escape_sequence+r")|("+universal_character_name+r"))"
 c_char_sequence=r"("+c_char+r"+)"
 encoding_prefix=r"((u8)|(u)|(U)|(L))"
-t_CHARACTER_LITERAL=r"("+encoding_prefix+r"\'"+c_char_sequence+r"\')"
+t_CHARACTER_LITERAL=r"(("+encoding_prefix+r"?)\'"+c_char_sequence+r"\')"
 
 
 
@@ -204,19 +204,19 @@ d-char:
 
 """
 
-d_char = r"([a-zA-Z0-9_\{\}\[\]#<>%:;\.\?\*\+\-/\^&\|~!=,\"\'])"
+d_char = r"([a-zA-Z0-9_\{\}\[\]\#<>%:;\.\?\*\+\-/\^&\|~!=,\"\'])"
 d_char_sequence = r"("+ d_char + r"+)"
-r_char = r"([ \t\v\f\na-zA-Z0-9_\{\}\[\]#\(<>%:;\.\?\*\+\-/\^&\|~!=,\"\'\\])"+ d_char_sequence + r"\""
+r_char = r"([ \t\v\f\na-zA-Z0-9_\{\}\[\]\#\(<>%:;\.\?\*\+\-/\^&\|~!=,\"\'\\])"+ d_char_sequence + r"\""
 r_char_sequence = r"("+ r_char + r"+)"
-raw_string = r"\" " + d_char_sequence + r"\(" + r_char_sequence + r"\)" + d_char_sequence + r"\""
-s_char = r"([ \t\v\fa-zA-Z0-9_\{\}\[\]#\(\)<>%:;\.\?\*\+\-/\^&\|~!=,\']|("+escape_sequence+r")|("+universal_character_name+r"))"
+raw_string = r"(\"(" + d_char_sequence + r"?)\((" + r_char_sequence + r"?)\)(" + d_char_sequence + r"?)\")"
+s_char = r"([ \t\v\fa-zA-Z0-9_\{\}\[\]\#\(\)<>%:;\.\?\*\+\-/\^&\|~!=,\']|("+escape_sequence+r")|("+universal_character_name+r"))"
 s_char_sequence = r"("+s_char+r"+)"
-t_STRING_LITERAL = r"(("+encoding_prefix+r"\""+s_char_sequence+r"\")|("+encoding_prefix+r"R"+raw_string+r"))"
+t_STRING_LITERAL = r"((("+encoding_prefix+r"?)\"("+s_char_sequence+r"?)\")|(("+encoding_prefix+r"?)R"+raw_string+r"))"
 
 
 if __name__ == '__main__':
     l=lex.lex()
-    input = "0x100'001'010"
+    input = "b"
     l.input(input)
     for tok in l:
         print(tok)
