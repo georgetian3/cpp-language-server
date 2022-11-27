@@ -252,12 +252,11 @@ raw_string = r"(\"(" + d_char_sequence + r"?)\((" + r_char_sequence + r"?)\)(" +
 s_char = r"(([ \t\v\fa-zA-Z0-9_\{\}\[\]\#\(\)<>%:;\.\?\*\+\-/\^&\|~!=,\'])|("+escape_sequence+r")|("+universal_character_name+r"))"
 s_char_sequence = r"("+s_char+r"+)"
 t_STRING_LITERAL = r"((("+encoding_prefix+r"?)\"("+s_char_sequence+r"?)\")|(("+encoding_prefix+r"?)R"+raw_string+r"))"
-print(t_STRING_LITERAL)
 
 if __name__ == '__main__':
     l=lex.lex()
     input = '''
-            "ab"
+            "u8"absid""
             '''
     l.input(input)
     for tok in l:
