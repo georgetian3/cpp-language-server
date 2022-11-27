@@ -53,7 +53,7 @@ binary_exponent = r'([pP]'+sign+digit+')'
 exp_exponent =r'([Ee]'+sign+digit+')?'
 frac_constant = r'(('+sign+digit+'?\.'+digit+')|'+'('+sign+digit+'\.'+'))'
 dec_float_literal = r'('+frac_constant + exp_exponent + float_point_suffix +r')'
-print(dec_float_literal)
+#print(dec_float_literal)
 @TOKEN(dec_float_literal)
 def t_DEC_FLOAT_LITERAL(t):
     return t

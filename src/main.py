@@ -20,7 +20,8 @@ def t_error(t):
 
 def parse_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument('source_file', help='Source file to be lexed')
+    parser.add_argument('-i', help='Source file to be lexed')
+    parser.add_argument('-o', help='Destination file to save token stream')
     args = parser.parse_args()
     return args
 
@@ -28,17 +29,19 @@ if __name__ == '__main__':
 
 
     args = parse_args()
-    source_file = args.source_file
 
-    with open(source_file, encoding='utf8') as f:
+    with open(args.i, encoding='utf8') as f:
         source = f.read()
 
-    lexer = lex.lex(debug=True)
+    lexer = lex.lex(debug=False)
     lexer.input(source)
 
     hg = LexHTMLGenerator()
-    for token in lexer:
-        print(token)
+    tokens = list(lexer)
+    for token in tokens:
         hg.create_html_token(token)
 
     hg.write_html('output/output.html')
+
+    with open(args.o, 'w', encoding='utf8') as f:
+        f.write('\n'.join(str(token) for token in tokens))
