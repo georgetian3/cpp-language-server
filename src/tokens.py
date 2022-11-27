@@ -120,7 +120,6 @@ def generate_tokens(token_tree, path=''):
         elif type(token_tree[token]) == str:
             if token_tree[token][:2] == 't_':
                 tokens.append(token_tree[token][2:])
-                print('appending', token_tree[token][2:])
                 continue
             if 'OPERATOR_OR_PUNCTUATOR' in path:
                 globals()['t' + new_path] = escape_special_chars(token_tree[token])
