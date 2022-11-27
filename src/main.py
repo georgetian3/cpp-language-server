@@ -2,34 +2,21 @@
 Most of the block comments in this repository originate from the C++ Working Draft N4860
 """
 
-import ply.lex as lex
-from characters import *
-from comments import *
-from identifiers import *
-from keywords import *
-from literals import *
-from operators import *
-from tokens import *
-
-import argparse
 from lexhtmlgenerator import LexHTMLGenerator
+import ply.lex as lex
+from tokens import *
+import argparse
 
-tokens = [
-    'LITERAL',
-    'IDENTIFIER',
-    'SEPARATOR',
-    'OPERATOR_OR_PUNCTUATOR',
-    'PREPROCESSING_OPERATOR',
-    'COMMENT_SINGLE_LINE',
-    'COMMENT_MULTI_LINE',
-    *(keyword.upper() for keyword in keywords)
-]
+
+# Define a rule so we can track line numbers
+def t_newline(t):
+    r'\n+'
+    t.lexer.lineno += len(t.value)
 
 # Error handling rule
 def t_error(t):
     print("Illegal character '%s'" % t.value[0])
     t.lexer.skip(1)
-
 
 def parse_args():
     parser = argparse.ArgumentParser()
@@ -39,7 +26,6 @@ def parse_args():
 
 if __name__ == '__main__':
 
-    hg = LexHTMLGenerator()
 
     args = parse_args()
     source_file = args.source_file
@@ -48,9 +34,11 @@ if __name__ == '__main__':
         source = f.read()
 
     lexer = lex.lex(debug=False)
-    lexer.input(input)
+    lexer.input(source)
 
+    hg = LexHTMLGenerator()
     for token in lexer:
+        print(token)
         hg.create_html_token(token)
 
-    hg.write_html('output/index.html')
+    hg.write_html('output/output.html')

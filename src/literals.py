@@ -1,6 +1,6 @@
 from ply.lex import TOKEN
 import ply.lex as lex
-tokens = ('BINART_LITERAL','OCT_LITERAL','DEC_LITERAL','HEX_LITERAL','INTEGER_LITERAL','FRAC_CONSTANTs')
+tokens = ('BINART_LITERAL','OCT_LITERAL','DEC_LITERAL','HEX_LITERAL','INTEGER_LITERAL','CHARACTER_LITERAL','STRING_LITERAL','FRAC_CONSTANTs')
 """
 5.13 Literals
 
@@ -195,6 +195,61 @@ hexadecimal-escape-sequence :
     \\x hexadecimal-digit
     hexadecimal-escape-sequence hexadecimal-digit
 """
+
+hexdecimal_escape_sequence = r"(\x"+r"("+hex_digit+r"+))"
+octal_escape_sequence = r"(("+r"\\"+octal_digit+r")|("+r"\\"+octal_digit+octal_digit+r")|("+r"\\"+octal_digit+octal_digit+octal_digit+r"))"
+simple_escape_sequence = r"[\'\"\?\\\a\b\f\n\r\t\v]"
+escape_sequence = r"(("+simple_escape_sequence+r")|("+octal_escape_sequence+r")|("+hexdecimal_escape_sequence+r"))"
+hex_quad = r"("+hex_digit+hex_digit+hex_digit+hex_digit+r")"
+universal_character_name = r"((\u"+hex_quad+r")|(\U"+hex_quad+hex_quad+r")"
+c_char = r"([ \t\v\fa-zA-Z0-9_{}[]#\(\)<>%:;\.\?\*\+\-/\^&\|~!=,\"]|("+escape_sequence+r")|("+universal_character_name+r"))"
+c_char_sequence=r"("+c_char+r"+)"
+encoding_prefix=r"((u8)|(u)|(U)|(L))"
+t_CHARACTER_LITERAL=r"("+encoding_prefix+r"\'"+c_char_sequence+r"\')"
+
+
+
+
+"""
+5.13.5 String literals [lex.string]
+string-literal:
+    encoding-prefixopt " s-char-sequenceopt "
+    encoding-prefixopt R raw-string
+s-char-sequence :
+    s-char
+    s-char-sequence s-char
+s-char:
+    any member of the basic source character set except the double-quote ", backslash \, or new-line character
+    escape-sequence
+    universal-character-name
+raw-string:
+    " d-char-sequenceopt ( r-char-sequenceopt ) d-char-sequenceopt "
+r-char-sequence :
+    r-char
+    r-char-sequence r-char
+r-char:
+    any member of the source character set, except a right parenthesis ) followed by
+    the initial d-char-sequence (which may be empty) followed by a double quote ".
+d-char-sequence :
+    d-char
+    d-char-sequence d-char
+d-char:
+    any member of the basic source character set except:
+    space, the left parenthesis (, the right parenthesis ), the backslash \, and the control characters
+    representing horizontal tab, vertical tab, form feed, and newline.
+
+"""
+
+d_char = r"([a-zA-Z0-9_\{\}\[\]#<>%:;\.\?\*\+\-/\^&\|~!=,\"\'])"
+d_char_sequence = r"("+ d_char + r"+)"
+r_char = r"([ \t\v\f\na-zA-Z0-9_\{\}\[\]#\(<>%:;\.\?\*\+\-/\^&\|~!=,\"\'\\])"+ d_char_sequence + r"\""
+r_char_sequence = r"("+ r_char + r"+)"
+raw_string = r"\" " + d_char_sequence + r"\(" + r_char_sequence + r"\)" + d_char_sequence + r"\""
+s_char = r"([ \t\v\fa-zA-Z0-9_\{\}\[\]#\(\)<>%:;\.\?\*\+\-/\^&\|~!=,\']|("+escape_sequence+r")|("+universal_character_name+r"))"
+s_char_sequence = r"("+s_char+r"+)"
+t_STRING_LITERAL = r"(("+encoding_prefix+r"\""+s_char_sequence+r"\")|("+encoding_prefix+r"R"+raw_string+r"))"
+
+
 if __name__ == '__main__':
     l=lex.lex()
     input = "0x100'001'010"
