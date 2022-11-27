@@ -8,6 +8,8 @@ from operators import preprocessing_operators, operator_or_punctuators
 
 from pprint import pprint
 
+import types
+
 
 """
 5.6 Tokens
@@ -16,6 +18,13 @@ There are five kinds of tokens: identifiers, keywords, literals, operators, and 
 """
 
 token_tree = {
+    'separator': {
+        'comment': {
+            'single_line': '//.*',
+            'multi_line': r'(/\*(.|\n)*?\*/)',
+        },
+        'space': whitespace, # TODO
+    },
     'preprocessing': 'adfasdfas', # TODO
     'keyword': {
         keyword: keyword for keyword in keywords
@@ -26,7 +35,7 @@ token_tree = {
         'character': '\'[A-Za-z]?\'', # TODO
         'string': '"[A-Za-z]*"', # TODO
         'boolean': 'true|false', # TODO
-        'pointer': '->', # TODO
+        'pointer': 'nullptr', # TODO
         'user_defined': 'sdfsdfsd', # TODO
     },
     'operator_or_punctuator': {
@@ -34,13 +43,7 @@ token_tree = {
         'preprocessing_operators': preprocessing_operators,
         **operator_or_punctuators,
     },
-    'separator': {
-        'comment': {
-            'single_line': '//.*',
-            'multi_line': '/\*.*?\*/',
-        },
-        'space': '\s', # TODO
-    },
+    
     'identifier': identifier,
 }
 
@@ -70,14 +73,14 @@ def generate_tokens(token_tree, path=''):
             else:
                 globals()['t' + new_path] = token_tree[token]
             tokens.append(new_path[1:])
-        elif type(token_tree[token]) == function:
-            # TODO: ???
-            pass
+        elif type(token_tree[token]) == types.FunctionType:
+            globals()['t' + new_path] = token_tree[token]
+            tokens.append(new_path[1:])
         else:
             print('???')
             exit()
 
 generate_tokens(token_tree)
 
-pprint(tokens)
-pprint(globals())
+#pprint(tokens)
+#pprint(globals())

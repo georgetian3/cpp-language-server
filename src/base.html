@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lexing output</title>
+  <link href="bootstrap.min.css" rel="stylesheet">
+  <script src="bootstrap.bundle.min.js"></script>
+  <style>
+    #tokens {
+      color: #000000;
+      line-height: 1.2;
+      display: block;
+      margin: 4em 2em 2em 2em;
+    }
+    #info {
+      margin-left: 2em;
+      margin-top: 2em;
+      color: #000000;
+    }
+    span {
+      border-radius: 4px;
+    }
+  </style>
+  
+</head>
+<body>
+    <div class="fixed-top">
+      <code id="info">
+      </code>
+    </div>
+    <code id="tokens">
+    </code>
+    <script>
+      var info = document.getElementById('info');
+      function show_info(id) {
+        span = document.getElementById(id);
+        span.style.backgroundColor = "yellow";
+        info.innerText = span.className;
+      }
+      function hide_info(id) {
+        info.innerText = '';
+        span.style.backgroundColor = 'rgba(0, 0, 0, 0)';
+      }
+    </script>
+</body>
+</html>

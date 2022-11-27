@@ -147,7 +147,7 @@ def t_INTEGER_LITERAL(t):
 
 
 @TOKEN(binary_literal)
-def t_BINART_LITERAL(t):
+def t_BINARY_LITERAL(t):
     # t.value = int(t.value,2)
     return t
 @TOKEN(oct_literal)
