@@ -198,11 +198,14 @@ d-char:
     representing horizontal tab, vertical tab, form feed, and newline.
 
 """
-d_char = r"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_{}[]#<>%:;.?*+-/^&|~!=,\"\'"
-d_char_sequence = r""
-basic_s_char = r""
-r_char = r" \t\v\f\nabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_{}[]#()<>%:;.?*+-/^&|~!=,\"\'\\"+ d_char_sequence + r'\"'
 
+d_char = r"([a-zA-Z0-9_\{\}\[\]#<>%:;\.\?\*\+\-/\^&\|~!=,\"\'])"
+d_char_sequence = r"("+ d_char + r"*)"
+r_char = r"([ \t\v\f\na-zA-Z0-9_\{\}\[\]#\(<>%:;\.\?\*\+\-/\^&\|~!=,\"\'\\])"+ d_char_sequence + r"\""
+r_char_sequence = r"("+ r_char + r"*)"
+raw_string = r"\" " + d_char_sequence + r"\(" + r_char_sequence + r"\)" + d_char_sequence + r"\""
+s_char = r"([ \t\v\fa-zA-Z0-9_\{\}\[\]#\(\)<>%:;\.\?\*\+\-/\^&\|~!=,\']|)"
+basic_s_char = r""
 if __name__ == '__main__':
     l=lex.lex()
     input = "0x100'001'010"
