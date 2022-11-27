@@ -1,6 +1,6 @@
 from ply.lex import TOKEN
 import ply.lex as lex
-tokens = ('BINART_LITERAL','OCT_LITERAL','DEC_LITERAL','HEX_LITERAL','INTEGER_LITERAL','CHARACTER_LITERAL','STRING_LITERAL')
+tokens = ('BINART_LITERAL','OCT_LITERAL','DEC_LITERAL','HEX_LITERAL','INTEGER_LITERAL','CHARACTER_LITERAL','STRING_LITERAL','FRAC_CONSTANTs')
 """
 5.13 Literals
 
@@ -129,6 +129,42 @@ def t_error(t):
 
 
 
+'''
+floating-point-literal :
+decimal-floating-point-literal
+hexadecimal-floating-point-literal
+decimal-floating-point-literal :
+fractional-constant exponent-partopt floating-point-suffixopt
+digit-sequence exponent-part floating-point-suffixopt
+hexadecimal-floating-point-literal :
+hexadecimal-prefix hexadecimal-fractional-constant binary-exponent-part floating-point-suffixopt
+hexadecimal-prefix hexadecimal-digit-sequence binary-exponent-part floating-point-suffixopt
+fractional-constant :
+digit-sequenceopt . digit-sequence
+digit-sequence .
+hexadecimal-fractional-constant :
+hexadecimal-digit-sequenceopt . hexadecimal-digit-sequence
+hexadecimal-digit-sequence .
+exponent-part :
+e signopt digit-sequence
+E signopt digit-sequence
+binary-exponent-part :
+p signopt digit-sequence
+P signopt digit-sequence
+sign : one of
++ -
+digit-sequence :
+digit
+digit-sequence ’opt digit
+floating-point-suffix : one of
+f l F L
+'''
+float_point_suffix = r'([flFL]?)'
+sign = r'([+-]?)'
+digit = r'([0-9]+)'
+binary_exponent = r'([pP]'+sign+digit+')'
+exp_exponent =r'([Ee]'+sign+digit+')'
+frac_constant = r'(('+sign+digit+'.'+digit+')|'+'('+sign+digit+'.'+'))'
 
 """
 5.13.3 Character literals
