@@ -255,7 +255,7 @@ t_STRING_LITERAL = r"((("+encoding_prefix+r"?)\"("+s_char_sequence+r"?)\")|(("+e
 if __name__ == '__main__':
     l=lex.lex()
     input = '''
-            "ab"
+            "u8"absid""
             '''
     l.input(input)
     for tok in l:
