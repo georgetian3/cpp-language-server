@@ -3,8 +3,6 @@
 #include <limits>
 #include <typeinfo>
 using namespace std;
-#define OUT(x) '\n' << setw(16) << #x << x
-
 #define DEBUG true
 
 int main() {
@@ -13,16 +11,12 @@ int main() {
     int i = 1;
     char* s = "string";
     float f = 3.14;
-    double d = 1.61;
+    double d = 1.61,d1=58.,d2=4e2,d3=123.456e-7;
     /* 
         multiline comment
     */
     i *= b || i && c;
     std::cout
-        << "Literal" "\t" "Printed value" << std::left
-        << OUT( 58.            ) // double
-        << OUT( 4e2            ) // double
-        << OUT( 123.456e-67    ) // double
         << OUT( 123.456e-67f   ) // float, truncated to zero
         << OUT( .1E4f          ) // float
         << OUT( 0x10.1p0       ) // double
