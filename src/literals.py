@@ -257,6 +257,7 @@ if __name__ == '__main__':
     input = '''
             "u8"absid""
             '''
+    input = "3.4028234e38f+ 3.2001"
     l.input(input)
     for tok in l:
         print(tok)
