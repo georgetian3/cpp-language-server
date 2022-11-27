@@ -38,7 +38,7 @@ if __name__ == '__main__':
 
     hg = LexHTMLGenerator()
     for token in lexer:
-        #print(token)
+        print(token)
         hg.create_html_token(token)
 
     hg.write_html('output/output.html')

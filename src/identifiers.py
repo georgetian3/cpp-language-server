@@ -1,3 +1,5 @@
+from keywords import keywords
+
 """
 5.10 Identifiers
 
@@ -28,4 +30,10 @@ names_disallowed = ['\u0300-\u036F', '\u1DC0-\u1DFF', '\u20D0-\u20FF', '\uFE20-\
 
 
 # currently not standard compliant, TODO: change later
-identifier = '[A-Za-z_][A-Za-z0-9_]*'
+def t_IDENTIFIER(t):
+    r'[A-Za-z_][A-Za-z0-9_]*'
+    if t.value in keywords:
+        t.type = 'KEYWORD_' + t.value.upper()
+    else:
+        t.type = 'IDENTIFIER'
+    return t

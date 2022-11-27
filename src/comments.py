@@ -6,12 +6,12 @@ The characters /* start a comment, which terminates with the characters */. Thes
 """
 
 
-def whitespace(t):
+def t_WS(t):
     r'\s+'
     t.lexer.lineno += t.value.count('\n')
     return t
 
-def t_COMMENT_SINGLE_LINE(t):
+"""def t_COMMENT_SINGLE_LINE(t):
     r'(//.*?(\n|$))'
     t.type = 'WS'
     return t
@@ -23,4 +23,4 @@ def t_COMMENT_MULTI_LINE(t):
     # replace with one space or a number of '\n'
     t.type = 'WS'
     #t.value = '\n' * ncr if ncr else ' '
-    return t
+    return t """

@@ -6,7 +6,7 @@ class LexHTMLGenerator:
 
     def __init__(self):
         self.__tokens = []
-        self.colors = {
+        """ self.colors = {
             'string_literal': 'CE915B',
             'IDENTIFIER': '4FB8FE',
             'OPERATOR_OR_PUNCTUATOR': 'FFFFFF',
@@ -14,24 +14,18 @@ class LexHTMLGenerator:
             'PREPROCESSING_OPERATOR': '4FB8FE',
             'INTEGER_LITERAL': '4FB8FE',
             'KEYWORD': 'C586A1',
-        }
-
-        self.__classes = {type: '.' + type + ''' {
-    color: #''' + self.colors[type] + '''
-}''' for type in self.colors
-        }
+        } """
 
     def create_html_token(self, token):
-        if token.type not in self.colors:
+        #if token.type not in self.colors:
             #print('HTML invalid type:', token)
-            pass
+            #pass
         value = token.value
-        if type(value) == str and re.fullmatch('\s+', value):
-            value = value.replace('\n', '<br>')
-            value = value.replace(' ', '&nbsp')
-            self.__tokens.append(value)
-        else:
-            self.__tokens.append(f'<span id="{len(self.__tokens)}" class={token.type} onmouseover="show_info({len(self.__tokens)})" onmouseleave="hide_info({len(self.__tokens)})">{token.value}</span>')
+        #print(value, len(value), ord(value[0]))
+        value = value.replace('\n', '<br>')
+        value = value.replace(' ', '&nbsp')
+            
+        self.__tokens.append(f'<span id="{len(self.__tokens)}" class={token.type} onmouseover="show_info({len(self.__tokens)})" onmouseleave="hide_info({len(self.__tokens)})">{value}</span>')
 
 
     def write_html(self, filename):
