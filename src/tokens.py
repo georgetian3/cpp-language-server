@@ -10,7 +10,7 @@ from pprint import pprint
 
 import types
 from collections import OrderedDict
-from literals import t_DEC_FLOAT_LITERAL, t_CHARACTER_LITERAL, t_BINARY_LITERAL, t_OCT_LITERAL, t_HEX_LITERAL, t_DEC_LITERAL, t_STRING_LITERAL
+from literals import t_DEC_FLOAT_LITERAL, t_BINARY_LITERAL, t_OCT_LITERAL, t_HEX_LITERAL, t_DEC_LITERAL, t_STRING_LITERAL
 
 """
 5.6 Tokens
@@ -34,7 +34,7 @@ token_tree = {
             'hex': 't_HEX_LITERAL',
             'dec': 't_DEC_LITERAL',
         },
-        'character': 't_CHARACTER_LITERAL',
+        'character': '\'.?\'', #'t_CHARACTER_LITERAL',
         'string': 't_STRING_LITERAL',
         'boolean': 'true|false',
         'pointer': 'nullptr',
