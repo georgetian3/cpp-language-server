@@ -256,7 +256,7 @@ t_STRING_LITERAL = r"(("+encoding_prefix+r"\""+s_char_sequence+r"\")|("+encoding
 
 if __name__ == '__main__':
     l=lex.lex()
-    input = "0x100'001'010"
+    input = "3.4028234e38f+ 3.2001"
     l.input(input)
     for tok in l:
         print(tok)
