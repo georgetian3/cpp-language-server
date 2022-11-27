@@ -244,9 +244,9 @@ d-char:
 
 """
 
-d_char = r"([a-zA-Z0-9_\{\}\[\]#<>%:;\.\?\*\+\-/\^&\|~!=,\"\'])"
+d_char = r"([a-zA-Z0-9_\{\}\[\]\#<>%:;\.\?\*\+\-/\^&\|~!=,\"\'])"
 d_char_sequence = r"("+ d_char + r"+)"
-r_char = r"([ \t\v\f\na-zA-Z0-9_\{\}\[\]#\(<>%:;\.\?\*\+\-/\^&\|~!=,\"\'\\])"+ d_char_sequence + r"\""
+r_char = r"([ \t\v\f\na-zA-Z0-9_\{\}\[\]\#\(<>%:;\.\?\*\+\-/\^&\|~!=,\"\'\\])"+ d_char_sequence + r"\""
 r_char_sequence = r"("+ r_char + r"+)"
 raw_string = r"(\"(" + d_char_sequence + r"?)\((" + r_char_sequence + r"?)\)(" + d_char_sequence + r"?)\")"
 s_char = r"(([ \t\v\fa-zA-Z0-9_\{\}\[\]\#\(\)<>%:;\.\?\*\+\-/\^&\|~!=,\'])|("+escape_sequence+r")|("+universal_character_name+r"))"
