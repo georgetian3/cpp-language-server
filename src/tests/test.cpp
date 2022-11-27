@@ -14,7 +14,9 @@ int main() {
     char* s = "string";
     float f = 3.14;
     double d = 1.61;
-
+    /* 
+        multiline comment
+    */
     i *= b || i && c;
     std::cout
         << "Literal" "\t" "Printed value" << std::left

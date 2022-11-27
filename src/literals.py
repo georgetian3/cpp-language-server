@@ -1,6 +1,5 @@
 from ply.lex import TOKEN
 import ply.lex as lex
-tokens = ('DEC_FLOAT_LITERAL','BINART_LITERAL','OCT_LITERAL','DEC_LITERAL','HEX_LITERAL','INTEGER_LITERAL','CHARACTER_LITERAL','STRING_LITERAL','FRAC_CONSTANT')
 """
 5.13 Literals
 
@@ -147,7 +146,7 @@ def t_INTEGER_LITERAL(t):
 
 
 @TOKEN(binary_literal)
-def t_BINART_LITERAL(t):
+def t_BINARY_LITERAL(t):
     # t.value = int(t.value,2)
     return t
 @TOKEN(oct_literal)
@@ -244,18 +243,20 @@ d-char:
 
 """
 
-d_char = r"([a-zA-Z0-9_\{\}\[\]#<>%:;\.\?\*\+\-/\^&\|~!=,\"\'])"
+d_char = r"([a-zA-Z0-9_\{\}\[\]\#<>%:;\.\?\*\+\-/\^&\|~!=,\"\'])"
 d_char_sequence = r"("+ d_char + r"+)"
-r_char = r"([ \t\v\f\na-zA-Z0-9_\{\}\[\]#\(<>%:;\.\?\*\+\-/\^&\|~!=,\"\'\\])"+ d_char_sequence + r"\""
+r_char = r"([ \t\v\f\na-zA-Z0-9_\{\}\[\]\#\(<>%:;\.\?\*\+\-/\^&\|~!=,\"\'\\])"+ d_char_sequence + r"\""
 r_char_sequence = r"("+ r_char + r"+)"
-raw_string = r"\" " + d_char_sequence + r"\(" + r_char_sequence + r"\)" + d_char_sequence + r"\""
-s_char = r"([ \t\v\fa-zA-Z0-9_\{\}\[\]#\(\)<>%:;\.\?\*\+\-/\^&\|~!=,\']|("+escape_sequence+r")|("+universal_character_name+r"))"
+raw_string = r"(\"(" + d_char_sequence + r"?)\((" + r_char_sequence + r"?)\)(" + d_char_sequence + r"?)\")"
+s_char = r"(([ \t\v\fa-zA-Z0-9_\{\}\[\]\#\(\)<>%:;\.\?\*\+\-/\^&\|~!=,\'])|("+escape_sequence+r")|("+universal_character_name+r"))"
 s_char_sequence = r"("+s_char+r"+)"
-t_STRING_LITERAL = r"(("+encoding_prefix+r"\""+s_char_sequence+r"\")|("+encoding_prefix+r"R"+raw_string+r"))"
-
+t_STRING_LITERAL = r"((("+encoding_prefix+r"?)\"("+s_char_sequence+r"?)\")|(("+encoding_prefix+r"?)R"+raw_string+r"))"
 
 if __name__ == '__main__':
     l=lex.lex()
+    input = '''
+            "u8"absid""
+            '''
     input = "3.4028234e38f+ 3.2001"
     l.input(input)
     for tok in l:

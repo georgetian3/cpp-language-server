@@ -1,13 +1,16 @@
 
 from characters import *
 from comments import *
-from identifiers import identifier
+from identifiers import t_IDENTIFIER
 from keywords import keywords
 #from literals import *
 from operators import preprocessing_operators, operator_or_punctuators
 
 from pprint import pprint
 
+import types
+from collections import OrderedDict
+from literals import t_DEC_FLOAT_LITERAL, t_CHARACTER_LITERAL, t_BINARY_LITERAL, t_OCT_LITERAL, t_HEX_LITERAL, t_DEC_LITERAL, t_STRING_LITERAL
 
 """
 5.6 Tokens
@@ -16,18 +19,26 @@ There are five kinds of tokens: identifiers, keywords, literals, operators, and 
 """
 
 token_tree = {
-    'preprocessing': 'adfasdfas', # TODO
+    'identifier': 't_IDENTIFIER',
+    'preprocessing': 'adfaasdfasdfsdfas', # TODO
     'keyword': {
-        keyword: keyword for keyword in keywords
+        keyword.upper(): keyword for keyword in keywords
     },
     'literal': {
-        'floating_point': '[0-9]+\.[0-9]+', # TODO
-        'integer': '[0-9]+', # TODO
-        'character': '\'[A-Za-z]?\'', # TODO
-        'string': '"[A-Za-z]*"', # TODO
-        'boolean': 'true|false', # TODO
-        'pointer': '->', # TODO
-        'user_defined': 'sdfsdfsd', # TODO
+        'floating_point': {
+            'decimal': 't_DEC_FLOAT_LITERAL',
+        },
+        'integer': {
+            'binary': 't_BINARY_LITERAL',
+            'oct': 't_OCT_LITERAL',
+            'hex': 't_HEX_LITERAL',
+            'dec': 't_DEC_LITERAL',
+        },
+        'character': 't_CHARACTER_LITERAL',
+        'string': 't_STRING_LITERAL',
+        'boolean': 'true|false',
+        'pointer': 'nullptr',
+        'user_defined': 'sdasdfasdfasdffsdfsd', # TODO
     },
     'operator_or_punctuator': {
         #'alternative': alternative_tokens,
@@ -36,13 +47,55 @@ token_tree = {
     },
     'separator': {
         'comment': {
-            'single_line': '//.*',
-            'multi_line': '/\*.*?\*/',
+            'single_line': '//.*\n',
+            'multi_line': r'(/\*(.|\n)*?\*/)',
         },
-        'space': '\s', # TODO
+        'space': 't_WS', # TODO
     },
-    'identifier': identifier,
 }
+
+""" token_tree = (
+    ('separator',
+        (
+            ('comment',
+                    (
+                        ('single_line', '//.*\n'),
+                        ('multi_line', r'(/\*(.|\n)*?\*/)'),
+                    ),
+            ),
+            ('space', whitespace), # TODO
+        )
+    ),
+    ('preprocessing', 'adfasdfas'), # TODO
+    ('keyword',
+        (
+            tuple((keyword, keyword) for keyword in keywords)
+        )
+    ),
+    ('literal',
+        (
+            ('floating_point', '[0-9]+\.[0-9]+'), # TODO
+            ('integer', '[0-9]+'), # TODO
+            ('character', '\'[A-Za-z]?\''), # TODO
+            ('string', '"[A-Za-z]*"'), # TODO
+            ('boolean', 'true|false'), # TODO
+            ('pointer', 'nullptr'), # TODO
+            ('user_defined', 'sdfsdfsd'), # TODO
+        )
+    ),
+    ('operator_or_punctuator',
+        (
+            #'alternative', alternative_tokens,
+            ('preprocessing_operators', preprocessing_operators),
+            *((k, v) for k, v in operator_or_punctuators.items()),
+        )
+    ),
+    ('identifier', identifier),
+) """
+
+
+#pprint(token_tree)
+
 
 
 tokens = []
@@ -65,19 +118,22 @@ def generate_tokens(token_tree, path=''):
         if type(token_tree[token]) == dict:
             generate_tokens(token_tree[token], new_path)
         elif type(token_tree[token]) == str:
+            if token_tree[token][:2] == 't_':
+                tokens.append(token_tree[token][2:])
+                print('appending', token_tree[token][2:])
+                continue
             if 'OPERATOR_OR_PUNCTUATOR' in path:
                 globals()['t' + new_path] = escape_special_chars(token_tree[token])
             else:
                 globals()['t' + new_path] = token_tree[token]
             tokens.append(new_path[1:])
-        elif type(token_tree[token]) == function:
-            # TODO: ???
-            pass
+        elif type(token_tree[token]) == types.FunctionType:
+            #token_tree[token].__name__ = 't' + new_path
+            tokens.append(token_tree[token].__name__[2:])
         else:
             print('???')
             exit()
 
 generate_tokens(token_tree)
 
-pprint(tokens)
-pprint(globals())
+#pprint(globals())
