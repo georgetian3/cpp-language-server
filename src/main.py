@@ -33,12 +33,12 @@ if __name__ == '__main__':
     with open(source_file, encoding='utf8') as f:
         source = f.read()
 
-    lexer = lex.lex(debug=False)
+    lexer = lex.lex(debug=True)
     lexer.input(source)
 
     hg = LexHTMLGenerator()
     for token in lexer:
-        print(token)
+        #print(token)
         hg.create_html_token(token)
 
     hg.write_html('output/output.html')

@@ -24,49 +24,22 @@ class LexHTMLGenerator:
     def create_html_token(self, token):
         if token.type not in self.colors:
             #print('HTML invalid type:', token)
-            self.__tokens.append(f'<span data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-html="true" title="{token.type}">{token.value}</span>')
-            return
+            pass
         value = token.value
-        #print('Value:', value)
         if type(value) == str and re.fullmatch('\s+', value):
             value = value.replace('\n', '<br>')
             value = value.replace(' ', '&nbsp')
             self.__tokens.append(value)
         else:
-            self.__tokens.append(f'<span class="{token.type}" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-html="true" title="{token.type}">{token.value}</span>')
+            self.__tokens.append(f'<span id="{len(self.__tokens)}" class={token.type} onmouseover="show_info({len(self.__tokens)})" onmouseleave="hide_info({len(self.__tokens)})">{token.value}</span>')
+
 
     def write_html(self, filename):
-        with open(filename, 'w', encoding='utf8') as f:
-            f.write('''<!doctype html>
-        <html lang="en">
-        <head>
-            <meta charset="utf-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1">
-            <title>Lexing output</title>
-            <link href="bootstrap.min.css" rel="stylesheet">
-            <script src="bootstrap.bundle.min.js"></script>
-            <style>
-                .tooltip {
-                    --#{$prefix}tooltip-max-width: #{1000px};
-                }
-                code {
-                    color: #ffffff;
-                    line-height: 1.2;
-                }''' + '\n'.join(self.__classes.values()) + '''
-            
-span {
-  border-radius: 8px;
-}
-            </style>
-        </head>
-        <body style="background-color:#000000;">
-            <code style="display: block; margin: 2%">''' +  ''.join(self.__tokens) + '''
-            </code>
-            <script>
-            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-            var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-                return new bootstrap.Tooltip(tooltipTriggerEl);
-            });
-            </script>
-        </body>
-        </html>''')
+        with open('base.html', encoding='utf8') as f:
+            html = f.read()
+        html = html.replace('</code>', ''.join(self.__tokens) + '</code>')
+
+        with open('output/output.html', 'w', encoding='utf8') as f:
+            f.write(html)
+        # '\n'.join(self.__classes.values()) + '''
+
