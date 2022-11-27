@@ -21,7 +21,6 @@ class LexHTMLGenerator:
             #print('HTML invalid type:', token)
             #pass
         value = token.value
-        #print(value, len(value), ord(value[0]))
         value = value.replace('\n', '<br>')
         value = value.replace(' ', '&nbsp')
             
