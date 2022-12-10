@@ -16,155 +16,16 @@ literal :
     pointer-literal
     user-defined-literal
 """
-'''
-floating-point-literal :
-decimal-floating-point-literal
-hexadecimal-floating-point-literal
-decimal-floating-point-literal :
-fractional-constant exponent-partopt floating-point-suffixopt
-digit-sequence exponent-part floating-point-suffixopt
-hexadecimal-floating-point-literal :
-hexadecimal-prefix hexadecimal-fractional-constant binary-exponent-part floating-point-suffixopt
-hexadecimal-prefix hexadecimal-digit-sequence binary-exponent-part floating-point-suffixopt
-fractional-constant :
-digit-sequenceopt . digit-sequence
-digit-sequence .
-hexadecimal-fractional-constant :
-hexadecimal-digit-sequenceopt . hexadecimal-digit-sequence
-hexadecimal-digit-sequence .
-exponent-part :
-e signopt digit-sequence
-E signopt digit-sequence
-binary-exponent-part :
-p signopt digit-sequence
-P signopt digit-sequence
-sign : one of
-+ -
-digit-sequence :
-digit
-digit-sequence ’opt digit
-floating-point-suffix : one of
-f l F L
-'''
-float_point_suffix = r'([flFL]?)'
-sign = r'([+-]?)'
-digit = r'([0-9]+)'
-binary_exponent = r'([pP]'+sign+digit+')'
-exp_exponent =r'([Ee]'+sign+digit+')?'
-frac_constant = r'(('+sign+digit+'?\.'+digit+')|'+'('+sign+digit+'\.'+'))'
-dec_float_literal = r'('+frac_constant + exp_exponent + float_point_suffix +r')'
-#print(dec_float_literal)
-@TOKEN(dec_float_literal)
-def t_DEC_FLOAT_LITERAL(t):
-    return t
+from .integer_literal import integer_literal
+from .floating_point_literal import floating_point_literal
 
-
-"""
-5.13.2 Integer literals
-
-integer-literal :
-    binary-literal integer-suffix(opt)
-    octal-literal integer-suffix(opt)
-    decimal-literal integer-suffix(opt)
-    hexadecimal-literal integer-suffix(opt)
-binary-literal :
-    0b binary-digit
-    0B binary-digit
-    binary-literal ’(opt) binary-digit
-octal-literal :
-    0
-    octal-literal ’(opt) octal-digit
-decimal-literal :
-    nonzero-digit
-    decimal-literal ’(opt) digit
-hexadecimal-literal :
-    hexadecimal-prefix hexadecimal-digit-sequence
-binary-digit : one of
-    0 1
-octal-digit : one of
-    0 1 2 3 4 5 6 7
-nonzero-digit : one of
-    1 2 3 4 5 6 7 8 9
-hexadecimal-prefix : one of
-    0x 0X
-hexadecimal-digit-sequence :
-    hexadecimal-digit
-    hexadecimal-digit-sequence ’(opt) hexadecimal-digit
-hexadecimal-digit : one of
-    0 1 2 3 4 5 6 7 8 9
-    a b c d e f
-    A B C D E F
-integer-suffix :
-    unsigned-suffix long-suffix(opt)
-    unsigned-suffix long-long-suffix(opt)
-    long-suffix unsigned-suffix(opt)
-    long-long-suffix unsigned-suffix(opt)
-unsigned-suffix : one of
-    u U
-long-suffix : one of
-    l L
-long-long-suffix : one of
-    ll LL
-"""
-binary_digit = r"([01]'?)"
-octal_digit = r"([0-7]'?)"
-nonzero_digit = r"([1-9]'?)"
-digit = r"([0-9]'?)"
-hex_pre = r'(0x|0X)'
-bin_pre = r'(0b|0B)'
-oct_pre = r'(0)'
-hex_digit = r"([0-9a-fA-F]'?)"
-binary_literal = r'('+ bin_pre + binary_digit + r'+)'
-oct_literal = r'('+oct_pre + octal_digit +r'+)'
-dec_literal = r'('+digit+r'+)'
-hex_literal = r'('+hex_pre+hex_digit+r'*)'
-unsigned_suffix = r'([uU])'
-long_suffix = r'([lL])'
-long_long_suffix = r'(ll|LL)'
-integer_suffix = r'([uU]|[lL]|ll|LL|[uU][lL]|[lL][uU]|[uU]ll|ll[uU]|[uU]LL|LL[uU])?' 
-integer_literal = r'((' + binary_literal + '|' + hex_literal + '|'+oct_literal+'|'+dec_literal+')'+integer_suffix+')' 
 @TOKEN(integer_literal)
 def t_INTEGER_LITERAL(t):
-    # t.value = t.value.replace('u','')
-    # t.value = t.value.replace('U','')
-    # t.value = t.value.replace('L','')
-    # t.value = t.value.replace('l','')
-    # t.value = t.value.replace("'",'')
-    # if t.value == '0':
-    #     t.value = 0
-    #     return t
-    # if t.value[0]=='0':
-    #     if t.value[1]=='b'or t.value[1]=='B':
-    #         t.value = int(t.value,2)
-    #     elif t.value[1]=='x' or t.value[1]=='X':
-    #         t.value = int(t.value,16)
-    #     else:
-    #         t.value = int(t.value,8)
-    # else:
-    #     t.value = int(t.value)
     return t
 
-
-@TOKEN(binary_literal)
-def t_BINARY_LITERAL(t):
-    # t.value = int(t.value,2)
+@TOKEN(floating_point_literal)
+def t_FLOATING_POINT_LITERAL(t):
     return t
-@TOKEN(oct_literal)
-def t_OCT_LITERAL(t):
-    # t.value = int(t.value,8)
-    return t
-@TOKEN(hex_literal)
-def t_HEX_LITERAL(t):
-    # t.value = int(t.value,16)
-    return t
-@TOKEN(dec_literal)
-def t_DEC_LITERAL(t):
-    # t.value = int(t.value)
-    return t
-
-def t_error(t):
-    t.lexer.skip(1)
-#def t_LITERAL
 
 
 
