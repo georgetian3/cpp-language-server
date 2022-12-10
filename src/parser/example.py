@@ -21,8 +21,7 @@
 
 from ply.lex import lex
 from ply.yacc import yacc
-import json
-
+from .myast import Node
 
 # --- Tokenizer
 
@@ -76,51 +75,44 @@ def p_expression(p):
     # expression : term PLUS term
     #   p[0]     : p[1] p[2] p[3]
     # 
-    p[0] = ('binop', p[2], p[1], p[3])
+    p[0] = Node('binop', p[2], [p[1], p[3]])
 
 def p_expression_term(p):
     '''
     expression : term
     '''
-    p[0] = p[1]
+    p[0] = Node('term', p[1])
 
 def p_term(p):
     '''
     term : factor TIMES factor
          | factor DIVIDE factor
     '''
-    p[0] = ('binop', p[2], p[1], p[3])
+    p[0] = Node('binop', p[2], [p[1], p[3]])
 
 def p_term_factor(p):
     '''
     term : factor
     '''
-    p[0] = p[1]
+    p[0] = Node('factor', '', [p[1]])
 
 def p_factor_number(p):
     '''
     factor : NUMBER
     '''
-    p[0] = ('number', p[1])
+    p[0] = Node('number', p[1])
 
 def p_factor_name(p):
     '''
     factor : NAME
     '''
-    p[0] = ('name', p[1])
-
-def p_factor_unary(p):
-    '''
-    factor : PLUS factor
-           | MINUS factor
-    '''
-    p[0] = ('unary', p[1], p[2])
+    p[0] = Node('name', p[1])
 
 def p_factor_grouped(p):
     '''
     factor : LPAREN expression RPAREN
     '''
-    p[0] = ('grouped', p[2])
+    p[0] = Node('grouped', '()', [p[2]])
 
 def p_error(p):
     print(f'Syntax error at {p.value!r}')
@@ -128,13 +120,6 @@ def p_error(p):
 # Build the parser
 parser = yacc()
 
-# Parse an expression
-
-
-
-
-
-
 if __name__ == '__main__':
-    ast = parser.parse('2 * 3 + 4 * (5 - x)')
-    export_ast(ast)
+    ast = parser.parse('2 * 3 + 4 * (5 - x)', debug=False)
+    print(type(ast))

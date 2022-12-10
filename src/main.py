@@ -1,13 +1,18 @@
 """
 Most of the block comments in this repository originate from the C++ Working Draft N4860
 """
+import ply.lex as lex
+import ply.yacc as yacc
 
 from lexer.lexhtmlgenerator import LexHTMLGenerator
-import ply.lex as lex
+
 from lexer.tokens import *
 import argparse
 
+from parser.example import *
+from parser.myast import AST
 
+from pprint import pprint
 
 
 def parse_args():
@@ -42,9 +47,49 @@ def run_lexer():
     return lexer
 
 def run_parser():
-    lexer = run_lexer()
+    args = parse_args()
+    with open(args.i, encoding='utf8') as f:
+        source = f.read()
+
+
+    parser = yacc.parse(lexer=run_lexer())
+    parser.parse(source, debug=True)    
+
+
+import re
+def format():
+    with open('in.txt') as f:
+        text = f.read()
+    text = text.replace('\\br', '')
+    text = text.replace('-', '_')
+    text = re.sub(r'\\.+?\{(.*?)\}', r'\1', text)
+
+
+    head, *prods = text.split('\n')
+    head = head[:-2]
+
+    f_def = f'def p_{head}(p):\n'
+    head = "    ''' " + head + ' '
+    prefix = ' ' * len(head) + '| '
+    head += ': ' + prods[0] + '\n'
+    del prods[0]
+    for i in range(len(prods)):
+        prods[i] = prefix + prods[i]
+    if prods:
+        prods[-1] += " '''"
+    else:
+        head = head[:-1] + " '''"
+    text = f_def + head + '\n'.join(prods)
+    print(text)
 
 if __name__ == '__main__':
-    run_parser()
+    #run_parser()
+    format()
+    """ expr = '2 * 3 + 4 * (5 - x)'
+    ast = AST(parser.parse(expr, debug=False))
+    print(expr)
+    pprint(ast.to_dict())
+    ast.export() """
+
 
     
