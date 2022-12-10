@@ -1,4 +1,4 @@
-from keywords import keywords
+from .keywords import keywords
 
 """
 5.10 Identifiers

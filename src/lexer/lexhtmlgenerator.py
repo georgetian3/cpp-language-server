@@ -28,7 +28,7 @@ class LexHTMLGenerator:
 
 
     def write_html(self, filename):
-        with open('base.html', encoding='utf8') as f:
+        with open('output/base.html', encoding='utf8') as f:
             html = f.read()
         html = html.replace('</code>', ''.join(self.__tokens) + '</code>')
 

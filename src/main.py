@@ -2,21 +2,13 @@
 Most of the block comments in this repository originate from the C++ Working Draft N4860
 """
 
-from lexhtmlgenerator import LexHTMLGenerator
+from lexer.lexhtmlgenerator import LexHTMLGenerator
 import ply.lex as lex
-from tokens import *
+from lexer.tokens import *
 import argparse
 
 
-# Define a rule so we can track line numbers
-def t_newline(t):
-    r'\n+'
-    t.lexer.lineno += len(t.value)
 
-# Error handling rule
-def t_error(t):
-    print("Illegal character '%s'" % t.value[0])
-    t.lexer.skip(1)
 
 def parse_args():
     parser = argparse.ArgumentParser()
@@ -25,9 +17,8 @@ def parse_args():
     args = parser.parse_args()
     return args
 
-if __name__ == '__main__':
 
-
+def run_lexer():
     args = parse_args()
 
     with open(args.i, encoding='utf8') as f:
@@ -45,3 +36,15 @@ if __name__ == '__main__':
 
     with open(args.o, 'w', encoding='utf8') as f:
         f.write('\n'.join(str(token) for token in tokens))
+
+    lexer = lex.lex(debug=False)
+    lexer.input(source)
+    return lexer
+
+def run_parser():
+    lexer = run_lexer()
+
+if __name__ == '__main__':
+    run_parser()
+
+    

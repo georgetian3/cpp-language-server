@@ -1,16 +1,16 @@
 
-from characters import *
-from comments import *
-from identifiers import t_IDENTIFIER
-from keywords import keywords
+from .characters import *
+from .comments import *
+from .identifiers import t_IDENTIFIER
+from .keywords import keywords
 #from literals import *
-from operators import preprocessing_operators, operator_or_punctuators
+from .operators import preprocessing_operators, operator_or_punctuators
 
 from pprint import pprint
 
 import types
 from collections import OrderedDict
-from literals import t_DEC_FLOAT_LITERAL, t_BINARY_LITERAL, t_OCT_LITERAL, t_HEX_LITERAL, t_DEC_LITERAL, t_STRING_LITERAL
+from .literals import t_DEC_FLOAT_LITERAL, t_BINARY_LITERAL, t_OCT_LITERAL, t_HEX_LITERAL, t_DEC_LITERAL, t_STRING_LITERAL
 
 """
 5.6 Tokens
@@ -134,5 +134,15 @@ def generate_tokens(token_tree, path=''):
             exit()
 
 generate_tokens(token_tree)
+
+# Define a rule so we can track line numbers
+def t_newline(t):
+    r'\n+'
+    t.lexer.lineno += len(t.value)
+
+# Error handling rule
+def t_error(t):
+    print("Illegal character '%s'" % t.value[0])
+    t.lexer.skip(1)
 
 #pprint(globals())
