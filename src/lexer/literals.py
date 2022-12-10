@@ -201,12 +201,12 @@ hexadecimal-escape-sequence :
 
 hexdecimal_escape_sequence = r"((\\x)"+r"("+hex_digit+r"+))"
 octal_escape_sequence = r"(("+r"\\"+octal_digit+r")|("+r"\\"+octal_digit+octal_digit+r")|("+r"\\"+octal_digit+octal_digit+octal_digit+r"))"
-simple_escape_sequence = r"([\'\"\?\\\a\b\f\n\r\t\v])"
+simple_escape_sequence = r"((\\\')|(\\\")|(\\\?)|(\\\\)|(\\a)|(\\b)|(\\f)|(\\n)|(\\r)|(\\t)|(\\v))"
 escape_sequence = r"(("+simple_escape_sequence+r")|("+octal_escape_sequence+r")|("+hexdecimal_escape_sequence+r"))"
 hex_quad = r"("+hex_digit+hex_digit+hex_digit+hex_digit+r")"
 universal_character_name = r"((\\u"+hex_quad+r")|(\\U"+hex_quad+hex_quad+r"))"
 c_char = r"(([ \t\v\fa-zA-Z0-9_\{\}\[\]\#\(\)<>%:;\.\?\*\+\-/\^&\|~!=,\"])|("+escape_sequence+r")|("+universal_character_name+r"))"
-c_char_sequence=r"("+c_char+r"+)"
+c_char_sequence=r"("+ c_char + r"+)"
 encoding_prefix=r"((u8)|(u)|(U)|(L))"
 t_CHARACTER_LITERAL=r"(("+encoding_prefix+r"?)\'"+c_char_sequence+r"\')"
 
@@ -257,7 +257,6 @@ if __name__ == '__main__':
     input = '''
             "u8"absid""
             '''
-    input = "3.4028234e38f+ 3.2001"
     l.input(input)
     for tok in l:
         print(tok)
