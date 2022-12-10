@@ -1,7 +1,7 @@
 """
 Most of the block comments in this repository originate from the C++ Working Draft N4860
 """
-import ply.lex as lex
+import ply
 import ply.yacc as yacc
 
 from lexer.lexhtmlgenerator import LexHTMLGenerator
@@ -9,10 +9,7 @@ from lexer.lexhtmlgenerator import LexHTMLGenerator
 from lexer.tokens import *
 import argparse
 
-from parser.example import *
-from parser.myast import AST
 
-from pprint import pprint
 
 
 def parse_args():
@@ -26,10 +23,10 @@ def parse_args():
 def run_lexer():
     args = parse_args()
 
-    with open(args.i, encoding='utf8') as f:
+    with open('test.cpp', encoding='utf8') as f:
         source = f.read()
 
-    lexer = lex.lex(debug=False)
+    lexer = ply.lex.lex(debug=False)
     lexer.input(source)
 
     hg = LexHTMLGenerator()
@@ -39,12 +36,12 @@ def run_lexer():
 
     hg.write_html('output/output.html')
 
-    with open(args.o, 'w', encoding='utf8') as f:
-        f.write('\n'.join(str(token) for token in tokens))
+    """ with open(args.o, 'w', encoding='utf8') as f:
+        f.write('\n'.join(str(token) for token in tokens)) """
 
-    lexer = lex.lex(debug=False)
+    """ lexer = lex.lex(debug=False)
     lexer.input(source)
-    return lexer
+    return lexer """
 
 def run_parser():
     args = parse_args()
@@ -83,13 +80,13 @@ def format():
     print(text)
 
 if __name__ == '__main__':
+    run_lexer()
     #run_parser()
-    format()
+    #format()
     """ expr = '2 * 3 + 4 * (5 - x)'
     ast = AST(parser.parse(expr, debug=False))
     print(expr)
-    pprint(ast.to_dict())
-    ast.export() """
+    pprint(ast.get_list()) """
 
 
     

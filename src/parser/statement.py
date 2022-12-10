@@ -1,4 +1,4 @@
-from .base import p_empty
+from .base import p_empty, Node
 
 """
 8 Statements
@@ -34,3 +34,4 @@ def p_condition(p):
 def p_expression_statement(p):
     ''' expression_statement : expression
                              | empty '''
+    p[0] = Node('expression_statement', '', [p[1]])

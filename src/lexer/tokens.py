@@ -19,11 +19,7 @@ There are five kinds of tokens: identifiers, keywords, literals, operators, and 
 """
 
 token_tree = {
-    'identifier': 't_IDENTIFIER',
     'preprocessing': 'adfaasdfasdfsdfas', # TODO
-    'keyword': {
-        keyword.upper(): keyword for keyword in keywords
-    },
     'literal': {
         'floating_point': {
             'decimal': 't_DEC_FLOAT_LITERAL',
@@ -98,7 +94,11 @@ token_tree = {
 
 
 
-tokens = []
+tokens = ['IDENTIFIER', 'LITERAL']
+
+
+tokens += list(keywords.values())
+
 
 __special_chars = set(['.', '+', '*', '?', '^', '$', '(', ')', '[', ']', '{', '}', '|', '\\', '#'])
 

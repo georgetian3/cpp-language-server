@@ -122,7 +122,7 @@ unsigned_suffix = r'([uU])'
 long_suffix = r'([lL])'
 long_long_suffix = r'(ll|LL)'
 integer_suffix = r'([uU]|[lL]|ll|LL|[uU][lL]|[lL][uU]|[uU]ll|ll[uU]|[uU]LL|LL[uU])?' 
-integer_literal = r'((' + binary_literal + '|' +hex_literal + '|'+oct_literal+'|'+dec_literal+')'+integer_suffix+')' 
+integer_literal = r'((' + binary_literal + '|' + hex_literal + '|'+oct_literal+'|'+dec_literal+')'+integer_suffix+')' 
 @TOKEN(integer_literal)
 def t_INTEGER_LITERAL(t):
     # t.value = t.value.replace('u','')
