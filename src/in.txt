@@ -1,7 +1,4 @@
-type-parameter:
-type-parameter-key ...opt identifieropt
-type-parameter-key identifieropt = type-id
-type-constraint ...opt identifieropt
-type-constraint identifieropt = type-id
-template-head type-parameter-key ...opt identifieropt
-template-head type-parameter-key identifieropt = id-expression
+template-argument:
+constant-expression
+type-id
+id-expression
