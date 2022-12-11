@@ -218,7 +218,7 @@ def p_logical_or_expression(p):
 # 7.6.16 Conditional operator
 def p_conditional_expression(p):
     ''' conditional_expression : logical_or_expression
-                               | logical_or_expression CONDOP expression COLON assignment_expression '''
+                               | logical_or_expression CONDOP expression ':' assignment_expression '''
     p[0] = Node('conditional_expression', '', p[1:])
 
 # 7.6.17 Yielding a value
@@ -229,7 +229,7 @@ def p_yield_expression(p):
 
 # 7.6.18 Throwing an exception
 def p_throw_expression(p):
-    ''' throw_expression : throw assignment_expression
+    ''' throw_expression : THROW assignment_expression
                          | empty '''
     p[0] = Node('throw_expression', '', p[1:])
 
