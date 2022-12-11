@@ -272,3 +272,7 @@ def p_parameter_declaration_list_opt(p):
 def p_typename_opt(p):
     ''' typename_opt : TYPENAME
                      | empty '''
+
+def p_ptr_abstract_declarator_opt(p):
+    ''' ptr_abstract_declarator_opt : ptr_abstract_declarator
+                                    | empty '''
