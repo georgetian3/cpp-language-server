@@ -260,4 +260,11 @@ def p_template_opt(p):
 def p_explicit_specifier_opt(p):
     ''' explicit_specifier_opt : explicit_specifier
                                | empty '''
-    p[0] = Node('explicit_specifier_opt', '', p[1:])
+
+def p_extern_opt(p):
+    ''' extern_opt : EXTERN
+                   | empty '''
+
+def p_parameter_declaration_list_opt(p):
+    ''' parameter_declaration_list_opt : parameter_declaration_list
+                                       | empty '''
