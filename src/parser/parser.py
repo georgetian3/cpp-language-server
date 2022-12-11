@@ -8,6 +8,7 @@ from .templates import *
 from .overloading import *
 from .exceptions import *
 from .preprocessing import *
+from .keywords import *
 from ply.yacc import yacc
 
 def p_error(p):
