@@ -124,6 +124,10 @@ def p_unary_operator(p):
                        | '~' '''
     p[0] = Node('unary_operator', '', p[1:])
 
+# 7.6.2.3 Await
+def p_await_expression(p):
+    ''' await_expression : CO_AWAIT cast_expression '''
+
 # 7.6.2.7 New
 # TODO
 # 7.6.2.8 Delete
@@ -186,7 +190,7 @@ def p_equality_expression(p):
 # 7.6.11 Bitwise AND operator
 def p_and_expression(p):
     ''' and_expression : equality_expression
-                       | and_expression AND equality_expression '''
+                       | and_expression '&' equality_expression '''
 
     p[0] = Node('and_expression', '', p[1:])
 # 7.6.12 Bitwise exclusive OR operator
