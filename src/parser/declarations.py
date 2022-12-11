@@ -577,9 +577,14 @@ def p_noptr_abstract_pack_declarator(p):
 
 # 9.3.3.5 Functions
 
+
+
 def p_parameter_declaration_clause(p):
     ''' parameter_declaration_clause : parameter_declaration_list_opt ellipsis_opt
-                                     | '''
+                                     | parameter_declaration_list ',' ELLIPSIS '''
+def p_parameter_declaration_list(p):
+    ''' parameter_declaration_list : parameter_declaration
+                                   | parameter_declaration_list ',' parameter_declaration '''
 
 # 9.4 Initializers
 
