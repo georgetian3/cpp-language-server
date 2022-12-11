@@ -24,6 +24,8 @@ def traverse(node):
         for child in node.children:
             res = traverse(child)
             tree[node.type][list(res.keys())[0]] = list(res.values())[0]
-    else:
+    elif isinstance(node, ExternalNode):
         return {node.type: node.value}
+    else:
+        return {None: None}
     return tree
