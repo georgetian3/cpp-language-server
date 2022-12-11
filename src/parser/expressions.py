@@ -15,14 +15,18 @@ def p_primary_expression(p):
 def p_lambda_expression(p):
     ''' lambda_expression : IDENTIFIER '''
     # TODO
+    p[0] = Node('lambda_expression', '', p[1:])
 
 def p_fold_expression(p):
     ''' fold_expression : IDENTIFIER '''
     # TODO
+    p[0] = Node('fold_expression', '', p[1:])
 
 def p_requires_expression(p):
     ''' requires_expression : IDENTIFIER '''
     # TODO
+    p[0] = Node('requires_expression', '', p[1:])
+
 # 7.5.4 Names
 
 def p_id_expression(p):
