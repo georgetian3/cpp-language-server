@@ -50,7 +50,6 @@ def run_parser():
     with open(args.i, encoding='utf8') as f:
         source = f.read()
 
-    parser.
     parser.parse(source, debug=True)    
 
 
