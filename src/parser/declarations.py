@@ -445,6 +445,10 @@ def p_ptr_declarator(p):
     '''
     p[0] = Node('ptr_declarator', '', p[1:])
 
+def p_ptr_abstract_declarator(p):
+    ''' ptr_abstract_declarator : noptr_abstract_declarator
+                                | ptr_operator ptr_abstract_declarator_opt '''
+
 def p_noptr_declarator(p):
     '''
         noptr_declarator : declarator_id attribute_specifier_seq_opt
@@ -798,7 +802,7 @@ def p_using_declarator_list(p):
 
 def p_using_declarator(p):
     ''' using_declarator : typename_opt nested_name_specifier unqualified_id '''
-    
+
 # 9.10 The asm declaration
 def p_asm_declaration(p):
     ''' asm_declaration : attribute_specifier_seq_opt ASM '(' STRING_LITERAL ')' ';' '''
