@@ -19,6 +19,7 @@ class MyClass {
 
 int main() {
     char c = 'c';
+    char c = 'c';
     c = 'd';
     bool b = true;
     int i = 1;
