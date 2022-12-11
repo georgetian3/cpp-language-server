@@ -201,7 +201,7 @@ hexadecimal-escape-sequence :
 
 hexdecimal_escape_sequence = r"((\\x)"+r"("+hex_digit+r"+))"
 octal_escape_sequence = r"(("+r"\\"+octal_digit+r")|("+r"\\"+octal_digit+octal_digit+r")|("+r"\\"+octal_digit+octal_digit+octal_digit+r"))"
-simple_escape_sequence = r"([\'\"\?\\\a\b\f\n\r\t\v])"
+simple_escape_sequence = r"((\\\')|(\\\")|(\\\?)|(\\\\)|(\\a)|(\\b)|(\\f)|(\\n)|(\\r)|(\\t)|(\\v))"
 escape_sequence = r"(("+simple_escape_sequence+r")|("+octal_escape_sequence+r")|("+hexdecimal_escape_sequence+r"))"
 hex_quad = r"("+hex_digit+hex_digit+hex_digit+hex_digit+r")"
 universal_character_name = r"((\\u"+hex_quad+r")|(\\U"+hex_quad+hex_quad+r"))"
