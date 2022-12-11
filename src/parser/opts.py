@@ -305,3 +305,11 @@ def p_attribute_specifier_seq_opt(p):
     ''' attribute_specifier_seq_opt : attribute_specifier_seq
                                    | empty '''
     p[0] = Node('attribute_specifier_seq_opt', '', p[1:])
+
+def p_global_module_fragment_opt(p):
+    ''' global_module_fragment_opt : global_module_fragment
+                                   | empty '''
+
+def p_private_module_fragment_opt(p):
+    ''' private_module_fragment_opt : private_module_fragment
+                                    | empty '''
