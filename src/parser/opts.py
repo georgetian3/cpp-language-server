@@ -264,3 +264,9 @@ def p_balanced_token_seq_opt(p):
     ''' balanced_token_seq_opt : balanced_token_seq
                                | empty '''
     p[0] = Node('balanced_token_seq_opt', '', p[1:])
+
+def p_attribute_specifier_seq_opt(p):
+    '''
+        attribute_specifier_seq_opt : attribute_specifier_seq 
+                                    | empty
+    '''
