@@ -90,3 +90,5 @@ pragma
 ifdef
 ifndef
 import
+elif
+defined

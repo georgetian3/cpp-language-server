@@ -211,7 +211,14 @@ def p_concept_name(p):
 def p_deduction_guide(p):
     ''' deduction_guide : explicit_specifier_opt template_name '(' parameter_declaration_clause ')' ARROW simple_template_id ';' '''
 
+    p[0] = Node('deduction_guide', '', p[1:])
 
 
 def p_explicit_instantiation(p):
     ''' explicit_instantiation : extern_opt TEMPLATE declaration '''
+    p[0] = Node('explicit_instantiation', '', p[1:])
+def p_explicit_specialization(p):
+    '''
+        explicit_specialization : TEMPLATE '<' '>' declaration
+    '''
+    p[0] = Node('explicit_specialization', '', p[1:])
