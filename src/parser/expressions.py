@@ -144,12 +144,12 @@ def p_new_type_id(p):
     ''' new_type_id : type_specifier_seq new_declarator_opt '''
 
 def p_new_declarator(p):
-    ''' ptr_operator : new_declarator_opt
+    ''' new_declarator : new_declarator_opt
                      | noptr_new_declarator '''
 
 def p_noptr_new_declarator(p):
     ''' noptr_new_declarator : '[' expression_opt ']' attribute_specifier_seq_opt
-                             | noptr_new_declarator '[' constant_expression ']' attribute_specific_seq_opt '''
+                             | noptr_new_declarator '[' constant_expression ']' attribute_specifier_seq_opt '''
 def p_new_initializer(p):
     ''' new_initializer : '(' expression_list_opt ')'
                         | braced_init_list '''

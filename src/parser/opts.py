@@ -296,6 +296,6 @@ def p_expression_opt(p):
     ''' expression_opt : expression
                        | empty '''
 
-def p_attribute_specific_seq_opt(p):
-    ''' attribute_specific_seq_opt : attribute_specific_seq
+def p_attribute_specifier_seq_opt(p):
+    ''' attribute_specifier_seq_opt : attribute_specifier_seq
                                    | empty '''
