@@ -248,9 +248,9 @@ def p_else_groups_opt(p):
                        | empty '''
     p[0] = Node('else_group_opt', '', p[1:])
 def p_export_opt(p):
-    ''' pp_export_opt : EXPORT
+    ''' export_opt : EXPORT
                       | empty '''
-    p[0] = Node('pp_export_opt', '', p[1:])
+    p[0] = Node('export_opt', '', p[1:])
 
 def p_template_opt(p):
     ''' template_opt : TEMPLATE
