@@ -46,10 +46,10 @@ def p_labeled_statement(p):
     '''
         labeled_statement : identifier ':' statement
                          | attribute_specifier_seq identifier ':' statement
-                         | t_CASE constant_expression ':' statement
-                         | attribute_specifier_seq t_CASE constant_expression ':' statement
-                         | t_DEFAULT ':' statement
-                         | attribute_specifier_seq t_DEFAULT ':' statement
+                         | CASE constant_expression ':' statement
+                         | attribute_specifier_seq CASE constant_expression ':' statement
+                         | DEFAULT ':' statement
+                         | attribute_specifier_seq DEFAULT ':' statement
     '''
     p[0] = Node('labeled_statement', '', p[1:])
 
@@ -89,16 +89,16 @@ selection_statement:
 '''
 def p_selection_statement(p):
     '''
-        selection_statement : t_IF '(' condition ')' statement
-                            | t_IF constexpr '(' condition ')' statement
-                            | t_IF '(' init_statement condition ')' statement
-                            | t_IF constexpr '(' init_statement condition ')' statement
-                            | t_IF '(' condition ')' statement t_ELSE statement
-                            | t_IF constexpr '(' condition ')' statement t_ELSE statement
-                            | t_IF '(' init_statement condition ')' statement t_ELSE statement
-                            | t_IF constexpr '(' init_statement condition ')' statement t_ELSE statement
-                            | t_SWITCH '(' condition ')' statement
-                            | t_SWITCH '('  init_statement condition ')' statement
+        selection_statement : IF '(' condition ')' statement
+                            | IF constexpr '(' condition ')' statement
+                            | IF '(' init_statement condition ')' statement
+                            | IF constexpr '(' init_statement condition ')' statement
+                            | IF '(' condition ')' statement ELSE statement
+                            | IF constexpr '(' condition ')' statement ELSE statement
+                            | IF '(' init_statement condition ')' statement ELSE statement
+                            | IF constexpr '(' init_statement condition ')' statement ELSE statement
+                            | SWITCH '(' condition ')' statement
+                            | SWITCH '('  init_statement condition ')' statement
     '''
     p[0] = Node('selection_statement', '', p[1:])
 
@@ -117,14 +117,14 @@ for_range_initializer:
 
 def p_iteration_statement(p):
     '''
-        iteration_statement : t_WHILE '(' condition ')' statement
-                            | t_DO statement t_WHILE '(' expression ')' ';'
-                            | t_FOR '(' init_statement ';' ) statement
-                            | t_FOR '(' init_statement condition ';' ) statement
-                            | t_FOR '(' init_statement ';' expression ) statement
-                            | t_FOR '(' init_statement condition ';' expression ) statement
-                            | t_FOR '(' for_range_declaration ':' for_range_initializer ) statement
-                            | t_FOR '(' init_statement for_range_declaration ':' for_range_initializer ) statement
+        iteration_statement : WHILE '(' condition ')' statement
+                            | DO statement WHILE '(' expression ')' ';'
+                            | FOR '(' init_statement ';' ) statement
+                            | FOR '(' init_statement condition ';' ) statement
+                            | FOR '(' init_statement ';' expression ) statement
+                            | FOR '(' init_statement condition ';' expression ) statement
+                            | FOR '(' for_range_declaration ':' for_range_initializer ) statement
+                            | FOR '(' init_statement for_range_declaration ':' for_range_initializer ) statement
     '''
     p[0] = Node('iteration_statement', '', p[1:])
 
@@ -156,12 +156,12 @@ jump_statement:
 
 def p_jump_statement(p):
     '''
-        jump_statement : t_BREAK ';'
-                       | t_CONTINUE ';'
-                       | t_RETURN ';'
-                       | t_RETURN expr_or_braced_init_list ';'
+        jump_statement : BREAK ';'
+                       | CONTINUE ';'
+                       | RETURN ';'
+                       | RETURN expr_or_braced_init_list ';'
                        | coroutine_return_statement
-                       | t_GOTO identifier ';'
+                       | GOTO identifier ';'
     '''
     p[0] = Node('for_jump_statement', '', p[1:])
 
