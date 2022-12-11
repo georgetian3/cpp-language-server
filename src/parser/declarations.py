@@ -796,6 +796,9 @@ def p_using_declarator_list(p):
                               | using_declarator_list ',' using_declarator ellipsis_opt ''' 
     p[0] = Node('using_declarator_list', '', p[1:])
 
+def p_using_declarator(p):
+    ''' using_declarator : typename_opt nested_name_specifier unqualified_id '''
+    
 # 9.10 The asm declaration
 def p_asm_declaration(p):
     ''' asm_declaration : attribute_specifier_seq_opt ASM '(' STRING_LITERAL ')' ';' '''

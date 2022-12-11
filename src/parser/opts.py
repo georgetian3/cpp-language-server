@@ -268,3 +268,7 @@ def p_extern_opt(p):
 def p_parameter_declaration_list_opt(p):
     ''' parameter_declaration_list_opt : parameter_declaration_list
                                        | empty '''
+
+def p_typename_opt(p):
+    ''' typename_opt : TYPENAME
+                     | empty '''
