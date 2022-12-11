@@ -239,3 +239,16 @@ def p_defined_macro_expression(p):
                                  | DEFINED '(' IDENTIFIER ')'
     '''
     p[0] = Node('defined_macro_expression', '', p[1:])  
+def p_pp_module(p):
+    '''
+        pp_module : export_opt MODULE pp_tokens_opt ';' new_line
+    '''
+    p[0] = Node('pp_module', '', p[1:])  
+
+def p_pp_import(p):
+    '''
+        pp_import : export_opt IMPORT header_name pp_tokens_opt ';' new_line
+                  | export_opt IMPORT header_name_tokens pp_tokens_opt ';' new_line
+                  | export_opt IMPORT pp_tokens ';' new_line
+    '''
+    p[0] = Node('pp_import', '', p[1:])  
