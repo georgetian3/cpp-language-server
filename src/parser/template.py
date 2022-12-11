@@ -1,3 +1,5 @@
+from .base import p_empty, Node
+
 '''
 template_declaration:
     template_head declaration
@@ -22,31 +24,41 @@ def p_template_declaration(p):
         template_declaration : template_head declaration
                              | template_head concept_definition
     '''
+    p[0] = Node('template_declaration', '', p[1:])
+
 def p_template_head(p):
     '''
         template_head : t_TEMPLATE '<' template_parameter_list ">" requires_clause
                       | t_TEMPLATE '<' template_parameter_list '
     '''
+    p[0] = Node('template_head', '', p[1:])
 
 def p_template_parameter_list(p):
     '''
         template_parameter_list : template_parameter
                                 | template_parameter_list ',' template_parameter
     '''
+    p[0] = Node('template_parameter_list', '', p[1:])
+
 def p_require_clause(p):
     '''
         require_clause: t_REQUIRES constraint_logical_or_expression
     '''
+    p[0] = Node('require_clause', '', p[1:])
+
 def p_constraint_logical_or_expression(p):
     '''
         constraint_logical_or_expression : constraint_logical_and_expression
                                          | constraint_logical_or_expression t_LOR constraint_logical_and_expression
     '''
+    p[0] = Node('constraint_logical_or_expression', '', p[1:])
+
 def p_constraint_logical_and_expression(p):
     '''
         constraint_logical_and_expression : primary_expression
                                           | constraint_logical_and_expression t_LAND primary_expression
     '''
+    p[0] = Node('constraint_logical_and_expression', '', p[1:])
 
 '''
 template_parameter:
@@ -72,6 +84,8 @@ def p_template_parameter(p):
         template_parameter : type_parameter
                              parameter_declaration
     '''
+    p[0] = Node('template_parameter', '', p[1:])
+
 def p_type_parameter(p):
     '''
         type_parameter : type_parameter_key
@@ -93,20 +107,25 @@ def p_type_parameter(p):
                        | template_head type_parameter_key '=' type_id
                        | template_head type_parameter_key identifier '=' type_id
     '''
+    p[0] = Node('type_parameter', '', p[1:])
+
 def p_type_parameter_key(p):
     '''
         type_parameter_key : t_CLASS
                            | t_TYPENAME
     '''
+    p[0] = Node('type_parameter_key', '', p[1:])
+
 def p_type_constraint(p):
     '''
-            p_type_constraint: concept_name
+            type_constraint: concept_name
                              | nested_name_specifier concept_name
                              | concept_name '<' '>'
                              | nested_name_specifier concept_name '<' '>'
                              | nested_name_specifier concept_name '<' template_argument_list '>'
                              | concept_name '<' template_argument_list '>'
     '''     
+    p[0] = Node('type_constraint', '', p[1:])
 
 
 
@@ -133,6 +152,8 @@ def p_simple_template_id(p):
         simple_template_id: template_name '<' '>'
                           | template_name '<' template_argument_list '>' 
     '''
+    p[0] = Node('simple_template_id', '', p[1:])
+
 def p_template_id(p):
     '''
         template_id : simple_template_id
@@ -141,10 +162,14 @@ def p_template_id(p):
                     | literal_operator_id '<' '>'
                     | literal_operator_id '<' template_argument_list '>'
     '''
+    p[0] = Node('template_id', '', p[1:])
+
 def p_template_name(p):
     '''
         template_name : t_IDENTIFIER
     '''
+    p[0] = Node('template_name', '', p[1:])
+
 def p_template_argument_list(p):
     '''
         template_argument_list : template_argument
@@ -152,9 +177,12 @@ def p_template_argument_list(p):
                                | template_argument_list ',' template_argument
                                | template_argument_list ',' template_argument t_ELLIPSIS
     '''
+    p[0] = Node('template_argument_list', '', p[1:])
+
 def p_template_argument(p):
     '''
         template_argument: constant_expression
                          | type_id
                          | id_expression
     '''
+    p[0] = Node('template_argument', '', p[1:])
