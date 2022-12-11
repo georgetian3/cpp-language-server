@@ -71,7 +71,7 @@ token_tree = {
 
 
 
-tokens = ['IDENTIFIER', 'LITERAL']
+tokens = ['IDENTIFIER', 'LITERAL','STRING_LITERAL']
 
 literals = '{}[]();:?.~!+-*/%^&|=<>,'
 tokens += list(keywords.values())

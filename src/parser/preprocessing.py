@@ -193,9 +193,12 @@ def p_replacement_list(p):
     p[0] = Node('replacement_list', '', p[1:])  
 
 def p_pp_tokens(p):
+    # '''
+    #     pp_tokens : preprocessing_token
+    #               | pp_tokens preprocessing_token
+    # ''' todo
     '''
-        pp_tokens : preprocessing_token
-                  | pp_tokens preprocessing_token
+        pp_tokens : empty
     '''
     p[0] = Node('pp_tokens', '', p[1:])  
 
