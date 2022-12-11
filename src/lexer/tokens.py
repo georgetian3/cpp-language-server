@@ -17,7 +17,6 @@ There are five kinds of tokens: identifiers, keywords, literals, operators, and 
 """
 
 token_tree = {
-    'preprocessing': 'adfaasdfasdfsdfas', # TODO
     'separator': {
         'comment': {
             'single_line': '//.*\n',
@@ -74,7 +73,7 @@ t_USER_DEFINED_STRING_LITERAL = r'ttttoooodddoooo'
 
 tokens = ['IDENTIFIER', 'LITERAL', 'STRING_LITERAL', 'Q_CHAR_SEQUENCE', 'H_CHAR_SEQUENCE', 'USER_DEFINED_STRING_LITERAL']
 
-literals = '{}[]();:?.~!+-*/%^&|=<>,'
+literals = '{}[]();:?.~!+-*/%^&|=<>,#'
 tokens += list(keywords.values())
 tokens += list(key.upper() for key in operator_or_punctuators.keys())
 

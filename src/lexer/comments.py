@@ -9,7 +9,6 @@ The characters /* start a comment, which terminates with the characters */. Thes
 def t_WS(t):
     r'\s+'
     t.lexer.lineno += t.value.count('\n')
-    return t
 
 """def t_COMMENT_SINGLE_LINE(t):
     r'(//.*?(\n|$))'
