@@ -1,5 +1,3 @@
-noptr_declarator:
-    declarator_id attribute_specifier_seqopt
-    noptr_declarator parameters_and_qualifiers
-    noptr_declarator [ constant_expressionopt ] attribute_specifier_seqopt
-    ( ptr_declarator )
+expr-or-braced-init-list :
+expression
+braced-init-list

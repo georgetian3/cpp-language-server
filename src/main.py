@@ -81,7 +81,9 @@ def format():
 if __name__ == '__main__':
     #run_lexer()
     #run_parser()
+    print()
     format()
+    print()
     """ expr = '2 * 3 + 4 * (5 - x)'
     ast = AST(parser.parse(expr, debug=False))
     print(expr)
