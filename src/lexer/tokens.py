@@ -70,8 +70,9 @@ token_tree = {
 #pprint(token_tree)
 
 
+t_USER_DEFINED_STRING_LITERAL = r'ttttoooodddoooo'
 
-tokens = ['IDENTIFIER', 'LITERAL', 'STRING_LITERAL', 'Q_CHAR_SEQUENCE', 'H_CHAR_SEQUENCE']
+tokens = ['IDENTIFIER', 'LITERAL', 'STRING_LITERAL', 'Q_CHAR_SEQUENCE', 'H_CHAR_SEQUENCE', 'USER_DEFINED_STRING_LITERAL']
 
 literals = '{}[]();:?.~!+-*/%^&|=<>,'
 tokens += list(keywords.values())

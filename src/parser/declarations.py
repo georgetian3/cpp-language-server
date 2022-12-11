@@ -108,7 +108,7 @@ def p_simple_declaration(p):
 def p_static_assert_declaration(p):
     '''
         static_assert_declaration : STATIC_ASSERT '(' constant_expression ')' ';'
-                                  | STATIC_ASSERT '(' constant_expression ',' string_literal ')' ';'
+                                  | STATIC_ASSERT '(' constant_expression ',' STRING_LITERAL ')' ';'
     '''
     p[0] = Node('static_assert_declaration', '', p[1:])
 
