@@ -147,9 +147,9 @@ def p_decl_specifier(p):
                        | function_specifier
                        | FRIEND
                        | TYPEDEF
-                       | constexpr
-                       | consteval
-                       | constinit
+                       | CONSTEPR
+                       | CONSTEVAL
+                       | CONSTINIT
                        | INLINE
     '''
     p[0] = Node('decl_specifier', '', p[1:])
@@ -294,15 +294,15 @@ def p_simple_type_specifier(p):
     '''
         simple_type_specifier : type_name
                               | nested_name_specifier type_name
-                              | nested_name_specifier template simple_template_id
+                              | nested_name_specifier TEMPLATE simple_template_id
                               | decltype_specifier
                               | placeholder_type_specifier
                               | template_name
                               | nested_name_specifier template_name
                               | CHAR
                               | CHAR8_T
-                              | CHAR_16_T
-                              | CHAR_32_T
+                              | CHAR16_T
+                              | CHAR32_T
                               | WCHAR_T
                               | BOOL
                               | SHORT
@@ -310,7 +310,7 @@ def p_simple_type_specifier(p):
                               | LONG
                               | SIGNED
                               | UNSIGNED
-                              | float
+                              | FLOAT
                               | DOUBLE
                               | VOID
     '''
@@ -340,7 +340,7 @@ def p_elaborated_type_specifier(p):
                                   | class_key attribute_specifier_seq_opt nested_name_specifier IDENTIFIER
                                   | class_key simple_template_id
                                   | simple_template_id
-                                  | class_key nested_name_specifier template simple_template_id
+                                  | class_key nested_name_specifier TEMPLATE simple_template_id
                                   | elaborated_enum_specifier
     '''
     p[0] = Node('elaborated_type_specifier', '', p[1:])
@@ -348,7 +348,7 @@ def p_elaborated_type_specifier(p):
 
 def p_elaborated_enum_specifier(p):
     '''
-        elaborated_enum_specifier : enum nested_name_specifier IDENTIFIER
+        elaborated_enum_specifier : ENUM nested_name_specifier IDENTIFIER
                                   | IDENTIFIER
     '''
     p[0] = Node('elaborated_enum_specifier', '', p[1:])
@@ -363,8 +363,8 @@ def p_placeholder_type_specifier(p):
     '''
         placeholder_type_specifier : AUTO
                                    | type_constraint AUTO
-                                   | decltype '(' AUTO ')'
-                                   | type_constraint decltype '(' AUTO ')'
+                                   | DECLTYPE '(' AUTO ')'
+                                   | type_constraint DECLTYPE '(' AUTO ')'
     '''
 
     p[0] = Node('placeholder_type_specifier', '', p[1:])
@@ -613,7 +613,7 @@ def p_designated_initializer_clause(p):
     p[0] = Node('designated_initializer_clause', '', p[1:])
 
 def p_designator(p):
-    ''' designator : '.' identifier '''
+    ''' designator : '.' IDENTIFIER '''
     p[0] = Node('designator', '', p[1:])
 
 def p_expr_or_braced_init_list(p):
@@ -808,7 +808,7 @@ def p_alignment_specifier(p):
     p[0] = Node('alignment_specifier', '', p[1:])
 
 def p_attribute_using_prefix(p):
-    ''' attribute_using_prefix : using attribute_namespace ':' '''
+    ''' attribute_using_prefix : USING attribute_namespace ':' '''
     p[0] = Node('attribute_using_prefix', '', p[1:])
 
 
