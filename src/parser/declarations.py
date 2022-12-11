@@ -577,7 +577,12 @@ def p_noptr_abstract_pack_declarator(p):
 
 # 9.3.3.5 Functions
 
-
+def p_parameter_declaration(p):
+    ''' parameter_declaration : attribute_specifier_seq_opt decl_specifier_seq declarator 
+                              | attribute_specifier_seq_opt decl_specifier_seq declarator '=' initializer_clause
+                              | attribute_specifier_seq_opt decl_specifier_seq declarator abstract_declarator_opt
+                              | attribute_specifier_seq_opt decl_specifier_seq declarator abstract_declarator_opt '=' initializer_clause
+    '''
 
 def p_parameter_declaration_clause(p):
     ''' parameter_declaration_clause : parameter_declaration_list_opt ellipsis_opt
@@ -871,3 +876,7 @@ def p_balanced_token(p):
     #  any token other than a parenthesis, a bracket, or a brace '''  
     # TODO
     p[0] = Node('balanced_token', '', p[1:])
+
+
+def p_explicit_specialization(p):
+    ''' explicit_specialization : TEMPLATE '<' '>' declaration '''
