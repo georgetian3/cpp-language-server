@@ -260,42 +260,54 @@ def p_template_opt(p):
 def p_explicit_specifier_opt(p):
     ''' explicit_specifier_opt : explicit_specifier
                                | empty '''
+    p[0] = Node('explicit_specifier_opt', '', p[1:])
 
 def p_extern_opt(p):
     ''' extern_opt : EXTERN
                    | empty '''
+    p[0] = Node('extern_opt', '', p[1:])
 
 def p_parameter_declaration_list_opt(p):
     ''' parameter_declaration_list_opt : parameter_declaration_list
                                        | empty '''
+    p[0] = Node('parameter_declaration_list_opt', '', p[1:])
 
 def p_typename_opt(p):
     ''' typename_opt : TYPENAME
                      | empty '''
+    p[0] = Node('typename_opt', '', p[1:])
 
 def p_ptr_abstract_declarator_opt(p):
     ''' ptr_abstract_declarator_opt : ptr_abstract_declarator
                                     | empty '''
+    p[0] = Node('ptr_abstract_declarator_opt', '', p[1:])
 
 def p_dcolon_opt(p):
     ''' dcolon_opt : DCOLON
                    | empty '''
+    p[0] = Node('dcolon_opt', '', p[1:])
 
 def p_new_placement_opt(p):
     ''' new_placement_opt : new_placement
                           | empty '''
+    p[0] = Node('new_placement_opt', '', p[1:])
 
 def p_new_initializer_opt(p):
     ''' new_initializer_opt : new_initializer
                             | empty '''
+    p[0] = Node('new_initializer_opt', '', p[1:])
+
 def p_new_declarator_opt(p):
     ''' new_declarator_opt : new_declarator
                            | empty '''
+    p[0] = Node('new_declarator_opt', '', p[1:])
 
 def p_expression_opt(p):
     ''' expression_opt : expression
                        | empty '''
+    p[0] = Node('expression_opt', '', p[1:])
 
 def p_attribute_specifier_seq_opt(p):
     ''' attribute_specifier_seq_opt : attribute_specifier_seq
                                    | empty '''
+    p[0] = Node('attribute_specifier_seq_opt', '', p[1:])

@@ -227,3 +227,4 @@ def p_explicit_specialization(p):
 
 def p_constraint_expression(p):
     ''' constraint_expression : logical_or_expression '''
+    p[0] = Node('constraint_expression', '', p[1:])
