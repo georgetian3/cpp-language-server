@@ -33,7 +33,7 @@ def p_id_expression(p):
 # 7.5.4.1 Unqualified names
 
 def p_unqualified_id(p):
-    ''' unqualified_id : identifier
+    ''' unqualified_id : IDENTIFIER
                        | operator_function_id
                        | conversion_function_id
                        | literal_operator_id
