@@ -10,7 +10,7 @@ keywords = {
     keyword: keyword.upper() for keyword in read_lines(__file__, 'keywords.txt')
 }
 
-# TODO: find right place to put FINAL
+# TODO: find right place to put FINAL and MODULE
 
 if __name__ == '__main__':
     print(keywords)
