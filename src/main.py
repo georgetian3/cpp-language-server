@@ -80,14 +80,9 @@ def format():
     print(text)
 
 if __name__ == '__main__':
-    run_lexer(); exit()
-
-    import re
-    s = 'f'
-    print(re.match(character_literal, s))
-
+    #run_lexer()
     #run_parser()
-    #format()
+    format()
     """ expr = '2 * 3 + 4 * (5 - x)'
     ast = AST(parser.parse(expr, debug=False))
     print(expr)

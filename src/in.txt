@@ -1,8 +1,4 @@
-primary-expression :
-literal
-this
-( expression )
-id-expression
-lambda-expression
-fold-expression
-requires-expression
+shift-expression :
+additive-expression
+shift-expression << additive-expression
+shift-expression >> additive-expression
