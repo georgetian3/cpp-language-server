@@ -119,12 +119,12 @@ def p_iteration_statement(p):
     '''
         iteration_statement : WHILE '(' condition ')' statement
                             | DO statement WHILE '(' expression ')' ';'
-                            | FOR '(' init_statement ';' ) statement
-                            | FOR '(' init_statement condition ';' ) statement
-                            | FOR '(' init_statement ';' expression ) statement
-                            | FOR '(' init_statement condition ';' expression ) statement
-                            | FOR '(' for_range_declaration ':' for_range_initializer ) statement
-                            | FOR '(' init_statement for_range_declaration ':' for_range_initializer ) statement
+                            | FOR '(' init_statement ';' ')' statement
+                            | FOR '(' init_statement condition ';' ')' statement
+                            | FOR '(' init_statement ';' expression ')' statement
+                            | FOR '(' init_statement condition ';' expression ')' statement
+                            | FOR '(' for_range_declaration ':' for_range_initializer ')' statement
+                            | FOR '(' init_statement for_range_declaration ':' for_range_initializer ')' statement
     '''
     p[0] = Node('iteration_statement', '', p[1:])
 

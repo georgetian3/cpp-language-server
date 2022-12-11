@@ -71,7 +71,7 @@ def p_block_declaration(p):
                           | namespace_alias_definition
                           | using_declaration
                           | using_enum_declaration
-                          | using_directive
+                          | using_directive ':'
                           | static_assert_declaration
                           | alias_declaration
                           | opaque_enum_declaration
@@ -96,24 +96,24 @@ def p_simple_declaration(p):
     '''
 def p_init_declarator_list_opt(p):
     '''
-        init_declarator_list_opt = init_declarator_list
+        init_declarator_list_opt : init_declarator_list
                                  | empty
     '''
 
 def p_attribute_specifier_seq_opt(p):
     '''
-        attribute_specifier_seq_opt = attribute_specifier_seq
+        attribute_specifier_seq_opt : attribute_specifier_seq
                                     | empty
     '''
 def p_ref_qualifier_opt(p):
     '''
-        ref_qualifier_opt = ref_qualifier
+        ref_qualifier_opt : ref_qualifier
                           | empty
     '''
 
 def p_static_assert_declaration(p):
     '''
-        static_assert_declaration = static_assert '(' constant_expression ')' ';'
+        static_assert_declaration : static_assert '(' constant_expression ')' ';'
                                   | static_assert '(' constant_expression ',' string_literal ')' ';'
     '''
 
