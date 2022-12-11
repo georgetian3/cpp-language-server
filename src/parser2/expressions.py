@@ -91,7 +91,6 @@ def p_unary_expression(p):
                          | SIZEOF '(' type_id ')'
                          | SIZEOF ELLIPSIS '(' IDENTIFIER ')'
                          | ALIGNOF '(' type_id ')'
-                         | noexcept_expression
                          | new_expression
                          | delete_expression '''
     p[0] = ExternalNode('unary_expression', p[1:])

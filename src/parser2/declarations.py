@@ -1,49 +1,6 @@
 from .myast import InternalNode, ExternalNode
 
-'''
-declaration_seq:
-    declaration
-    declaration_seq declaration
-declaration:
-    block_declaration
-    nodeclspec_function_declaration
-    function_definition
-    template_declaration
-    deduction_guide
-    explicit_instantiation
-    explicit_specialization
-    export_declaration
-    linkage_specification
-    namespace_definition
-    empty_declaration
-    attribute_declaration
-    module_import_declaration
-block_declaration:
-    simple_declaration
-    asm_declaration
-    namespace_alias_definition
-    using_declaration
-    using_enum_declaration
-    using_directive
-    static_assert_declaration
-    alias_declaration
-    opaque_enum_declaration
-nodeclspec_function_declaration:
-    attribute_specifier_seqopt declarator ;
-alias_declaration:
-    using identifier attribute_specifier_seqopt = defining_type_id ;
-simple_declaration:
-    decl_specifier_seq init_declarator_listopt ;
-    attribute_specifier_seq decl_specifier_seq init_declarator_list ;
-    attribute_specifier_seqopt decl_specifier_seq ref_qualifieropt [ identifier_list ] initializer ;
-static_assert_declaration:
-    static_assert ( constant_expression ) ;
-    static_assert ( constant_expression , string_literal ) ;
-empty_declaration:
-    ;
-attribute_declaration:
-    attribute_specifier_seq ;
-'''
+
 def p_declaration_seq(p):
     '''
         declaration_seq : declaration
@@ -72,11 +29,6 @@ def p_declaration(p):
 def p_block_declaration(p):
     '''
         block_declaration : simple_declaration
-                          | asm_declaration
-                          | namespace_alias_definition
-                          | using_declaration
-                          | using_enum_declaration
-                          | using_directive
                           | static_assert_declaration
                           | alias_declaration
                           | opaque_enum_declaration
@@ -787,26 +739,6 @@ def p_using_directive(p):
     p[0] = ExternalNode('using_directive', p[1:])
 
 
-# 9.9 The using declaration
-
-
-
-def p_using_declaration(p):
-    ''' using_declaration : USING using_declarator_list ';' '''
-    p[0] = ExternalNode('using_declaration', p[1:])
-
-def p_using_declarator_list(p):
-    ''' using_declarator_list : using_declarator ellipsis_opt
-                              | using_declarator_list ',' using_declarator ellipsis_opt ''' 
-    p[0] = ExternalNode('using_declarator_list', p[1:])
-
-def p_using_declarator(p):
-    ''' using_declarator : typename_opt nested_name_specifier unqualified_id '''
-
-# 9.10 The asm declaration
-def p_asm_declaration(p):
-    ''' asm_declaration : attribute_specifier_seq_opt ASM '(' STRING_LITERAL ')' ';' '''
-    p[0] = ExternalNode('asm_declaration', p[1:])
 
 # 9.11 Linkage specifications
 def p_linkage_specification(p):

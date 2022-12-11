@@ -1,5 +1,5 @@
-from .keywords import keywords
 from ply.lex import TOKEN
+from .keywords import keywords
 
 """
 5.10 Identifiers
@@ -32,7 +32,12 @@ names_disallowed = ['\u0300-\u036F', '\u1DC0-\u1DFF', '\u20D0-\u20FF', '\uFE20-\
 
 identifier = r'([A-Za-z_][A-Za-z0-9_]*)'
 
+print('imported identifier')
+
 # currently not standard compliant, TODO: change later
 @TOKEN(identifier)
 def t_IDENTIFIER(t):
+    if t.value in keywords:
+        t.type = t.value.upper()
+
     return t

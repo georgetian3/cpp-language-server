@@ -1,21 +1,20 @@
 from pprint import pprint
 
 
-class Node:
-    def __init__(self, type):
-        self.type = str(type)
-
-class InternalNode(Node):
+class InternalNode:
     def __init__(self, type, children):
-        super().__init__(type)
+        print('-------------------InternalNode:', type, children)
+        self.type = type
         self.children = children
+        print('begin print')
         for i in range(len(self.children)):
-            if not isinstance(self.children[i], Node):
-                self.children[i] = ExternalNode(str(self.children[i]), str(self.children[i]))
-
-class ExternalNode(Node):
+            print(self.children[i])
+            if not isinstance(self.children[i], ExternalNode):
+                print('not node')
+class ExternalNode:
     def __init__(self, type, value):
-        super().__init__(type)
+        print('--------------------ExternalNode:', type, value)
+        self.type = type
         self.value = value
 
 def traverse(node):
@@ -25,7 +24,9 @@ def traverse(node):
             res = traverse(child)
             tree[node.type][list(res.keys())[0]] = list(res.values())[0]
     elif isinstance(node, ExternalNode):
+        print(node.type, node.value)
         return {node.type: node.value}
     else:
+        print('???????????????????')
         return {None: None}
     return tree

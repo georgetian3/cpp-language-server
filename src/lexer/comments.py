@@ -1,3 +1,5 @@
+from ply.lex import TOKEN
+
 """
 2.7 Comments
 
@@ -5,21 +7,18 @@ The characters /* start a comment, which terminates with the characters */. Thes
 — end note ]
 """
 
-
-def t_WS(t):
+def t_WHITESPACE(t):
     r'\s+'
     t.lexer.lineno += t.value.count('\n')
 
-"""def t_COMMENT_SINGLE_LINE(t):
-    r'(//.*?(\n|$))'
-    t.type = 'WS'
-    return t
 
-def t_COMMENT_MULTI_LINE(t):
-    r'(/\*(.|\n)*?\*/)'
-    ncr = t.value.count("\n")
-    t.lexer.lineno += ncr
-    # replace with one space or a number of '\n'
-    t.type = 'WS'
-    #t.value = '\n' * ncr if ncr else ' '
-    return t """
+single_line_comment = r'(//.*?(\n|$))'
+multi_line_comment = r'(/\*(.|\n)*?\*/)'
+comment = r'[%s|%s]' % (single_line_comment, multi_line_comment)
+
+@TOKEN(comment)
+def t_COMMENT(t):
+    r'(//.*?(\n|$))'
+    t.type = 'WHITESPACE'
+    t.lexer.lineno += t.value.count("\n")
+    return t

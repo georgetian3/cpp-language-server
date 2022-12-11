@@ -33,11 +33,14 @@ Each operator-or-punctuator is converted to a single token in translation phase 
 """
 
 preprocessing_operators = {
-    'pphash': r'#',
-    'ppdhash': r'##', # TODO: find official name
+    'pphash': r'\#',
+    'ppdhash': r'\#\#', # TODO: find official name
 
 }
 operator_or_punctuators = {
+    #'pphash': r'\#',
+    'ppdhash': r'\#\#', # TODO: find official name
+
     'lbrace': '\{',
     'rbrace': '\}',
     'lbracket': '\[',
@@ -74,8 +77,8 @@ operator_or_punctuators = {
     'orequal': '\|=',
     'eq': '==',
     'ne': '!=',
-    'lt': '<',
-    'gt': '>',
+    #'lt': '<',
+    #'gt': '>',
     'le': '<=',
     'ge': '>=',
     'spaceship': '<=>',
@@ -114,15 +117,6 @@ operator_or_punctuators = {
 
 for name, symbol in operator_or_punctuators.items():
     globals()['t_' + name.upper()] = symbol
-
-""" 
-
-
-def regex_or(l):
-    return f"{'|'.join(escape_special_chars(x) for x in l)}"
-
-t_PREPROCESSING_OPERATOR = regex_or(preprocessing_operators)
-t_OPERATOR_OR_PUNCTUATOR = regex_or(operator_or_punctuators) """
 
 
 

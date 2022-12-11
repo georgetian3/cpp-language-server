@@ -9,12 +9,12 @@ from lexer.lexhtmlgenerator import LexHTMLGenerator
 from lexer.tokens import *
 import argparse
 import re
-from parser.myast import traverse
-from parser.parser import *
+
 import json
 
 
-
+from parser2.myast import traverse
+from parser2.parser import *
 
 def parse_args():
     parser = argparse.ArgumentParser()
@@ -33,12 +33,12 @@ def run_lexer():
     lexer = lex.lex(debug=True)
     lexer.input(source)
 
-    """ hg = LexHTMLGenerator()
+    hg = LexHTMLGenerator()
     tokens = list(lexer)
     for token in tokens:
         hg.create_html_token(token)
 
-    hg.write_html('output/output.html') """
+    hg.write_html('output/output.html')
     return lexer
 
 def run_parser():

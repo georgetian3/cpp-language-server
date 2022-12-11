@@ -82,15 +82,3 @@ wchar_t
 while
 module
 include
-define
-undef
-line
-error
-pragma
-ifdef
-ifndef
-import
-elif
-defined
-endif
-override
