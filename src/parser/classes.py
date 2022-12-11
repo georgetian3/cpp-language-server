@@ -93,12 +93,7 @@ def p_class_name(p):
     '''
     p[0] = Node('class_name', '', p[1:])
 
-def p_member_specification_opt(p):
-    '''
-    member_specification_opt : member_specification
-                             | empty
-    '''
-    p[0] = Node('member_specification_opt', '', p[1:])
+
 
 def p_class_specifier(p):
     '''
@@ -106,26 +101,7 @@ def p_class_specifier(p):
     '''
     p[0] = Node('class_specifier', '', p[1:])
 
-def p_attribute_specifier_seq_opt(p):
-    '''
-    attribute_specifier_seq_opt : attribute_specifier_seq
-                                | empty
-    '''
-    p[0] = Node('attribute_specifier_seq_opt', '', p[1:])
 
-def p_class_virt_specifier_opt(p):
-    '''
-    class_virt_specifier_opt : class_virt_specifier
-                             | empty
-    '''
-    p[0] = Node('class_virt_specifier_opt', '', p[1:])
-    
-def p_base_clause_opt(p):
-    '''
-    base_clause_opt : base_clause
-                    | empty
-    '''
-    p[0] = Node('base_clause_opt', '', p[1:])
 
 def p_class_head(p):
     '''
@@ -135,12 +111,7 @@ def p_class_head(p):
     '''
     p[0] = Node('class_head', '', p[1:])
 
-def p_nested_name_specifier_opt(p):
-    '''
-    nested_name_specifier_opt : nested_name_specifier
-                              | empty
-    '''
-    p[0] = Node('nested_name_specifier_opt', '', p[1:])
+
 
 def p_class_head_name(p):
     '''
@@ -162,12 +133,7 @@ def p_class_key(p):
     '''
     p[0] = Node('class_key', '', p[1:])
 
-def p_member_specification_opt(p):
-    '''
-    member_specification_opt : member_specification
-                             | empty
-    '''
-    p[0] = Node('member_specification_opt', '', p[1:])
+
 
 def p_member_specification(p):
     '''
@@ -176,19 +142,7 @@ def p_member_specification(p):
     '''
     p[0] = Node('member_specification', '', p[1:])
 
-def p_decl_specifier_seq_opt(p):
-    '''
-    decl_specifier_seq_opt : decl_specifier_seq
-                           | empty
-    '''
-    p[0] = Node('decl_specifier_seq_opt', '', p[1:])
 
-def p_member_declarator_list_opt(p):
-    '''
-    member_declarator_list_opt : member_declarator_list
-                               | empty
-    '''
-    p[0] = Node('member_declarator_list_opt', '', p[1:])
 
 def p_member_declaration(p):
     '''
@@ -213,33 +167,9 @@ def p_member_declarator_list(p):
     '''
     p[0] = Node('member_declarator_list', '', p[1:])
 
-def p_virt_specifier_seq_opt(p):
-    '''
-    virt_specifier_seq_opt : virt_specifier_seq
-                           | empty
-    '''
-    p[0] = Node('virt_specifier_seq_opt', '', p[1:])
 
-def p_pure_specifier_opt(p):
-    '''
-    pure_specifier_opt : pure_specifier
-                       | empty
-    '''
-    p[0] = Node('pure_specifier_opt', '', p[1:])
 
-def p_brace_or_equal_initializer_opt(p):
-    '''
-    brace_or_equal_initializer_opt : brace_or_equal_initializer
-                                   | empty
-    '''
-    p[0] = Node('brace_or_equal_initializer_opt', '', p[1:])
 
-def p_identifier_opt(p):
-    '''
-    identifier_opt : IDENTIFIER
-                   | empty
-    '''
-    p[0] = Node('identifier_opt', '', p[1:])
 
 def p_member_declarator(p):
     '''
@@ -278,12 +208,7 @@ def p_conversion_function_id(p):
     '''
     p[0] = Node('conversion_function_id', '', p[1:])
 
-def p_conversion_declarator_opt(p):
-    '''
-    conversion_declarator_opt : conversion_declarator
-                              | empty
-    '''
-    p[0] = Node('conversion_declarator_opt', '', p[1:])
+
 
 def p_conversion_type_id(p):
     '''
@@ -303,12 +228,7 @@ def p_base_clause(p):
     '''
     p[0] = Node('base_clause', '', p[1:])
 
-def p_ellipsis_opt(p):
-    '''
-    ellipsis_opt : ELLIPSIS
-                   | empty
-    '''
-    p[0] = Node('ellipsis_opt', '', p[1:])
+
 
 def p_base_specifier_list(p):
     '''
@@ -317,19 +237,7 @@ def p_base_specifier_list(p):
     '''
     p[0] = Node('base_specifer_list', '', p[1:])
 
-def p_virtual_opt(p):
-    '''
-    virtual_opt : VIRTUAL
-                | empty
-    '''
-    p[0] = Node('virtual_opt', '', p[1:])
 
-def p_access_specifier_opt(p):
-    '''
-    access_specifier_opt = access_specifier
-                         | empty
-    '''
-    p[0] = Node('access_specifier_opt', '', p[1:])
 
 def p_base_specifier(p):
     '''
@@ -368,12 +276,7 @@ def p_mem_initializer_list(p):
     '''
     p[0] = Node('member_initializer_list', '', p[1:])
 
-def p_expression_list_opt(p):
-    '''
-    expression_list_opt = expression_list
-                        | empty
-    '''
-    p[0] = Node('expression_list_opt', '', p[1:])
+
 
 
 def p_mem_initializer(p):
