@@ -209,31 +209,20 @@ def p_balanced_token_seq_opt(p):
                                | empty '''
     p[0] = Node('balanced_token_seq_opt', '', p[1:])
     
-def p_ctor_initializer_opt(p):
-    ''' ctor_initializer_opt : ctor_initializer_seq
-                               | empty '''
-    p[0] = Node('ctor_initializer_seq_opt', '', p[1:])
 def p_handler_seq_opt(p):
     ''' handler_seq_opt : handler_seq
                         | empty '''
     p[0] = Node('handler_seq_opt', '', p[1:])
-def p_attribute_specifier_seq_opt(p):
-    ''' attribute_specifier_seq_opt : attribute_specifier_seq
-                                    | empty '''
-    p[0] = Node('attribute_specifier_seq_opt', '', p[1:])
-def p_abstract_declarator_opt(p):
-    ''' abstract_declarator_opt : abstract_declarator
-                                | empty '''
-    p[0] = Node('abstract_declarator_opt', '', p[1:])
+
 def p_group_opt(p):
     ''' group_opt : group
                   | empty '''
     p[0] = Node('group_opt', '', p[1:])
-def p_group_opt(p):
+def p_pp_global_module_fragment_opt(p):
     ''' pp_global_module_fragment_opt : pp_global_module_fragment
                                       | empty '''
     p[0] = Node('pp_global_module_fragment_opt', '', p[1:])
-def p_group_opt(p):
+def p_pp_private_module_fragment_opt(p):
     ''' pp_private_module_fragment_opt : pp_private_module_fragment
                                        | empty '''
     p[0] = Node('pp_private_module_fragment_opt', '', p[1:])
