@@ -225,8 +225,5 @@ def p_explicit_specialization(p):
 
 
 
-def p_requires_clause(p):
-    ''' requires_clause : REQUIRES constraint_logical_or_expression '''
-
 def p_constraint_expression(p):
     ''' constraint_expression : logical_or_expression '''
