@@ -104,6 +104,57 @@ def p_type_constraint(p):
                              | nested_name_specifier concept_name
                              | concept_name '<' '>'
                              | nested_name_specifier concept_name '<' '>'
-                             | 
-            nested_name_specifieropt concept_name < template_argument_listopt >
+                             | nested_name_specifier concept_name '<' template_argument_list '>'
+                             | concept_name '<' template_argument_list '>'
+    '''     
+
+
+
+'''
+simple_template_id:
+    template_name < template_argument_listopt >
+template_id:
+    simple_template_id
+    operator_function_id < template_argument_listopt >
+    literal_operator_id < template_argument_listopt >
+template_name:
+    identifier
+template_argument_list:
+    template_argument ...opt
+    template_argument_list , template_argument ...opt
+template_argument:
+    constant_expression
+    type_id
+    id_expression
+'''
+
+def p_simple_template_id(p):
+    '''
+        simple_template_id: template_name '<' '>'
+                          | template_name '<' template_argument_list '>' 
+    '''
+def p_template_id(p):
+    '''
+        template_id : simple_template_id
+                    | operator_function_id '<' '>'
+                    | operator_function_id '<' template_argument_list '>'
+                    | literal_operator_id '<' '>'
+                    | literal_operator_id '<' template_argument_list '>'
+    '''
+def p_template_name(p):
+    '''
+        template_name : t_IDENTIFIER
+    '''
+def p_template_argument_list(p):
+    '''
+        template_argument_list : template_argument
+                               | template_argument t_ELLIPSIS
+                               | template_argument_list ',' template_argument
+                               | template_argument_list ',' template_argument t_ELLIPSIS
+    '''
+def p_template_argument(p):
+    '''
+        template_argument: constant_expression
+                         | type_id
+                         | id_expression
     '''
