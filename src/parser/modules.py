@@ -30,32 +30,32 @@ def p_module_declaration(p):
     '''
     module_declaration : export_keyword module_keyword module_name module_partition attribute_specifier_seq
                        | export_keyword module_keyword module_name module_partition
-                       | export_keyword module_keyword module_name attribute_specifier_seq
                        | export_keyword module_keyword module_name
                        | module_keyword module_name module_partition attribute_specifier_seq
                        | module_keyword module_name module_partition
-                       | export_keywordopt module_keyword module_name attribute_specifier_seq
-                       | export_keywordopt module_keyword module_name
+                       | module_keyword module_name attribute_specifier_seq
+                       | export_keyword module_keyword module_name attribute_specifier_seq
+                       | module_keyword module_name
     '''
     p[0] = Node('module_declaration', '', p[1:])
 
 def p_module_name(p):
     '''
-    module_name : module_name_qualifier IDENTIFER
-                | IDENTIFER
+    module_name : module_name_qualifier IDENTIFIER
+                | IDENTIFIER
     '''
     p[0] = Node('module_name', '', p[1:])
 
 def p_module_partition(p):
     '''
-    module_partition : ':' module_name_qualifier IDENTIFER
-                     | ':' IDENTIFER
+    module_partition : ':' module_name_qualifier IDENTIFIER
+                     | ':' IDENTIFIER
     '''
     p[0] = Node('module_partition', '', p[1:])
 
 def p_module_name_qualifier(p):
     '''
-    module_name_qualifier : IDENTIFER '.'
+    module_name_qualifier : IDENTIFIER '.'
                           | module_name_qualifier IDENTIFIER '.'
     '''
     p[0] = Node('module_name_qualifier', '', p[1:])
