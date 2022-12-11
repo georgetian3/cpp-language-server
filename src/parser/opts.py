@@ -28,26 +28,6 @@ def p_base_clause_opt(p):
     '''
     p[0] = Node('base_clause_opt', '', p[1:])
 
-def p_nested_name_specifier_opt(p):
-    '''
-    nested_name_specifier_opt : nested_name_specifier
-                              | empty
-    '''
-    p[0] = Node('nested_name_specifier_opt', '', p[1:])
-
-def p_member_specification_opt(p):
-    '''
-    member_specification_opt : member_specification
-                             | empty
-    '''
-    p[0] = Node('member_specification_opt', '', p[1:])
-
-def p_decl_specifier_seq_opt(p):
-    '''
-    decl_specifier_seq_opt : decl_specifier_seq
-                           | empty
-    '''
-    p[0] = Node('decl_specifier_seq_opt', '', p[1:])
 
 def p_member_declarator_list_opt(p):
     '''
@@ -56,12 +36,6 @@ def p_member_declarator_list_opt(p):
     '''
     p[0] = Node('member_declarator_list_opt', '', p[1:])
 
-def p_virt_specifier_seq_opt(p):
-    '''
-    virt_specifier_seq_opt : virt_specifier_seq
-                           | empty
-    '''
-    p[0] = Node('virt_specifier_seq_opt', '', p[1:])
 
 def p_pure_specifier_opt(p):
     '''
@@ -91,12 +65,6 @@ def p_conversion_declarator_opt(p):
     '''
     p[0] = Node('conversion_declarator_opt', '', p[1:])
 
-def p_ellipsis_opt(p):
-    '''
-    ellipsis_opt : ELLIPSIS
-                   | empty
-    '''
-    p[0] = Node('ellipsis_opt', '', p[1:])
 
 def p_virtual_opt(p):
     '''
@@ -107,40 +75,25 @@ def p_virtual_opt(p):
 
 def p_access_specifier_opt(p):
     '''
-    access_specifier_opt = access_specifier
+    access_specifier_opt : access_specifier
                          | empty
     '''
     p[0] = Node('access_specifier_opt', '', p[1:])
 
 def p_expression_list_opt(p):
     '''
-    expression_list_opt = expression_list
+    expression_list_opt : expression_list
                         | empty
     '''
     p[0] = Node('expression_list_opt', '', p[1:])
 
 def p_init_declarator_list_opt(p):
     '''
-        init_declarator_list_opt = init_declarator_list
+        init_declarator_list_opt : init_declarator_list
                                  | empty
     '''
 
-def p_attribute_specifier_seq_opt(p):
-    '''
-        attribute_specifier_seq_opt = attribute_specifier_seq
-                                    | empty
-    '''
-def p_ref_qualifier_opt(p):
-    '''
-        ref_qualifier_opt = ref_qualifier
-                          | empty
-    '''
 
-def p_attribute_specifier_seq_opt(p):
-    '''
-        attribute_specifier_seq_opt : attribute_specifier_seq
-                                    | empty
-    '''
 def p_constant_expression_opt(p):
     '''
         constant_expression_opt : constant_expression
@@ -173,16 +126,7 @@ def p_noptr_abstract_declarator_opt(p):
         noptr_abstract_declarator_opt : noptr_abstract_declarator
                                       | empty
     '''
-def p_constant_expression_opt(p):
-    '''
-        constant_expression_opt : constant_expression
-                                | empty
-    '''
-def p_attribute_specifier_seq_opt(p):
-    '''
-        attribute_specifier_seq_opt : attribute_specifier_seq
-                                    | empty
-    '''
+
 def p_comma_opt(p):
     ''' comma_opt : ','
                   | empty '''
@@ -264,9 +208,3 @@ def p_balanced_token_seq_opt(p):
     ''' balanced_token_seq_opt : balanced_token_seq
                                | empty '''
     p[0] = Node('balanced_token_seq_opt', '', p[1:])
-
-def p_attribute_specifier_seq_opt(p):
-    '''
-        attribute_specifier_seq_opt : attribute_specifier_seq 
-                                    | empty
-    '''
