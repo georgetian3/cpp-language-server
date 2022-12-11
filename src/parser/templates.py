@@ -222,3 +222,11 @@ def p_explicit_specialization(p):
         explicit_specialization : TEMPLATE '<' '>' declaration
     '''
     p[0] = Node('explicit_specialization', '', p[1:])
+
+
+
+def p_requires_clause(p):
+    ''' requires_clause : REQUIRES constraint_logical_or_expression '''
+
+def p_constraint_expression(p):
+    ''' constraint_expression : logical_or_expression '''

@@ -26,16 +26,23 @@ private-module-fragment:
     module-keyword : private ; declaration-seqopt
 '''
 
+def p_export_keyword_opt(p):
+    '''
+    export_keyword_opt : export_keyword
+                       | empty
+    '''
+    p[0] = Node('export_keyword', '', p[1:])
+
+def p_module_partition_opt(p):
+    '''
+    module_partition_opt : module_partition
+                         | empty
+    '''
+    p[0] = Node('module_partition', '', p[1:])
+
 def p_module_declaration(p):
     '''
-    module_declaration : export_keyword module_keyword module_name module_partition attribute_specifier_seq
-                       | export_keyword module_keyword module_name module_partition
-                       | export_keyword module_keyword module_name
-                       | module_keyword module_name module_partition attribute_specifier_seq
-                       | module_keyword module_name module_partition
-                       | module_keyword module_name attribute_specifier_seq
-                       | export_keyword module_keyword module_name attribute_specifier_seq
-                       | module_keyword module_name
+    module_declaration : export_keyword_opt module_keyword module_name module_partition_opt attribute_specifier_seq_opt
     '''
     p[0] = Node('module_declaration', '', p[1:])
 
@@ -71,12 +78,9 @@ def p_export_declaration(p):
 
 def p_module_import_declaration(p):
     '''
-    module_import_declaration : import_keyword module_name attribute_specifier_seq ';'
-                              | import_keyword module_name ';'
-                              | import_keyword module_partition attribute_specifier_seq ';'
-                              | import_keyword module_partition ';'
-                              | import_keyword header_name attribute_specifier_seq ';'
-                              | import_keyword header_name ';'
+    module_import_declaration : import_keyword module_name attribute_specifier_seq_opt ';'
+                              | import_keyword module_partition attribute_specifier_seq_opt ';'
+                              | import_keyword header_name attribute_specifier_seq_opt ';'
     '''
     p[0] = Node('module_import_declaration', '', p[1:])
 

@@ -577,7 +577,12 @@ def p_noptr_abstract_pack_declarator(p):
 
 # 9.3.3.5 Functions
 
-
+def p_parameter_declaration(p):
+    ''' parameter_declaration : attribute_specifier_seq_opt decl_specifier_seq declarator 
+                              | attribute_specifier_seq_opt decl_specifier_seq declarator '=' initializer_clause
+                              | attribute_specifier_seq_opt decl_specifier_seq declarator abstract_declarator_opt
+                              | attribute_specifier_seq_opt decl_specifier_seq declarator abstract_declarator_opt '=' initializer_clause
+    '''
 
 def p_parameter_declaration_clause(p):
     ''' parameter_declaration_clause : parameter_declaration_list_opt ellipsis_opt
@@ -791,6 +796,9 @@ def p_using_declarator_list(p):
                               | using_declarator_list ',' using_declarator ellipsis_opt ''' 
     p[0] = Node('using_declarator_list', '', p[1:])
 
+def p_using_declarator(p):
+    ''' using_declarator : typename_opt nested_name_specifier unqualified_id '''
+    
 # 9.10 The asm declaration
 def p_asm_declaration(p):
     ''' asm_declaration : attribute_specifier_seq_opt ASM '(' STRING_LITERAL ')' ';' '''
@@ -871,3 +879,7 @@ def p_balanced_token(p):
     #  any token other than a parenthesis, a bracket, or a brace '''  
     # TODO
     p[0] = Node('balanced_token', '', p[1:])
+
+
+def p_explicit_specialization(p):
+    ''' explicit_specialization : TEMPLATE '<' '>' declaration '''
