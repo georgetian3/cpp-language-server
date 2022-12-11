@@ -77,10 +77,14 @@ def p_export_declaration(p):
     p[0] = Node('export_declaration', '', p[1:])
 
 def p_module_import_declaration(p):
+    # '''
+    # module_import_declaration : import_keyword module_name attribute_specifier_seq_opt ';'
+    #                           | import_keyword module_partition attribute_specifier_seq_opt ';'
+    #                           | import_keyword header_name attribute_specifier_seq_opt ';'
+    # ''' todo
     '''
     module_import_declaration : import_keyword module_name attribute_specifier_seq_opt ';'
                               | import_keyword module_partition attribute_specifier_seq_opt ';'
-                              | import_keyword header_name attribute_specifier_seq_opt ';'
     '''
     p[0] = Node('module_import_declaration', '', p[1:])
 
