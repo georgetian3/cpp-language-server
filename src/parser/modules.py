@@ -1,4 +1,4 @@
-from myast import Node
+from .myast import Node
 
 '''
 modules declaration

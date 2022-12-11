@@ -28,8 +28,8 @@ def p_template_declaration(p):
 
 def p_template_head(p):
     '''
-        template_head : TEMPLATE '<' template_parameter_list ">" requires_clause
-                      | TEMPLATE '<' template_parameter_list '
+        template_head : TEMPLATE '<' template_parameter_list '>' requires_clause
+                      | TEMPLATE '<' template_parameter_list
     '''
     p[0] = Node('template_head', '', p[1:])
 
@@ -42,7 +42,7 @@ def p_template_parameter_list(p):
 
 def p_require_clause(p):
     '''
-        require_clause: REQUIRES constraint_logical_or_expression
+        require_clause : REQUIRES constraint_logical_or_expression
     '''
     p[0] = Node('require_clause', '', p[1:])
 
@@ -82,28 +82,22 @@ type_constraint:
 def p_template_parameter(p):
     ''' 
         template_parameter : type_parameter
-                             parameter_declaration
+                           | parameter_declaration
     '''
     p[0] = Node('template_parameter', '', p[1:])
 
 def p_type_parameter(p):
     '''
         type_parameter : type_parameter_key
-                       | type_parameter_key ELLIPSIS
                        | type_parameter_key identifier
-                       | type_parameter_key ELLIPSIS identifier
                        | type_parameter_key '=' type_id
                        | type_parameter_key identifier '=' type_id
                        | type_constraint
-                       | type_constraint ELLIPSIS
                        | type_constraint identifier
-                       | type_constraint ELLIPSIS identifier
                        | type_constraint '=' type_id
                        | type_constraint identifier '=' type_id
                        | template_head type_parameter_key
-                       | template_head type_parameter_key ELLIPSIS
                        | template_head type_parameter_key identifier
-                       | template_head type_parameter_key ELLIPSIS identifier
                        | template_head type_parameter_key '=' type_id
                        | template_head type_parameter_key identifier '=' type_id
     '''
@@ -118,12 +112,12 @@ def p_type_parameter_key(p):
 
 def p_type_constraint(p):
     '''
-            type_constraint: concept_name
-                             | nested_name_specifier concept_name
-                             | concept_name '<' '>'
-                             | nested_name_specifier concept_name '<' '>'
-                             | nested_name_specifier concept_name '<' template_argument_list '>'
-                             | concept_name '<' template_argument_list '>'
+            type_constraint : concept_name
+                            | nested_name_specifier concept_name
+                            | concept_name '<' '>'
+                            | nested_name_specifier concept_name '<' '>'
+                            | nested_name_specifier concept_name '<' template_argument_list '>'
+                            | concept_name '<' template_argument_list '>'
     '''     
     p[0] = Node('type_constraint', '', p[1:])
 
@@ -149,8 +143,8 @@ template_argument:
 
 def p_simple_template_id(p):
     '''
-        simple_template_id: template_name '<' '>'
-                          | template_name '<' template_argument_list '>' 
+        simple_template_id : template_name '<' '>'
+                           | template_name '<' template_argument_list '>' 
     '''
     p[0] = Node('simple_template_id', '', p[1:])
 
@@ -166,23 +160,23 @@ def p_template_id(p):
 
 def p_template_name(p):
     '''
-        template_name : t_IDENTIFIER
+        template_name : IDENTIFIER
     '''
     p[0] = Node('template_name', '', p[1:])
 
 def p_template_argument_list(p):
     '''
         template_argument_list : template_argument
-                               | template_argument t_ELLIPSIS
+                               | template_argument t_
                                | template_argument_list ',' template_argument
-                               | template_argument_list ',' template_argument t_ELLIPSIS
+                               | template_argument_list ',' template_argument t_
     '''
     p[0] = Node('template_argument_list', '', p[1:])
 
 def p_template_argument(p):
     '''
-        template_argument: constant_expression
-                         | type_id
-                         | id_expression
+        template_argument : constant_expression
+                          | type_id
+                          | id_expression
     '''
     p[0] = Node('template_argument', '', p[1:])

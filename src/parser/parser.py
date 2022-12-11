@@ -1,7 +1,10 @@
+from .opts import *
 from .expressions import *
 from .statements import *
 from .declarations import *
-from .opts import *
+from .modules import *
+from .classes import *
+from .templates import *
 
 from ply.yacc import yacc
 

@@ -1,4 +1,4 @@
-from .base import p_empty, Node
+from .base import *
 
 """
 8 Statements
@@ -35,13 +35,6 @@ def p_condition(p):
     p[0] = Node('condition', '', p[1:])
 
 
-'''
-labeled_statement:
-    attribute_specifier_seqopt identifier : statement
-    attribute_specifier_seqopt case constant_expression : statement
-    attribute_specifier_seqopt default : statement
-'''
-
 def p_labeled_statement(p):
     '''
         labeled_statement : identifier ':' statement
@@ -59,14 +52,7 @@ def p_expression_statement(p):
     ''' expression_statement : expression
                              | empty '''
     p[0] = Node('expression_statement', '', [p[1]])
-    
-'''
-compound_statement:
-    '{' statement_seqopt '}'
-statement_seq:
-    statement
-    statement_seq statement
-'''
+
 def p_compound_statement(p):
     '''
         compound_statement : '{' '}'
@@ -81,12 +67,7 @@ def p_statement_seq(p):
     '''
     p[0] = Node('statement_seq', '', p[1:])
 
-'''
-selection_statement:
-    if constexpropt ( init_statementopt condition ) statement
-    if constexpropt ( init_statementopt condition ) statement else statement
-    switch ( init_statementopt condition ) statement
-'''
+
 def p_selection_statement(p):
     '''
         selection_statement : IF '(' condition ')' statement
@@ -101,19 +82,6 @@ def p_selection_statement(p):
                             | SWITCH '('  init_statement condition ')' statement
     '''
     p[0] = Node('selection_statement', '', p[1:])
-
-'''
-iteration_statement:
-    while ( condition ) statement
-    do statement while ( expression ) ;
-    for ( init_statement conditionopt ; expressionopt ) statement
-    for ( init_statementopt for_range_declaration : for_range_initializer ) statement
-for_range_declaration:
-    attribute_specifier_seqopt decl_specifier_seq declarator
-    attribute_specifier_seqopt decl_specifier_seq ref_qualifieropt [ identifier_list ]
-for_range_initializer:
-    expr_or_braced_init_list
-'''
 
 def p_iteration_statement(p):
     '''
