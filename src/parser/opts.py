@@ -166,11 +166,6 @@ def p_inline_opt(p):
                    | empty '''
     p[0] = Node('inline_opt', '', p[1:])
 
-def p_attribute_specifier_seq_opt(p):
-    ''' attribute_specifier_seq_opt : attribute_specifier_seq
-                                    | empty '''
-    p[0] = Node('attribute_specifier_seq_opt', '', p[1:])
-
 def p_declaration_seq_opt(p):
     ''' declaration_seq_opt : declaration_seq
                             | empty '''
