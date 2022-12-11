@@ -261,3 +261,7 @@ def p_export_opt(p):
 def p_template_opt(p):
     ''' template_opt : TEMPLATE
                      | empty '''
+
+def p_explicit_specifier_opt(p):
+    ''' explicit_specifier_opt : explicit_specifier
+                               | empty '''

@@ -183,3 +183,10 @@ def p_template_argument(p):
 def p_typename_specifier(p):
     ''' typename_specifier : TYPENAME nested_name_specifier IDENTIFIER
                            | TYPENAME nested_name_specifier template_opt simple_template_id '''
+
+# 13.7.1.2 Deduction guides
+
+
+
+def p_deduction_guide(p):
+    ''' deduction_guide : explicit_specifier_opt template_name '(' parameter_declaration_clause ')' ARROW simple_template_id ';' '''
