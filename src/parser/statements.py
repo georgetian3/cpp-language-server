@@ -140,7 +140,7 @@ coroutine_return_statement:
 
 def p_coroutine_return_statement(p):
     '''
-        coroutine_return_statement : co_return expr_or_braced_init_list ';'
+        coroutine_return_statement : CO_RETURN expr_or_braced_init_list ';'
                                    | ';'
     '''
     p[0] = Node('coroutine_return_statement', '', p[1:])

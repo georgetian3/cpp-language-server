@@ -203,3 +203,10 @@ def p_concept_name(p):
         concept_name : IDENTIFIER 
     '''
     p[0] = Node('concept_name', '', p[1:])
+
+# 13.7.1.2 Deduction guides
+
+
+
+def p_deduction_guide(p):
+    ''' deduction_guide : explicit_specifier_opt template_name '(' parameter_declaration_clause ')' ARROW simple_template_id ';' '''

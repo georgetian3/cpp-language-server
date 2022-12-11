@@ -1,8 +1,8 @@
 
 from .characters import *
 from .comments import *
-from .identifiers import t_IDENTIFIER
-from .keywords import keywords
+from .identifiers import *
+from .keywords import *
 #from literals import *
 from .operators import *
 

@@ -52,6 +52,6 @@ def p_operator(p):
     p[0] = Node('operator', '', p[1:])
 
 def p_literal_operator_id(p):
-    ''' literal_operator_id : OPERATOR string_literal IDENTIFIER
-                            | OPERATOR user_defined_string_literal '''
+    ''' literal_operator_id : OPERATOR STRING_LITERAL IDENTIFIER
+                            | OPERATOR USER_DEFINED_STRING_LITERAL '''
     p[0] = Node('literal_operator_id', '', p[1:])
