@@ -575,6 +575,12 @@ def p_noptr_abstract_pack_declarator(p):
     p[0] = Node('noptr_abstract_pack_declarator', '', p[1:])
 
 
+# 9.3.3.5 Functions
+
+def p_parameter_declaration_clause(p):
+    ''' parameter_declaration_clause : parameter_declaration_list_opt ellipsis_opt
+                                     | '''
+
 # 9.4 Initializers
 
 def p_initializer(p):
