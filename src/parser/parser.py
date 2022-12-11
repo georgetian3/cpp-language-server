@@ -11,9 +11,11 @@ from .exceptions import *
 from .preprocessing import *
 from .keywords import *
 
+from .myast import ExternalNode
+
 def p_empty(p):
     'empty :'
-    pass
+    p[0] = {'empty': 'empty'}
 
 from ply.yacc import yacc
 
