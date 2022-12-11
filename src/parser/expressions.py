@@ -1,3 +1,5 @@
+from .myast import Node
+
 # 7.5 Primary expressions
 
 def p_primary_expression(p):
@@ -8,12 +10,13 @@ def p_primary_expression(p):
                            | lambda_expression
                            | fold_expression
                            | requires_expression '''
-
+    p[0] = Node('primary_expression', '', p[1:])
 # 7.5.4 Names
 
 def p_id_expression(p):
     ''' id_expression : unqualified_id
                       | qualified_id '''
+    p[0] = Node('id_expression', '', p[1:])
 
 # 7.5.4.1 Unqualified names
 
@@ -25,11 +28,13 @@ def p_unqualified_id(p):
                        | '~' type_name
                        | '~' decltype_specifier
                        | template_id '''
+    p[0] = Node('unqualified_id', '', p[1:])
 
 # 7.5.4.2 Qualified names
 def p_qualified_id(p):
     ''' qualified_id : nested_name_specifier TEMPLATE unqualified_id
                      | nested_name_specifier unqualified_id '''
+    p[0] = Node('qualified_id', '', p[1:])
 
 def p_nested_name_specifier(p):
     ''' nested_name_specifier : 
@@ -40,6 +45,7 @@ def p_nested_name_specifier(p):
                               | nested_name_specifier identifier DCOLON
                               | nested_name_specifier TEMPLATE simple_template_id DCOLON 
                               | nested_name_specifier simple_template_id DCOLON '''
+    p[0] = Node('nested_name_specifier', '', p[1:])
 
 #7.5.5 Lambda expressions
 # TODO
@@ -74,9 +80,11 @@ def p_postfix_expression(p):
                            | CONST_CAST '<' type_id '>' '(' expression ')'
                            | TYPEID '(' expression ')'
                            | TYPEID '(' type_id ')' '''
+    p[0] = Node('postfix_expression', '', p[1:])
  
 def p_expression_list(p):
     ''' expression_list : initializer_list '''
+    p[0] = Node('expression_list', '', p[1:])
 
 # 7.6.2 Unary expressions
 
@@ -93,9 +101,11 @@ def p_unary_expression(p):
                          | noexcept_expression
                          | new_expression
                          | delete_expression '''
+    p[0] = Node('unary_expression', '', p[1:])
 
 def p_unary_operator(p):
     ''' unary_operator : '*' | '&' | '+' | '-' | '!' | '~' '''
+    p[0] = Node('unary_operator', '', p[1:])
 
 # 7.6.2.7 New
 # TODO
@@ -106,12 +116,14 @@ def p_unary_operator(p):
 def p_cast_expression(p):
     ''' cast_expression : unary_expression
                         | '(' type_id ')' cast_expression '''
+    p[0] = Node('cast_expression', '', p[1:])
 
 # 7.6.4 Pointer-to-member operators
 def p_pm_expression(p):
     ''' pm_expression : cast_expression
                       | pm_expression PERIODSTAR cast_expression
                       | pm_expression ARROWSTAR cast_expression '''
+    p[0] = Node('pm_expression', '', p[1:])
 
 # 7.6.5 Multiplicative operators
 def p_multiplicative_expression(p):
@@ -119,18 +131,111 @@ def p_multiplicative_expression(p):
                                   | multiplicative_expression '*' pm_expression
                                   | multiplicative_expression '/' pm_expression
                                   | multiplicative_expression '%' pm_expression ''' 
+    p[0] = Node('multiplicative_expression', '', p[1:])
+
 # 7.6.6 Additive operators
 def p_additive_expression(p):
     ''' additive_expression : multiplicative_expression
                             | additive_expression + multiplicative_expression
                             | additive_expression - multiplicative_expression '''
+    p[0] = Node('additive_expression', '', p[1:])
+
 # 7.6.7 Shift operators
 def p_shift_expression(p):
     ''' shift_expression : additive_expression
-                         | shift_expression << additive_expression
-                         | shift_expression >> additive_expression '''
+                         | shift_expression LSHIFT additive_expression
+                         | shift_expression RSHIFT additive_expression '''
+    p[0] = Node('shift_expression', '', p[1:])
+# 7.6.8 Three-way comparison operator
+def p_compare_expression(p):
+    ''' compare_expression : shift_expression
+                           | compare_expression SPACESHIP shift_expression '''
+    p[0] = Node('compare_expression', '', p[1:])
+
+# 7.6.9 Relational operators
+def p_relational_expression(p):
+    ''' relational_expression : compare_expression
+                              | relational_expression LT compare_expression
+                              | relational_expression GT compare_expression
+                              | relational_expression LE compare_expression
+                              | relational_expression GE compare_expression '''
+    p[0] = Node('relational_expression', '', p[1:])
+# 7.6.10 Equality operators
+def p_equality_expression(p):
+    ''' equality_expression : relational_expression
+                            | equality_expression EQ relational_expression
+                            | equality_expression NE relational_expression '''
+    p[0] = Node('equality_expression', '', p[1:])
+# 7.6.11 Bitwise AND operator
+def p_and_expression(p):
+    ''' and_expression : equality_expression
+                       | and_expression AND equality_expression '''
+
+    p[0] = Node('and_expression', '', p[1:])
+# 7.6.12 Bitwise exclusive OR operator
+def p_exclusive_or_expression(p):
+    ''' exclusive_or_expression : and_expression
+                                | exclusive_or_expression XOR and_expression '''
+    p[0] = Node('exclusive_or_expression', '', p[1:])
+
+
+
+# 7.6.13 Bitwise inclusive OR operator
+def p_inclusive_or_expression(p):
+    ''' inclusive_or_expression : exclusive_or_expression
+                                | inclusive_or_expression OR exclusive_or_expression '''
+    p[0] = Node('inclusive_or_expression', '', p[1:])
+
+# 7.6.14 Logical AND operator
+
+def p_logical_and_expression(p):
+    ''' logical_and_expression : inclusive_or_expression
+                               | logical_and_expression LAND inclusive_or_expression '''
+    p[0] = Node('logical_and_expression', '', p[1:])
+
+# 7.6.15 Logical OR operator
+def p_logical_or_expression(p):
+    ''' logical_or_expression : logical_and_expression
+                              | logical_or_expression LOR logical_and_expression '''
+    p[0] = Node('logical_or_expression', '', p[1:])
+# 7.6.16 Conditional operator
+def p_conditional_expression(p):
+    ''' conditional_expression : logical_or_expression
+                               | logical_or_expression CONDOP expression COLON assignment_expression '''
+    p[0] = Node('conditional_expression', '', p[1:])
+
+# 7.6.17 Yielding a value
+def p_yield_expression(p):
+    ''' yield_expression : CO_YIELD assignment_expression
+                         | CO_YIELD braced_init_list '''
+    p[0] = Node('yield_expression', '', p[1:])
+
+# 7.6.18 Throwing an exception
+def p_throw_expression(p):
+    ''' throw_expression : throw assignment_expression
+                         | empty '''
+    p[0] = Node('throw_expression', '', p[1:])
+
+# 7.6.19 Assignment and compound assignment operators
+def p_assignment_expression(p):
+    ''' assignment_expression : conditional_expression
+                              | yield_expression
+                              | throw_expression
+                              | logical_or_expression assignment_operator initializer_clause '''
+    p[0] = Node('assignment_expression', '', p[1:])
+def p_assignment_operator(p):
+    ''' assignment_operator : '=' | TIMESEQUAL | DIVEQUAL | MODEQUAL | PLUSEQUAL
+                            | MINUSEQUAL | RSHIFTEQUAL | LSHIFTEQUAL | ANDEQUAL
+                            | XOREQUAL | OREQUAL '''
+    p[0] = Node('assignment_operator', '', p[1:])
+
+# 7.6.20 Comma operator
+def p_expression(p):
+    ''' expression : assignment_expression
+                   | expression ',' assignment_expression '''
+    p[0] = Node('expression', '', p[1:])
 
 # 7.7 Constant expressions
-
 def p_constant_expression(p):
     ''' constant_expression : conditional_expression '''
+    p[0] = Node('constant_expression', '', p[1:])

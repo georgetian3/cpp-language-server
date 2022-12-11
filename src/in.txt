@@ -1,4 +1,3 @@
-shift-expression :
-additive-expression
-shift-expression << additive-expression
-shift-expression >> additive-expression
+expression :
+assignment-expression
+expression , assignment-expression

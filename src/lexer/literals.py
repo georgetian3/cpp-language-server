@@ -135,7 +135,6 @@ def t_BOOLEAN_LITERAL(t):
 def t_POINTER_LITERAL(t):
     return t
 
-print(string_literal)
 
 
 
