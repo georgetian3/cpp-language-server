@@ -78,12 +78,9 @@ def p_export_declaration(p):
 
 def p_module_import_declaration(p):
     '''
-    module_import_declaration : import_keyword module_name attribute_specifier_seq ';'
-                              | import_keyword module_name ';'
-                              | import_keyword module_partition attribute_specifier_seq ';'
-                              | import_keyword module_partition ';'
-                              | import_keyword header_name attribute_specifier_seq ';'
-                              | import_keyword header_name ';'
+    module_import_declaration : import_keyword module_name attribute_specifier_seq_opt ';'
+                              | import_keyword module_partition attribute_specifier_seq_opt ';'
+                              | import_keyword header_name attribute_specifier_seq_opt ';'
     '''
     p[0] = Node('module_import_declaration', '', p[1:])
 
