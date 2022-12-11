@@ -183,3 +183,23 @@ def p_template_argument(p):
 def p_typename_specifier(p):
     ''' typename_specifier : TYPENAME nested_name_specifier IDENTIFIER
                            | TYPENAME nested_name_specifier template_opt simple_template_id '''
+    p[0] = Node('typename_specifier', '', p[1:])
+    
+
+'''
+concept_definition:
+concept concept_name = constraint_expression ;
+concept_name:
+identifier
+'''
+def p_concept_definition(p):
+    '''
+        concept_definition : CONCEPT concept_name '=' constraint_expression ';' 
+    '''
+    p[0] = Node('concept_definition', '', p[1:])
+
+def p_concept_name(p):
+    '''
+        concept_name : IDENTIFIER 
+    '''
+    p[0] = Node('concept_name', '', p[1:])
