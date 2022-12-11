@@ -8,7 +8,9 @@ from lexer.lexhtmlgenerator import LexHTMLGenerator
 
 from lexer.tokens import *
 import argparse
+import re
 
+from parser.parser import parser
 
 
 
@@ -48,12 +50,9 @@ def run_parser():
     with open(args.i, encoding='utf8') as f:
         source = f.read()
 
-
-    parser = yacc.parse(lexer=run_lexer())
     parser.parse(source, debug=True)    
 
 
-import re
 def format():
     with open('in.txt') as f:
         text = f.read()
@@ -82,7 +81,9 @@ def format():
 if __name__ == '__main__':
     #run_lexer()
     #run_parser()
+    print()
     format()
+    print()
     """ expr = '2 * 3 + 4 * (5 - x)'
     ast = AST(parser.parse(expr, debug=False))
     print(expr)

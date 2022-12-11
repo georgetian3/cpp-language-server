@@ -21,7 +21,7 @@
 
 from ply.lex import lex
 from ply.yacc import yacc
-from .myast import Node
+from myast import Node
 
 # --- Tokenizer
 
@@ -88,6 +88,7 @@ def p_term(p):
     term : factor TIMES factor
          | factor DIVIDE factor
     '''
+    print(str(p))
     p[0] = Node('binop', p[2], [p[1], p[3]])
 
 def p_term_factor(p):

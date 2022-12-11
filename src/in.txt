@@ -1,4 +1,3 @@
-template-argument:
-constant-expression
-type-id
-id-expression
+expr-or-braced-init-list :
+expression
+braced-init-list

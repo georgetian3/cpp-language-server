@@ -28,8 +28,8 @@ def p_template_declaration(p):
 
 def p_template_head(p):
     '''
-        template_head : t_TEMPLATE '<' template_parameter_list ">" requires_clause
-                      | t_TEMPLATE '<' template_parameter_list '
+        template_head : TEMPLATE '<' template_parameter_list ">" requires_clause
+                      | TEMPLATE '<' template_parameter_list '
     '''
     p[0] = Node('template_head', '', p[1:])
 
@@ -42,7 +42,7 @@ def p_template_parameter_list(p):
 
 def p_require_clause(p):
     '''
-        require_clause: t_REQUIRES constraint_logical_or_expression
+        require_clause: REQUIRES constraint_logical_or_expression
     '''
     p[0] = Node('require_clause', '', p[1:])
 
@@ -56,7 +56,7 @@ def p_constraint_logical_or_expression(p):
 def p_constraint_logical_and_expression(p):
     '''
         constraint_logical_and_expression : primary_expression
-                                          | constraint_logical_and_expression t_LAND primary_expression
+                                          | constraint_logical_and_expression LAND primary_expression
     '''
     p[0] = Node('constraint_logical_and_expression', '', p[1:])
 
@@ -89,21 +89,21 @@ def p_template_parameter(p):
 def p_type_parameter(p):
     '''
         type_parameter : type_parameter_key
-                       | type_parameter_key t_ELLIPSIS
+                       | type_parameter_key ELLIPSIS
                        | type_parameter_key identifier
-                       | type_parameter_key t_ELLIPSIS identifier
+                       | type_parameter_key ELLIPSIS identifier
                        | type_parameter_key '=' type_id
                        | type_parameter_key identifier '=' type_id
                        | type_constraint
-                       | type_constraint t_ELLIPSIS
+                       | type_constraint ELLIPSIS
                        | type_constraint identifier
-                       | type_constraint t_ELLIPSIS identifier
+                       | type_constraint ELLIPSIS identifier
                        | type_constraint '=' type_id
                        | type_constraint identifier '=' type_id
                        | template_head type_parameter_key
-                       | template_head type_parameter_key t_ELLIPSIS
+                       | template_head type_parameter_key ELLIPSIS
                        | template_head type_parameter_key identifier
-                       | template_head type_parameter_key t_ELLIPSIS identifier
+                       | template_head type_parameter_key ELLIPSIS identifier
                        | template_head type_parameter_key '=' type_id
                        | template_head type_parameter_key identifier '=' type_id
     '''
@@ -111,8 +111,8 @@ def p_type_parameter(p):
 
 def p_type_parameter_key(p):
     '''
-        type_parameter_key : t_CLASS
-                           | t_TYPENAME
+        type_parameter_key : CLASS
+                           | TYPENAME
     '''
     p[0] = Node('type_parameter_key', '', p[1:])
 
