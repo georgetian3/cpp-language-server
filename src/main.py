@@ -81,6 +81,12 @@ def format():
     text = f_def + head + '\n'.join(prods)
     print(text)
 
+
+""" precedence = (
+    ('left', 'function_definition', 'IDENTIFIER'),
+) """
+
+
 if __name__ == '__main__':
     run_lexer()
     run_parser()
