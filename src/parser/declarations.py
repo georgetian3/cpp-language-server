@@ -49,6 +49,7 @@ def p_declaration_seq(p):
         declaration_seq : declaration
                         | declaration_seq declaration
     '''
+    p[0] = Node('declaration_seq', '', p[1:])
 
 def p_declaration(p):
     '''
@@ -66,6 +67,8 @@ def p_declaration(p):
                     | attribute_declaration
                     | module_import_declaration
     '''
+    p[0] = Node('declaration', '', p[1:])
+
 def p_block_declaration(p):
     '''
         block_declaration : simple_declaration
@@ -78,18 +81,22 @@ def p_block_declaration(p):
                           | alias_declaration
                           | opaque_enum_declaration
     '''
+    p[0] = Node('block_declaration', '', p[1:])
 
 def p_nodeclspec_function_declaration(p):
     '''
         nodeclspec_function_declaration : declarator ';'
                                         | attribute_specifier_seq declarator ';'
     '''
+    p[0] = Node('nodeclspec_function_declaration', '', p[1:])
 
 def p_alias_declaration(p):
     '''
         alias_declaration : USING IDENTIFIER '=' defining_type_id ';'
                           | USING IDENTIFIER attribute_specifier_seq '=' defining_type_id ';' 
     '''
+    p[0] = Node('alias_declaration', '', p[1:])
+
 def p_simple_declaration(p):
     '''
         simple_declaration : decl_specifier_seq init_declarator_list_opt ';'
@@ -103,16 +110,19 @@ def p_static_assert_declaration(p):
         static_assert_declaration : STATIC_ASSERT '(' constant_expression ')' ';'
                                   | STATIC_ASSERT '(' constant_expression ',' string_literal ')' ';'
     '''
+    p[0] = Node('static_assert_declaration', '', p[1:])
 
 def p_empty_declaration(p):
     '''
         empty_declaration : ';'
     '''
+    p[0] = Node('empty_declaration', '', p[1:])
 
 def p_attribute_declaration(p):
     '''
         attribute_declaration : attribute_specifier_seq ';'
     '''
+    p[0] = Node('attribute_declaration', '', p[1:])
 
 '''
 decl_specifier:
@@ -142,6 +152,7 @@ def p_decl_specifier(p):
                        | constinit
                        | INLINE
     '''
+    p[0] = Node('decl_specifier', '', p[1:])
 
 def p_decl_specifier_seq(p):
     '''
@@ -149,6 +160,7 @@ def p_decl_specifier_seq(p):
                            | decl_specifier attribute_specifier_seq
                            | decl_specifier decl_specifier_seq
     '''
+    p[0] = Node('decl_specifier_seq', '', p[1:])
 
 '''
 storage_class_specifier:
@@ -165,6 +177,7 @@ def p_storage_class_specifier(p):
                                 | EXTERN
                                 | MUTABLE
     '''
+    p[0] = Node('storage_class_specifier', '', p[1:])
 
 '''
 function_specifier:
@@ -180,11 +193,14 @@ def p_function_specifier(p):
         function_specifier : VIRTUAL
                            | explicit_specifier
     '''
+    p[0] = Node('function_specifier', '', p[1:])
+
 def p_explicit_specifier(p):
     '''
-        explicit_specifier : explicit '(' constant_expression ')'
-                           | explicit
+        explicit_specifier : EXPLICIT '(' constant_expression ')'
+                           | EXPLICIT
     '''
+    p[0] = Node('explicit_specifier', '', p[1:])
 
 '''
 typedef_name:
@@ -197,7 +213,7 @@ def p_typedef_name(p):
         typedef_name : IDENTIFIER
                      | simple_template_id
     '''
-
+    p[0] = Node('typedef_name', '', p[1:])
 
 '''
 type_specifier:
@@ -224,6 +240,8 @@ def p_type_specifier(p):
                        | typename_specifier
                        | cv_qualifier
     '''
+    p[0] = Node('type_specifier', '', p[1:])
+
 def p_type_specifier_seq(p):
     '''
         type_specifier_seq : type_specifier
@@ -236,12 +254,15 @@ def p_defining_type_specifier(p):
                                 | class_specifier
                                 | enum_specifier
     '''
+    p[0] = Node('defining_type_specifier', '', p[1:])
+
 def p_defining_type_specifier_seq(p):
     '''
         defining_type_specifier_seq : defining_type_specifier
                                     | defining_type_specifier attribute_specifier_seq
                                     | defining_type_specifier defining_type_specifier_seq
     '''
+    p[0] = Node('defining_type_specifier_seq', '', p[1:])
 
 '''
 simple_type_specifier:
@@ -293,12 +314,15 @@ def p_simple_type_specifier(p):
                               | DOUBLE
                               | VOID
     '''
+    p[0] = Node('simple_type_specifier', '', p[1:])
+
 def p_type_name(p):
     '''
         type_name : class_name
                   | enum_name
                   | typedef_name
     '''
+    p[0] = Node('type_name', '', p[1:])
 
 '''
 elaborated_type_specifier:
@@ -319,6 +343,7 @@ def p_elaborated_type_specifier(p):
                                   | class_key nested_name_specifier template simple_template_id
                                   | elaborated_enum_specifier
     '''
+    p[0] = Node('elaborated_type_specifier', '', p[1:])
 
 
 def p_elaborated_enum_specifier(p):
@@ -326,6 +351,7 @@ def p_elaborated_enum_specifier(p):
         elaborated_enum_specifier : enum nested_name_specifier IDENTIFIER
                                   | IDENTIFIER
     '''
+    p[0] = Node('elaborated_enum_specifier', '', p[1:])
 
 '''
 placeholder_type_specifier:
@@ -341,6 +367,7 @@ def p_placeholder_type_specifier(p):
                                    | type_constraint decltype '(' AUTO ')'
     '''
 
+    p[0] = Node('placeholder_type_specifier', '', p[1:])
 
 '''
 init_declarator_list:
@@ -356,12 +383,16 @@ def p_init_declarator_list(p):
         init_declarator_list : init_declarator
                              | init_declarator_list ',' init_declarator
     '''
+    p[0] = Node('init_declarator_list', '', p[1:])
+
 def p_init_declarator(p):
     '''
         init_declarator : declarator
                         | declarator initializer
                         | declarator requires_clause
     '''
+    p[0] = Node('init_declarator', '', p[1:])
+
 '''
 declarator:
     ptr_declarator
@@ -400,11 +431,15 @@ def p_declarator(p):
         declarator : ptr_declarator
                    | noptr_declarator parameters_and_qualifiers trailing_return_type
     '''
+    p[0] = Node('declarator', '', p[1:])
+
 def p_ptr_declarator(p):
     '''
         ptr_declarator : noptr_declarator
                        | ptr_operator ptr_declarator
     '''
+    p[0] = Node('ptr_declarator', '', p[1:])
+
 def p_noptr_declarator(p):
     '''
         noptr_declarator : declarator_id attribute_specifier_seq_opt
@@ -413,12 +448,14 @@ def p_noptr_declarator(p):
                          | '(' ptr_declarator ')'
     '''
 
+    p[0] = Node('noptr_declarator', '', p[1:])
 
 def p_parameters_and_qualifiers(p):
     '''
         parameters_and_qualifiers : '(' parameter_declaration_clause ')' cv_qualifier_seq_opt
                                   | ref_qualifier_opt noexcept_specifier_opt attribute_specifier_seq_opt
     '''
+    p[0] = Node('parameters_and_qualifiers', '', p[1:])
 
 
 
@@ -426,6 +463,8 @@ def p_trailing_return_type(p):
     '''
        trailing_return_type : ARROW type_id
     '''
+    p[0] = Node('trailing_return_type', '', p[1:])
+
 def p_ptr_operator(p):
     '''
         ptr_operator : '*' attribute_specifier_seq_opt cv_qualifier_seq_opt
@@ -433,26 +472,34 @@ def p_ptr_operator(p):
                      | LAND attribute_specifier_seq_opt
                      | nested_name_specifier '*' attribute_specifier_seq_opt cv_qualifier_seq_opt
     '''
+    p[0] = Node('ptr_operator', '', p[1:])
+
 def p_cv_qualifier_seq(p):
     '''
         cv_qualifier_seq : cv_qualifier cv_qualifier_seq_opt
     '''
+    p[0] = Node('cv_qualifier_seq', '', p[1:])
+
 def p_cv_qualifier(p):
     '''
         cv_qualifier : CONST
                      | VOLATILE 
     '''   
+    p[0] = Node('cv_qualifier', '', p[1:])
 
 def p_ref_qualifier(p):
     '''
         ref_qualifier : '&'
                       | LAND
     '''
+    p[0] = Node('ref_qualifier', '', p[1:])
+
 def p_declarator_id(p):
     '''
         declarator_id : id_expression
                       | ELLIPSIS id_expression  
     '''
+    p[0] = Node('declarator_id', '', p[1:])
 
 '''
 type_id:
@@ -483,33 +530,44 @@ def p_type_id(p):
     '''
         type_id : type_specifier_seq abstract_declarator_opt
     '''
+    p[0] = Node('type_id', '', p[1:])
+
 def p_defining_type_id(p):
     '''
         defining_type_id : defining_type_specifier_seq abstract_declarator_opt
     '''
+    p[0] = Node('defining_type_id', '', p[1:])
+
 def p_abstract_declarator(p):
     '''
         abstract_declarator : ptr_abstract_declarator
                             | noptr_abstract_declarator_opt parameters_and_qualifiers trailing_return_type
                             | abstract_pack_declarator
     '''
+    p[0] = Node('abstract_declarator', '', p[1:])
+
 def p_noptr_abstract_declarator(p):
     '''
         noptr_abstract_declarator : noptr_abstract_declarator_opt parameters_and_qualifiers
                                   | noptr_abstract_declarator_opt '[' constant_expression_opt ']' attribute_specifier_seq_opt
                                   | '(' ptr_abstract_declarator ')'
     '''
+    p[0] = Node('noptr_abstract_declarator', '', p[1:])
+
 def p_abstract_pack_declarator(p):
     '''
         abstract_pack_declarator : noptr_abstract_pack_declarator
                                  | ptr_operator abstract_pack_declarator
     '''
+    p[0] = Node('abstract_pack_declarator', '', p[1:])
+    
 def p_noptr_abstract_pack_declarator(p):
     '''
         noptr_abstract_pack_declarator : noptr_abstract_pack_declarator parameters_and_qualifiers
                                        | noptr_abstract_pack_declarator '[' constant_expression_opt ']' attribute_specifier_seq_opt
                                        | ELLIPSIS
     '''
+    p[0] = Node('noptr_abstract_pack_declarator', '', p[1:])
 
 
 # 9.4 Initializers
