@@ -103,28 +103,7 @@ def p_simple_declaration(p):
                            | attribute_specifier_seq decl_specifier_seq init_declarator_list ';'
                            | attribute_specifier_seq_opt decl_specifier_seq ref_qualifier_opt '[' identifier_list ']' initializer ';'
     '''
-    p[0] = Node('simple_declaration', '', p[1:])
 
-def p_init_declarator_list_opt(p):
-    '''
-        init_declarator_list_opt : init_declarator_list
-                                 | empty
-    '''
-    p[0] = Node('init_declarator_list_opt', '', p[1:])
-
-def p_attribute_specifier_seq_opt(p):
-    '''
-        attribute_specifier_seq_opt : attribute_specifier_seq
-                                    | empty
-    '''
-    p[0] = Node('attribute_specifier_seq_opt', '', p[1:])
-
-def p_ref_qualifier_opt(p):
-    '''
-        ref_qualifier_opt : ref_qualifier
-                          | empty
-    '''
-    p[0] = Node('ref_qualifier_opt', '', p[1:])
 
 def p_static_assert_declaration(p):
     '''
@@ -366,12 +345,6 @@ def p_elaborated_type_specifier(p):
     '''
     p[0] = Node('elaborated_type_specifier', '', p[1:])
 
-def p_attribute_specifier_seq_opt(p):
-    '''
-        attribute_specifier_seq_opt : attribute_specifier_seq 
-                                    | empty
-    '''
-    p[0] = Node('attribute_specifier_seq_opt', '', p[1:])
 
 def p_elaborated_enum_specifier(p):
     '''
@@ -466,16 +439,7 @@ def p_noptr_declarator(p):
                          | noptr_declarator '[' constant_expression_opt ']' attribute_specifier_seq_opt
                          | '(' ptr_declarator ')'
     '''
-def p_attribute_specifier_seq_opt(p):
-    '''
-        attribute_specifier_seq_opt : attribute_specifier_seq
-                                    | empty
-    '''
-def p_constant_expression_opt(p):
-    '''
-        constant_expression_opt : constant_expression
-                                | empty
-    '''
+
 
 def p_parameters_and_qualifiers(p):
     '''
@@ -483,22 +447,7 @@ def p_parameters_and_qualifiers(p):
                                   | ref_qualifier_opt noexcept_specifier_opt attribute_specifier_seq_opt
     '''
 
-def p_cv_qualifier_seq_opt(p):
-    '''
-        cv_qualifier_seq_opt : cv_qualifier_seq
-                             | empty
-    '''
 
-def p_ref_qualifier_opt(p):
-    '''
-        cv_ref_qualifier_opt : ref_qualifier
-                             | empty
-    '''
-def p_noexcept_specifier_opt(p):
-    '''
-        noexcept_specifier_opt : noexcept_specifier
-                               | empty
-    '''
 
 def p_trailing_return_type(p):
     '''
@@ -556,26 +505,7 @@ noptr_abstract_pack_declarator:
     noptr_abstract_pack_declarator [ constant_expressionopt ] attribute_specifier_seqopt
     ...
 '''
-def p_abstract_declarator_opt(p):
-    '''
-        abstract_declarator_opt : abstract_declarator
-                                | empty
-    '''
-def p_noptr_abstract_declarator_opt(p):
-    '''
-        noptr_abstract_declarator_opt : noptr_abstract_declarator
-                                      | empty
-    '''
-def p_constant_expression_opt(p):
-    '''
-        constant_expression_opt : constant_expression
-                                | empty
-    '''
-def p_attribute_specifier_seq_opt(p):
-    '''
-        attribute_specifier_seq_opt : attribute_specifier_seq
-                                    | empty
-    '''
+
 def p_type_id(p):
     '''
         type_id : type_specifier_seq abstract_declarator_opt
@@ -627,10 +557,7 @@ def p_initializer_clause(p):
                            | braced_init_list '''
     p[0] = Node('initializer_clause', '', p[1:])
 
-def p_comma_opt(p):
-    ''' comma_opt : ','
-                  | empty '''
-    p[0] = Node('comma_opt', '', p[1:])
+
 
 def p_braced_init_list(p):
     ''' braced_init_list : '{' initializer_list comma_opt '}'
@@ -668,23 +595,13 @@ def p_expr_or_braced_init_list(p):
 # 9.5.1 In general
 
 
-def p_decl_specifier_seq_opt(p):
-    ''' decl_specifier_seq_opt : decl_specifier_seq
-                               | empty '''
-    p[0] = Node('decl_specifier_seq_opt', '', p[1:])
-def p_virt_specifier_seq_opt(p):
-    ''' virt_specifier_seq_opt : virt_specifier_seq
-                               | empty '''
-    p[0] = Node('virt_specifier_seq_opt', '', p[1:])
+
 def p_function_definition(p):
     ''' function_definition : attribute_specifier_seq_opt decl_specifier_seq_opt declarator virt_specifier_seq_opt function_body
                             | attribute_specifier_seq_opt decl_specifier_seq_opt declarator requires_clause function_body '''
     p[0] = Node('function_definition', '', p[1:])
 
-def p_ctor_initializer_opt(p):
-    ''' ctor_initializer_opt : ctor_initializer
-                             | empty '''
-    p[0] = Node('ctor_initializer_opt', '', p[1:])
+
 def p_function_body(p):
     ''' function_body : ctor_initializer_opt compound_statement
                       | function_try_block
@@ -706,20 +623,7 @@ def p_enum_specifier(p):
                        | enum_head '{' enumerator_list ',' '}' '''
     p[0] = Node('enum_specifier', '', p[1:])
 
-def p_enumerator_list_opt(p):
-    ''' enumerator_list_opt : enumerator_list
-                            | empty '''
-    p[0] = Node('enumerator_list_opt', '', p[1:])
 
-def p_enum_head_name_opt(p):
-    ''' enum_head_name_opt : enum_head_name
-                           | empty '''
-    p[0] = Node('enum_head_name_opt', '', p[1:])
-
-def p_enum_base_opt(p):
-    ''' enum_base_opt : enum_base
-                      | empty '''    
-    p[0] = Node('enum_base_opt', '', p[1:])
 
 def p_enum_head(p):
     ''' enum_head : enum_key attribute_specifier_seq_opt enum_head_name_opt enum_base_opt '''
@@ -781,20 +685,7 @@ def p_namespace_definition(p):
                              | nested_namespace_definition '''
     p[0] = Node('namespace_definition', '', p[1:])
 
-def p_inline_opt(p):
-    ''' inline_opt : INLINE
-                   | empty '''
-    p[0] = Node('inline_opt', '', p[1:])
 
-def attribute_specifier_seq_opt(p):
-    ''' attribute_specifier_seq_opt : attribute_specifier_seq
-                                    | empty '''
-    p[0] = Node('attribute_specifier_seq_opt', '', p[1:])
-
-def declaration_seq_opt(p):
-    ''' declaration_seq_opt : declaration_seq
-                            | empty '''
-    p[0] = Node('declaration_seq_opt', '', p[1:])
 
 def p_named_namespace_definition(p):
     ''' named_namespace_definition : inline_opt NAMESPACE attribute_specifier_seq_opt IDENTIFIER '{' namespace_body '}' '''
@@ -827,10 +718,7 @@ def p_namespace_alias_definition(p):
     ''' namespace_alias_definition : NAMESPACE IDENTIFIER '=' qualified_namespace_specifier ';' '''
     p[0] = Node('namespace_alias_definition', '', p[1:])
 
-def p_nested_name_specifier_opt(p):
-    ''' nested_name_specifier_opt : nested_name_specifier
-                                  | empty '''
-    p[0] = Node('nested_name_specifier_opt', '', p[1:])
+
 
 def p_qualified_namespace_specifier(p):
     ''' qualified_namespace_specifier : nested_name_specifier_opt namespace_name '''
@@ -845,10 +733,7 @@ def p_using_directive(p):
 
 # 9.9 The using declaration
 
-def p_ellipsis_opt(p):
-    ''' ellipsis_opt : ELLIPSIS
-                       | empty '''
-    p[0] = Node('ellipsis_opt', '', p[1:])
+
 
 def p_using_declaration(p):
     ''' using_declaration : USING using_declarator_list ';' '''
@@ -879,10 +764,7 @@ def p_attribute_specifier_seq(p):
     ''' attribute_specifier_seq : attribute_specifier_seq_opt attribute_specifier '''
     p[0] = Node('attribute_specifier_seq', '', p[1:])
 
-def p_attribute_using_prefix_opt(p):
-    ''' attribute_using_prefix_opt : attribute_using_prefix
-                                   | empty '''
-    p[0] = Node('attribute_using_prefix_opt', '', p[1:])
+
 
 def p_attribute_specifier(p):
     ''' attribute_specifier : '[' '[' attribute_using_prefix_opt attribute_list ']' ']'
@@ -898,10 +780,6 @@ def p_attribute_using_prefix(p):
     ''' attribute_using_prefix : using attribute_namespace ':' '''
     p[0] = Node('attribute_using_prefix', '', p[1:])
 
-def attribute_opt(p):
-    ''' attribute_opt : attribute
-                      | empty '''
-    p[0] = Node('attribute_opt', '', p[1:])
 
 def p_attribute_list(p):
     ''' attribute_list : attribute_opt
@@ -910,10 +788,6 @@ def p_attribute_list(p):
                        | attribute_list ',' attribute ELLIPSIS '''
     p[0] = Node('attribute_list', '', p[1:])
 
-def p_attribute_argument_clause_opt(p):
-    ''' attribute_argument_clause_opt : attribute_argument_clause
-                                      | empty '''
-    p[0] = Node('attribute_argument_clause_opt', '', p[1:])
 
 def p_attribute(p):
     ''' attribute : attribute_token attribute_argument_clause_opt '''
@@ -933,10 +807,6 @@ def p_attribute_scoped_token(p):
     p[0] = Node('attribute_scoped_token', '', p[1:])
 
 
-def p_balanced_token_seq_opt(p):
-    ''' balanced_token_seq_opt : balanced_token_seq
-                               | empty '''
-    p[0] = Node('balanced_token_seq_opt', '', p[1:])
 
 def p_attribute_argument_clause(p):
     ''' attribute_argument_clause : '(' balanced_token_seq_opt ')' '''
