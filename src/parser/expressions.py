@@ -128,6 +128,10 @@ def p_unary_operator(p):
 def p_await_expression(p):
     ''' await_expression : CO_AWAIT cast_expression '''
 
+# 7.6.2.6 noexcept operator
+def p_noexcept_expression(p):
+    ''' noexcept_expression : NOEXCEPT '(' expression ')' '''
+
 # 7.6.2.7 New
 # TODO
 # 7.6.2.8 Delete
