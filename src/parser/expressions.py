@@ -4,13 +4,25 @@ from .myast import Node
 
 def p_primary_expression(p):
     ''' primary_expression : LITERAL
-                           | this
-                           | '('expression')'
+                           | THIS
+                           | '(' expression ')'
                            | id_expression
                            | lambda_expression
                            | fold_expression
                            | requires_expression '''
     p[0] = Node('primary_expression', '', p[1:])
+
+def p_lambda_expression(p):
+    ''' lambda_expression : IDENTIFIER '''
+    # TODO
+
+def p_fold_expression(p):
+    ''' fold_expression : IDENTIFIER '''
+    # TODO
+
+def p_requires_expression(p):
+    ''' requires_expression : IDENTIFIER '''
+    # TODO
 # 7.5.4 Names
 
 def p_id_expression(p):
@@ -104,7 +116,12 @@ def p_unary_expression(p):
     p[0] = Node('unary_expression', '', p[1:])
 
 def p_unary_operator(p):
-    ''' unary_operator : '*' | '&' | '+' | '-' | '!' | '~' '''
+    ''' unary_operator : '*'
+                       | '&'
+                       | '+'
+                       | '-'
+                       | '!'
+                       | '~' '''
     p[0] = Node('unary_operator', '', p[1:])
 
 # 7.6.2.7 New
@@ -136,8 +153,8 @@ def p_multiplicative_expression(p):
 # 7.6.6 Additive operators
 def p_additive_expression(p):
     ''' additive_expression : multiplicative_expression
-                            | additive_expression + multiplicative_expression
-                            | additive_expression - multiplicative_expression '''
+                            | additive_expression '+' multiplicative_expression
+                            | additive_expression '-' multiplicative_expression '''
     p[0] = Node('additive_expression', '', p[1:])
 
 # 7.6.7 Shift operators
@@ -155,8 +172,8 @@ def p_compare_expression(p):
 # 7.6.9 Relational operators
 def p_relational_expression(p):
     ''' relational_expression : compare_expression
-                              | relational_expression LT compare_expression
-                              | relational_expression GT compare_expression
+                              | relational_expression '<' compare_expression
+                              | relational_expression '>' compare_expression
                               | relational_expression LE compare_expression
                               | relational_expression GE compare_expression '''
     p[0] = Node('relational_expression', '', p[1:])
@@ -224,9 +241,17 @@ def p_assignment_expression(p):
                               | logical_or_expression assignment_operator initializer_clause '''
     p[0] = Node('assignment_expression', '', p[1:])
 def p_assignment_operator(p):
-    ''' assignment_operator : '=' | TIMESEQUAL | DIVEQUAL | MODEQUAL | PLUSEQUAL
-                            | MINUSEQUAL | RSHIFTEQUAL | LSHIFTEQUAL | ANDEQUAL
-                            | XOREQUAL | OREQUAL '''
+    ''' assignment_operator : '='
+                            | TIMESEQUAL
+                            | DIVEQUAL
+                            | MODEQUAL
+                            | PLUSEQUAL
+                            | MINUSEQUAL
+                            | RSHIFTEQUAL
+                            | LSHIFTEQUAL
+                            | ANDEQUAL
+                            | XOREQUAL
+                            | OREQUAL '''
     p[0] = Node('assignment_operator', '', p[1:])
 
 # 7.6.20 Comma operator

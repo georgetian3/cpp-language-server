@@ -1,5 +1,6 @@
 from .expressions import *
 from .statements import *
+from .declarations import *
 
 from ply.yacc import yacc
 

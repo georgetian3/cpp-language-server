@@ -89,7 +89,7 @@ token_tree = {
 
 tokens = ['IDENTIFIER', 'LITERAL']
 
-
+literals = '{}[]();:?.~!+-*/%^&|=<>,'
 tokens += list(keywords.values())
 
 
