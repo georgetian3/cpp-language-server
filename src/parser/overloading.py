@@ -1,8 +1,8 @@
-from .myast import Node
+from .myast import InternalNode, ExternalNode
 
 def p_operator_function_id(p):
     ''' operator_function_id : OPERATOR operator '''
-    p[0] = Node('operator_function_id', '', p[1:])
+    p[0] = ExternalNode('operator_function_id', p[1:])
 
 
 def p_operator(p):
@@ -49,10 +49,10 @@ def p_operator(p):
                  | PLUSPLUS
                  | MINUSMINUS
                  | ',' '''
-    p[0] = Node('operator', '', p[1:])
+    p[0] = ExternalNode('operator', p[1:])
 
 def p_literal_operator_id(p):
     # ''' literal_operator_id : OPERATOR STRING_LITERAL IDENTIFIER
     #                         | OPERATOR USER_DEFINED_STRING_LITERAL ''' todo
     ''' literal_operator_id : OPERATOR STRING_LITERAL IDENTIFIER'''
-    p[0] = Node('literal_operator_id', '', p[1:])
+    p[0] = ExternalNode('literal_operator_id', p[1:])

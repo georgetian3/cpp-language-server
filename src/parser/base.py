@@ -1,2 +1,2 @@
-from .myast import Node
+from .myast import InternalNode, ExternalNode
 

@@ -1,38 +1,29 @@
-import json
 from pprint import pprint
 
 
 class Node:
-    def __init__(self, type, value, children=[]):
-        self.type = type
-        self.value = value
+    def __init__(self, type):
+        self.type = str(type)
+
+class InternalNode(Node):
+    def __init__(self, type, children):
+        super().__init__(type)
         self.children = children
+        for i in range(len(self.children)):
+            if not isinstance(self.children[i], Node):
+                self.children[i] = ExternalNode(str(self.children[i]), str(self.children[i]))
 
-class AST:
+class ExternalNode(Node):
+    def __init__(self, type, value):
+        super().__init__(type)
+        self.value = value
 
-    def __init__(self, root):
-        self.root = root
-
-    def __traverse(self, node):
-
-        subtree = (node.type, node.value)
-        if node.children:
-            subtree = [subtree]
-            for child in node.children:
-                subtree.append(self.__traverse(child))
-
-        return subtree
-
-
-    """ def to_dict(self):
-        return self.__traverse(self.root) """
-
-    def get_list(self):
-        return self.__traverse(self.root)
-
-    def __str__(self):
-        return str(self.__traverse(self.root))
-
-    """ def export(self):
-        with open('out.json', 'w') as f:
-            json.dump(self.to_dict(), f, ensure_ascii=False, indent=4) """
+def traverse(node):
+    if isinstance(node, InternalNode):
+        tree = {node.type: {}}
+        for child in node.children:
+            res = traverse(child)
+            tree[node.type][list(res.keys())[0]] = list(res.values())[0]
+    else:
+        return {node.type: node.value}
+    return tree

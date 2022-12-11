@@ -1,4 +1,4 @@
-from .myast import Node
+from .myast import InternalNode, ExternalNode
 
 '''
 preprocessing_file :
@@ -24,32 +24,32 @@ def p_preprocessing_file(p):
         preprocessing_file : group_opt
                            | module_file
     '''
-    p[0] = Node('preprocessing_file', '', p[1:])  
+    p[0] = ExternalNode('preprocessing_file', p[1:])  
 
 def p_module_file(p):
     '''
         module_file : pp_global_module_fragment_opt pp_module group_opt pp_private_module_fragment_opt
     '''
-    p[0] = Node('module_file', '', p[1:])  
+    p[0] = ExternalNode('module_file', p[1:])  
 
 def p_pp_global_module_fragment(p):
     '''
         pp_global_module_fragment : MODULE ';' new_line group_opt
     '''
-    p[0] = Node('pp_global_module_fragment', '', p[1:])  
+    p[0] = ExternalNode('pp_global_module_fragment', p[1:])  
 
 def p_pp_private_module_fragment(p):
     '''
         pp_private_module_fragment : MODULE PRIVATE ';' new_line group_opt
     '''    
-    p[0] = Node('pp_private_module_fragment', '', p[1:])  
+    p[0] = ExternalNode('pp_private_module_fragment', p[1:])  
 
 def p_group(p):
     '''
         group : group_part
               | group group_part
     '''
-    p[0] = Node('group', '', p[1:])  
+    p[0] = ExternalNode('group', p[1:])  
 
 def p_group_part(p):
     '''
@@ -58,7 +58,7 @@ def p_group_part(p):
                    | text_line
                    | '#' conditionally_supported_directive       
     '''
-    p[0] = Node('group_part', '', p[1:])  
+    p[0] = ExternalNode('group_part', p[1:])  
 
 '''
 control_line:
@@ -94,13 +94,13 @@ def p_control_line(p):
                      | '#' PRAGMA pp_tokens_opt new_line
                      | '#' new_line
     '''
-    p[0] = Node('control_line', '', p[1:])  
+    p[0] = ExternalNode('control_line', p[1:])  
 
 def p_if_section(p):
     '''
         if_section : if_group elif_groups_opt else_group_opt endif_line
     '''
-    p[0] = Node('if_section', '', p[1:])  
+    p[0] = ExternalNode('if_section', p[1:])  
 
 def p_if_group(p):
     '''
@@ -108,7 +108,7 @@ def p_if_group(p):
                  | '#' IFDEF IDENTIFIER new_line group_opt
                  | '#' IFNDEF IDENTIFIER new_line group_opt
     '''
-    p[0] = Node('if_group', '', p[1:])  
+    p[0] = ExternalNode('if_group', p[1:])  
 
 '''
 elif_groups:
@@ -140,57 +140,57 @@ def p_elif_groups(p):
         elif_groups : elif_group
                     | elif_groups elif_group
     '''
-    p[0] = Node('elif_groups', '', p[1:])  
+    p[0] = ExternalNode('elif_groups', p[1:])  
 
 def p_elif_group(p):
     '''
         elif_group : '#' ELIF constant_expression new_line group_opt
     '''
-    p[0] = Node('elif_group', '', p[1:])  
+    p[0] = ExternalNode('elif_group', p[1:])  
 
 def p_else_group(p):
     '''
         else_group : "#" ELSE new_line group_opt
     '''
-    p[0] = Node('else_group', '', p[1:])  
+    p[0] = ExternalNode('else_group', p[1:])  
 
 #todo 
 def p_lparen(p):
     '''
         lparen : '('
     '''
-    p[0] = Node('lparen', '', p[1:])  
+    p[0] = ExternalNode('lparen', p[1:])  
     
 def p_endif_line(p):
     '''
         endif_line : '#' ENDIF new_line
     '''
-    p[0] = Node('endif_line', '', p[1:])  
+    p[0] = ExternalNode('endif_line', p[1:])  
 
 def p_text_line(p):
     '''
         text_line : pp_tokens_opt new_line
     '''
-    p[0] = Node('text_line', '', p[1:])  
+    p[0] = ExternalNode('text_line', p[1:])  
 
 def p_conditionally_supported_directive(p):
     '''
         conditionally_supported_directive : pp_tokens new_line
     '''
-    p[0] = Node('conditionally_supported_directive', '', p[1:])  
+    p[0] = ExternalNode('conditionally_supported_directive', p[1:])  
 
 def p_identifier_list(p):
     '''
         identifier_list : IDENTIFIER
                         | identifier_list ',' IDENTIFIER   
     '''
-    p[0] = Node('identifier_list', '', p[1:])  
+    p[0] = ExternalNode('identifier_list', p[1:])  
 
 def p_replacement_list(p):
     '''
         replacement_list : pp_tokens_opt
     '''
-    p[0] = Node('replacement_list', '', p[1:])  
+    p[0] = ExternalNode('replacement_list', p[1:])  
 
 def p_pp_tokens(p):
     # '''
@@ -200,7 +200,7 @@ def p_pp_tokens(p):
     '''
         pp_tokens : empty
     '''
-    p[0] = Node('pp_tokens', '', p[1:])  
+    p[0] = ExternalNode('pp_tokens', p[1:])  
 
 '''
 new_line:
@@ -234,19 +234,19 @@ def p_new_line(p):
     '''
         new_line : empty
     '''
-    p[0] = Node('new_line', '', p[1:])  
+    p[0] = ExternalNode('new_line', p[1:])  
 
 def p_defined_macro_expression(p):
     '''
         defined_macro_expression : DEFINED IDENTIFIER
                                  | DEFINED '(' IDENTIFIER ')'
     '''
-    p[0] = Node('defined_macro_expression', '', p[1:])  
+    p[0] = ExternalNode('defined_macro_expression', p[1:])  
 def p_pp_module(p):
     '''
         pp_module : export_opt MODULE pp_tokens_opt ';' new_line
     '''
-    p[0] = Node('pp_module', '', p[1:])  
+    p[0] = ExternalNode('pp_module', p[1:])  
 
 #todo
 def p_pp_import(p):
@@ -258,4 +258,4 @@ def p_pp_import(p):
     '''
         pp_import : export_opt IMPORT pp_tokens ';' new_line
     '''
-    p[0] = Node('pp_import', '', p[1:])  
+    p[0] = ExternalNode('pp_import', p[1:])  

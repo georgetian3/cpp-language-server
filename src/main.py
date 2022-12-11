@@ -9,8 +9,9 @@ from lexer.lexhtmlgenerator import LexHTMLGenerator
 from lexer.tokens import *
 import argparse
 import re
-
+from parser.myast import traverse
 from parser.parser import *
+import json
 
 
 
@@ -32,19 +33,13 @@ def run_lexer():
     lexer = lex.lex(debug=True)
     lexer.input(source)
 
-    hg = LexHTMLGenerator()
+    """ hg = LexHTMLGenerator()
     tokens = list(lexer)
     for token in tokens:
         hg.create_html_token(token)
 
-    hg.write_html('output/output.html')
-
-    """ with open(args.o, 'w', encoding='utf8') as f:
-        f.write('\n'.join(str(token) for token in tokens)) """
-
-    """ lexer = lex.lex(debug=False)
-    lexer.input(source)
-    return lexer """
+    hg.write_html('output/output.html') """
+    return lexer
 
 def run_parser():
     args = parse_args()
@@ -55,6 +50,10 @@ def run_parser():
     parser = yacc(debugfile='parser.out', debug=True)
     ast = parser.parse(source, debug=True)
     print(ast)
+    tree = traverse(ast)
+    print(tree)
+    with open('out.json', 'w') as f:
+        json.dump(tree, f, indent=4)
 
 
 def format():
@@ -84,6 +83,6 @@ def format():
 
 if __name__ == '__main__':
     run_lexer()
-    #run_parser()
+    run_parser()
 
     

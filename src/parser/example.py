@@ -95,7 +95,7 @@ def p_term_factor(p):
     '''
     term : factor
     '''
-    p[0] = Node('factor', '', [p[1]])
+    p[0] = ExternalNode('factor', [p[1]])
 
 def p_factor_number(p):
     '''

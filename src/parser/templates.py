@@ -1,4 +1,4 @@
-from .myast import Node
+from .myast import InternalNode, ExternalNode
 
 '''
 template_declaration:
@@ -24,41 +24,41 @@ def p_template_declaration(p):
         template_declaration : template_head declaration
                              | template_head concept_definition
     '''
-    p[0] = Node('template_declaration', '', p[1:])
+    p[0] = ExternalNode('template_declaration', p[1:])
 
 def p_template_head(p):
     '''
         template_head : TEMPLATE '<' template_parameter_list '>' requires_clause
                       | TEMPLATE '<' template_parameter_list
     '''
-    p[0] = Node('template_head', '', p[1:])
+    p[0] = ExternalNode('template_head', p[1:])
 
 def p_template_parameter_list(p):
     '''
         template_parameter_list : template_parameter
                                 | template_parameter_list ',' template_parameter
     '''
-    p[0] = Node('template_parameter_list', '', p[1:])
+    p[0] = ExternalNode('template_parameter_list', p[1:])
 
 def p_requires_clause(p):
     '''
         requires_clause : REQUIRES constraint_logical_or_expression
     '''
-    p[0] = Node('requires_clause', '', p[1:])
+    p[0] = ExternalNode('requires_clause', p[1:])
 
 def p_constraint_logical_or_expression(p):
     '''
         constraint_logical_or_expression : constraint_logical_and_expression
                                          | constraint_logical_or_expression LOR constraint_logical_and_expression
     '''
-    p[0] = Node('constraint_logical_or_expression', '', p[1:])
+    p[0] = ExternalNode('constraint_logical_or_expression', p[1:])
 
 def p_constraint_logical_and_expression(p):
     '''
         constraint_logical_and_expression : primary_expression
                                           | constraint_logical_and_expression LAND primary_expression
     '''
-    p[0] = Node('constraint_logical_and_expression', '', p[1:])
+    p[0] = ExternalNode('constraint_logical_and_expression', p[1:])
 
 '''
 template_parameter:
@@ -84,7 +84,7 @@ def p_template_parameter(p):
         template_parameter : type_parameter
                            | parameter_declaration
     '''
-    p[0] = Node('template_parameter', '', p[1:])
+    p[0] = ExternalNode('template_parameter', p[1:])
 
 def p_type_parameter(p):
     '''
@@ -101,14 +101,14 @@ def p_type_parameter(p):
                        | template_head type_parameter_key '=' type_id
                        | template_head type_parameter_key IDENTIFIER '=' type_id
     '''
-    p[0] = Node('type_parameter', '', p[1:])
+    p[0] = ExternalNode('type_parameter', p[1:])
 
 def p_type_parameter_key(p):
     '''
         type_parameter_key : CLASS
                            | TYPENAME
     '''
-    p[0] = Node('type_parameter_key', '', p[1:])
+    p[0] = ExternalNode('type_parameter_key', p[1:])
 
 def p_type_constraint(p):
     '''
@@ -119,7 +119,7 @@ def p_type_constraint(p):
                             | nested_name_specifier concept_name '<' template_argument_list '>'
                             | concept_name '<' template_argument_list '>'
     '''     
-    p[0] = Node('type_constraint', '', p[1:])
+    p[0] = ExternalNode('type_constraint', p[1:])
 
 
 
@@ -146,7 +146,7 @@ def p_simple_template_id(p):
         simple_template_id : template_name '<' '>'
                            | template_name '<' template_argument_list '>' 
     '''
-    p[0] = Node('simple_template_id', '', p[1:])
+    p[0] = ExternalNode('simple_template_id', p[1:])
 
 def p_template_id(p):
     '''
@@ -156,20 +156,20 @@ def p_template_id(p):
                     | literal_operator_id '<' '>'
                     | literal_operator_id '<' template_argument_list '>'
     '''
-    p[0] = Node('template_id', '', p[1:])
+    p[0] = ExternalNode('template_id', p[1:])
 
 def p_template_name(p):
     '''
         template_name : IDENTIFIER
     '''
-    p[0] = Node('template_name', '', p[1:])
+    p[0] = ExternalNode('template_name', p[1:])
 
 def p_template_argument_list(p):
     '''
         template_argument_list : template_argument ellipsis_opt
                                | template_argument_list ',' ellipsis_opt
     '''
-    p[0] = Node('template_argument_list', '', p[1:])
+    p[0] = ExternalNode('template_argument_list', p[1:])
 
 def p_template_argument(p):
     '''
@@ -177,13 +177,13 @@ def p_template_argument(p):
                           | type_id
                           | id_expression
     '''
-    p[0] = Node('template_argument', '', p[1:])
+    p[0] = ExternalNode('template_argument', p[1:])
 
 
 def p_typename_specifier(p):
     ''' typename_specifier : TYPENAME nested_name_specifier IDENTIFIER
                            | TYPENAME nested_name_specifier template_opt simple_template_id '''
-    p[0] = Node('typename_specifier', '', p[1:])
+    p[0] = ExternalNode('typename_specifier', p[1:])
     
 
 '''
@@ -196,13 +196,13 @@ def p_concept_definition(p):
     '''
         concept_definition : CONCEPT concept_name '=' constraint_expression ';' 
     '''
-    p[0] = Node('concept_definition', '', p[1:])
+    p[0] = ExternalNode('concept_definition', p[1:])
 
 def p_concept_name(p):
     '''
         concept_name : IDENTIFIER 
     '''
-    p[0] = Node('concept_name', '', p[1:])
+    p[0] = ExternalNode('concept_name', p[1:])
 
 # 13.7.1.2 Deduction guides
 
@@ -211,20 +211,20 @@ def p_concept_name(p):
 def p_deduction_guide(p):
     ''' deduction_guide : explicit_specifier_opt template_name '(' parameter_declaration_clause ')' ARROW simple_template_id ';' '''
 
-    p[0] = Node('deduction_guide', '', p[1:])
+    p[0] = ExternalNode('deduction_guide', p[1:])
 
 
 def p_explicit_instantiation(p):
     ''' explicit_instantiation : extern_opt TEMPLATE declaration '''
-    p[0] = Node('explicit_instantiation', '', p[1:])
+    p[0] = ExternalNode('explicit_instantiation', p[1:])
 def p_explicit_specialization(p):
     '''
         explicit_specialization : TEMPLATE '<' '>' declaration
     '''
-    p[0] = Node('explicit_specialization', '', p[1:])
+    p[0] = ExternalNode('explicit_specialization', p[1:])
 
 
 
 def p_constraint_expression(p):
     ''' constraint_expression : logical_or_expression '''
-    p[0] = Node('constraint_expression', '', p[1:])
+    p[0] = ExternalNode('constraint_expression', p[1:])

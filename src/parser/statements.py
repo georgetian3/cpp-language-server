@@ -1,4 +1,4 @@
-from .myast import Node
+from .myast import InternalNode, ExternalNode
 
 """
 8 Statements
@@ -21,18 +21,18 @@ def p_statement(p):
                   | attribute_specifier_seq jump_statement
                   | attribute_specifier_seq try_block '''
 
-    p[0] = Node('statement', '', p[1:])
+    p[0] = ExternalNode('statement', p[1:])
 
 
 def p_init_statement(p):
     ''' init_statement : expression_statement
                        | simple_declaration '''
-    p[0] = Node('init_statement', '', p[1:])
+    p[0] = ExternalNode('init_statement', p[1:])
 def p_condition(p):
     ''' condition : expression
                   | decl_specifier_seq declarator brace_or_equal_initializer
                   | attribute_specifier_seq decl_specifier_seq declarator brace_or_equal_initializer '''
-    p[0] = Node('condition', '', p[1:])
+    p[0] = ExternalNode('condition', p[1:])
 
 
 def p_labeled_statement(p):
@@ -44,28 +44,28 @@ def p_labeled_statement(p):
                          | DEFAULT ':' statement
                          | attribute_specifier_seq DEFAULT ':' statement
     '''
-    p[0] = Node('labeled_statement', '', p[1:])
+    p[0] = ExternalNode('labeled_statement', p[1:])
 
 
 # 8.3 Expression statement
 def p_expression_statement(p):
     ''' expression_statement : expression
                              | empty '''
-    p[0] = Node('expression_statement', '', [p[1]])
+    p[0] = ExternalNode('expression_statement', [p[1]])
 
 def p_compound_statement(p):
     '''
         compound_statement : '{' '}'
                            | '{' statement_seq '}'
     '''
-    p[0] = Node('compound_statement', '', p[1:])
+    p[0] = ExternalNode('compound_statement', p[1:])
 
 def p_statement_seq(p):
     '''
         statement_seq : statement
                       | statement_seq statement
     '''
-    p[0] = Node('statement_seq', '', p[1:])
+    p[0] = ExternalNode('statement_seq', p[1:])
 
 
 def p_selection_statement(p):
@@ -81,7 +81,7 @@ def p_selection_statement(p):
                             | SWITCH '(' condition ')' statement
                             | SWITCH '('  init_statement condition ')' statement
     '''
-    p[0] = Node('selection_statement', '', p[1:])
+    p[0] = ExternalNode('selection_statement', p[1:])
 
 def p_iteration_statement(p):
     '''
@@ -94,7 +94,7 @@ def p_iteration_statement(p):
                             | FOR '(' for_range_declaration ':' for_range_initializer ')' statement
                             | FOR '(' init_statement for_range_declaration ':' for_range_initializer ')' statement
     '''
-    p[0] = Node('iteration_statement', '', p[1:])
+    p[0] = ExternalNode('iteration_statement', p[1:])
 
 def p_for_range_declaration(p):
     '''
@@ -105,13 +105,13 @@ def p_for_range_declaration(p):
                               | decl_specifier_seq ref_qualifier '[' identifier_list ']'
                               | attribute_specifier_seq decl_specifier_seq ref_qualifier '[' identifier_list ']'
     '''
-    p[0] = Node('for_range_declaration', '', p[1:])
+    p[0] = ExternalNode('for_range_declaration', p[1:])
 
 def p_for_range_initializer(p):
     '''
         for_range_initializer : expr_or_braced_init_list
     '''
-    p[0] = Node('for_range_initializer', '', p[1:])
+    p[0] = ExternalNode('for_range_initializer', p[1:])
 
 '''
 jump_statement:
@@ -131,7 +131,7 @@ def p_jump_statement(p):
                        | coroutine_return_statement
                        | GOTO IDENTIFIER ';'
     '''
-    p[0] = Node('for_jump_statement', '', p[1:])
+    p[0] = ExternalNode('for_jump_statement', p[1:])
 
 '''
 coroutine_return_statement:
@@ -143,7 +143,7 @@ def p_coroutine_return_statement(p):
         coroutine_return_statement : CO_RETURN expr_or_braced_init_list ';'
                                    | ';'
     '''
-    p[0] = Node('coroutine_return_statement', '', p[1:])
+    p[0] = ExternalNode('coroutine_return_statement', p[1:])
 
 '''
 declaration_statement:
@@ -154,5 +154,5 @@ def p_declaration_statement(p):
     '''
         declaration_statement : block_declaration
     '''
-    p[0] = Node('declaration_statement', '', p[1:])
+    p[0] = ExternalNode('declaration_statement', p[1:])
 
