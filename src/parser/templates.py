@@ -40,11 +40,11 @@ def p_template_parameter_list(p):
     '''
     p[0] = Node('template_parameter_list', '', p[1:])
 
-def p_require_clause(p):
+def p_requires_clause(p):
     '''
-        require_clause : REQUIRES constraint_logical_or_expression
+        requires_clause : REQUIRES constraint_logical_or_expression
     '''
-    p[0] = Node('require_clause', '', p[1:])
+    p[0] = Node('requires_clause', '', p[1:])
 
 def p_constraint_logical_or_expression(p):
     '''

@@ -81,3 +81,9 @@ volatile
 wchar_t
 while
 module
+include
+define
+undef
+line
+error
+pragma
