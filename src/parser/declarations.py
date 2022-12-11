@@ -147,7 +147,7 @@ def p_decl_specifier(p):
                        | function_specifier
                        | FRIEND
                        | TYPEDEF
-                       | CONSTEPR
+                       | CONSTEXPR
                        | CONSTEVAL
                        | CONSTINIT
                        | INLINE
@@ -315,6 +315,11 @@ def p_simple_type_specifier(p):
                               | VOID
     '''
     p[0] = Node('simple_type_specifier', '', p[1:])
+
+def p_decltype_specifier(p):
+    ''' decltype_specifier : DECLTYPE '(' expression ')' '''
+    p[0] = Node('decltype_specifier', '', p[1:])
+
 
 def p_type_name(p):
     '''

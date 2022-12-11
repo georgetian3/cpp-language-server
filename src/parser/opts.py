@@ -208,3 +208,8 @@ def p_balanced_token_seq_opt(p):
     ''' balanced_token_seq_opt : balanced_token_seq
                                | empty '''
     p[0] = Node('balanced_token_seq_opt', '', p[1:])
+
+
+def p_template_opt(p):
+    ''' template_opt : TEMPLATE
+                     | empty '''

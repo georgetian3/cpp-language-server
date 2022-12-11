@@ -54,7 +54,7 @@ def p_nested_name_specifier(p):
                               | type_name DCOLON
                               | namespace_name DCOLON
                               | decltype_specifier DCOLON
-                              | nested_name_specifier identifier DCOLON
+                              | nested_name_specifier IDENTIFIER DCOLON
                               | nested_name_specifier TEMPLATE simple_template_id DCOLON 
                               | nested_name_specifier simple_template_id DCOLON '''
     p[0] = Node('nested_name_specifier', '', p[1:])
@@ -192,7 +192,7 @@ def p_and_expression(p):
 # 7.6.12 Bitwise exclusive OR operator
 def p_exclusive_or_expression(p):
     ''' exclusive_or_expression : and_expression
-                                | exclusive_or_expression XOR and_expression '''
+                                | exclusive_or_expression '^' and_expression '''
     p[0] = Node('exclusive_or_expression', '', p[1:])
 
 
@@ -200,7 +200,7 @@ def p_exclusive_or_expression(p):
 # 7.6.13 Bitwise inclusive OR operator
 def p_inclusive_or_expression(p):
     ''' inclusive_or_expression : exclusive_or_expression
-                                | inclusive_or_expression OR exclusive_or_expression '''
+                                | inclusive_or_expression '|' exclusive_or_expression '''
     p[0] = Node('inclusive_or_expression', '', p[1:])
 
 # 7.6.14 Logical AND operator
