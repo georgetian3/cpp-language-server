@@ -8,6 +8,8 @@ A B C D E F G H I J K L M N O P Q R S T U V W X Y Z
 _ { } [ ] # ( ) < > % : ; . ? * + - / ^ & | ~ ! = , \ " ’
 """
 
-basic_source_character_set = set(
-    ' \t\v\f\nabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_{}[]#()<>%:;.?*+-/^&|~!=,\\"\''
-)
+from .digits import hexadecimal_digit
+
+basic_source_character = r'[\u0020-\u003f|\u0041-\u005f|\u0061-\u007e]'
+hex_quad = r'(%s{4})' % hexadecimal_digit
+universal_character_name = r'(\\[u|U]%s{1,2})' % hex_quad
