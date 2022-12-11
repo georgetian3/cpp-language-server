@@ -26,7 +26,7 @@ def run_lexer():
     with open('test.cpp', encoding='utf8') as f:
         source = f.read()
 
-    lexer = ply.lex.lex(debug=False)
+    lexer = ply.lex.lex(debug=True)
     lexer.input(source)
 
     hg = LexHTMLGenerator()

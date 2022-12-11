@@ -1,12 +1,6 @@
-from .digits import digit
-
-binary_digit = r'[01]'
-octal_digit = r'[0-7]'
-nonzero_digit = r'[1-9]'
+from .digits import digit, binary_digit, octal_digit, hexadecimal_digit, hexadecimal_digit_sequence, nonzero_digit
 
 hexadecimal_prefix = r'[0x|0X]'
-hexadecimal_digit = r'[0-9a-fA-F]'
-hexadecimal_digit_sequence = r"(%s('?%s)*)" % hexadecimal_digit
 
 unsigned_suffix = r'[uU]'
 long_suffix = r'[lL]'

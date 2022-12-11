@@ -1,5 +1,5 @@
-from .digits import digit_sequence
-from .integer_literal import hexadecimal_prefix, hexadecimal_digit_sequence
+from .digits import digit_sequence, hexadecimal_digit_sequence
+from .integer_literal import hexadecimal_prefix
 
 floating_point_suffix = r'[flFL]'
 sign = r'[\+-]'

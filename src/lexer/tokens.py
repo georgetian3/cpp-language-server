@@ -10,7 +10,7 @@ from pprint import pprint
 
 import types
 from collections import OrderedDict
-from .literals import t_DEC_FLOAT_LITERAL, t_BINARY_LITERAL, t_OCT_LITERAL, t_HEX_LITERAL, t_DEC_LITERAL, t_STRING_LITERAL
+from .literals import *
 
 """
 5.6 Tokens
@@ -21,15 +21,8 @@ There are five kinds of tokens: identifiers, keywords, literals, operators, and 
 token_tree = {
     'preprocessing': 'adfaasdfasdfsdfas', # TODO
     'literal': {
-        'floating_point': {
-            'decimal': 't_DEC_FLOAT_LITERAL',
-        },
-        'integer': {
-            'binary': 't_BINARY_LITERAL',
-            'oct': 't_OCT_LITERAL',
-            'hex': 't_HEX_LITERAL',
-            'dec': 't_DEC_LITERAL',
-        },
+        'floating_point': 't_FLOATING_POINT_LITERAL',
+        'integer': 't_INTEGER_LITERAL',
         'character': '\'.?\'', #'t_CHARACTER_LITERAL',
         'string': 't_STRING_LITERAL',
         'boolean': 'true|false',
