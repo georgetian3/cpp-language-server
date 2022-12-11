@@ -32,6 +32,8 @@ integer_literal = r'(%s%s?|%s%s?|%s%s?|%s%s?)' % (
     hexadecimal_literal, integer_suffix,
 )
 
+integer_literal = '\d+'
+
 
 #############################################################################################################
 # 5.13.3 Character literals

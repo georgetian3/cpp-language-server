@@ -6,13 +6,7 @@ def p_member_specification_opt(p):
                              | empty
     '''
     p[0] = Node('member_specification_opt', '', p[1:])
-
-def p_attribute_specifier_seq_opt(p):
-    '''
-    attribute_specifier_seq_opt : attribute_specifier_seq
-                                | empty
-    '''
-    p[0] = Node('attribute_specifier_seq_opt', '', p[1:])
+    
 
 def p_class_virt_specifier_opt(p):
     '''
