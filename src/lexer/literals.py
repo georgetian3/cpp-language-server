@@ -60,6 +60,8 @@ hexadecimal-escape-sequence :
     hexadecimal-escape-sequence hexadecimal-digit
 """
 
+hex_digit = r"([0-9a-fA-F]'?)"
+octal_digit = r"([0-7]'?)"
 hexdecimal_escape_sequence = r"((\\x)"+r"("+hex_digit+r"+))"
 octal_escape_sequence = r"(("+r"\\"+octal_digit+r")|("+r"\\"+octal_digit+octal_digit+r")|("+r"\\"+octal_digit+octal_digit+octal_digit+r"))"
 simple_escape_sequence = r"((\\\')|(\\\")|(\\\?)|(\\\\)|(\\a)|(\\b)|(\\f)|(\\n)|(\\r)|(\\t)|(\\v))"
