@@ -276,3 +276,26 @@ def p_typename_opt(p):
 def p_ptr_abstract_declarator_opt(p):
     ''' ptr_abstract_declarator_opt : ptr_abstract_declarator
                                     | empty '''
+
+def p_dcolon_opt(p):
+    ''' dcolon_opt : DCOLON
+                   | empty '''
+
+def p_new_placement_opt(p):
+    ''' new_placement_opt : new_placement
+                          | empty '''
+
+def p_new_initializer_opt(p):
+    ''' new_initializer_opt : new_initializer
+                            | empty '''
+def p_new_declarator_opt(p):
+    ''' new_declarator_opt : new_declarator
+                           | empty '''
+
+def p_expression_opt(p):
+    ''' expression_opt : expression
+                       | empty '''
+
+def p_attribute_specific_seq_opt(p):
+    ''' attribute_specific_seq_opt : attribute_specific_seq
+                                   | empty '''

@@ -133,9 +133,32 @@ def p_noexcept_expression(p):
     ''' noexcept_expression : NOEXCEPT '(' expression ')' '''
 
 # 7.6.2.7 New
-# TODO
+
+def p_new_expression(p):
+    ''' new_expression : dcolon_opt NEW new_placement_opt new_type_id new_initializer_opt
+                       | dcolon_opt NEW new_placement_opt '(' type_id ')' new_initializer_opt '''
+
+def p_new_placement(p):
+    ''' new_placement : '(' expression_list ')' '''
+def p_new_type_id(p):
+    ''' new_type_id : type_specifier_seq new_declarator_opt '''
+
+def p_new_declarator(p):
+    ''' ptr_operator : new_declarator_opt
+                     | noptr_new_declarator '''
+
+def p_noptr_new_declarator(p):
+    ''' noptr_new_declarator : '[' expression_opt ']' attribute_specifier_seq_opt
+                             | noptr_new_declarator '[' constant_expression ']' attribute_specific_seq_opt '''
+def p_new_initializer(p):
+    ''' new_initializer : '(' expression_list_opt ')'
+                        | braced_init_list '''
+
 # 7.6.2.8 Delete
-# TODO
+
+def p_delete_expression(p):
+    ''' delete_expression : dcolon_opt DELETE cast_expression
+                          | dcolon_opt DELETE '[' ']' cast_expression '''
 
 # 7.6.3 Explicit type conversion (cast notation)
 def p_cast_expression(p):
