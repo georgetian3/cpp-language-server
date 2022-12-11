@@ -11,7 +11,9 @@ from .exceptions import *
 from .preprocessing import *
 from .keywords import *
 
-
+def p_empty(p):
+    'empty :'
+    pass
 
 from ply.yacc import yacc
 

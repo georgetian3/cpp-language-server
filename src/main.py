@@ -52,8 +52,8 @@ def run_parser():
         source = f.read()
 
 
-    parser = yacc(debugfile='parser.out')
-    ast = parser.parse(source, debug=False)
+    parser = yacc(debugfile='parser.out', debug=True)
+    ast = parser.parse(source, debug=True)
     print(ast)
 
 

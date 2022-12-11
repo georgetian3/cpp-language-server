@@ -1,4 +1,4 @@
-from .base import *
+from .myast import Node
 '''
 try_block:
     try compound_statement handler_seq

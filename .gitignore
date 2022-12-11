@@ -3,3 +3,4 @@ __pycache__
 *.exe
 output.html
 *.json
+*.out

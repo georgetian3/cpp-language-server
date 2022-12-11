@@ -1,4 +1,4 @@
-from .base import *
+from .myast import Node
 
 def p_operator_function_id(p):
     ''' operator_function_id : OPERATOR operator '''

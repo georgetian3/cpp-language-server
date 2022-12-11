@@ -1,4 +1,4 @@
-from .base import p_empty, Node
+from .myast import Node
 
 '''
 template_declaration:

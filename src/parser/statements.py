@@ -1,4 +1,4 @@
-from .base import *
+from .myast import Node
 
 """
 8 Statements

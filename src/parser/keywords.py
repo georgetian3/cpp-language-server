@@ -1,4 +1,4 @@
-from .base import *
+from .myast import Node
 
 def p_import_keyword(p):
     '''
