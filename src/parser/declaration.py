@@ -85,8 +85,8 @@ def p_nodeclspec_function_declaration(p):
 
 def p_alias_declaration(p):
     '''
-        alias_declaration : using identifier '=' defining_type_id ';'
-                          | using identifier attribute_specifier_seq '=' defining_type_id ';' 
+        alias_declaration : USING identifier '=' defining_type_id ';'
+                          | USING identifier attribute_specifier_seq '=' defining_type_id ';' 
     '''
 def p_simple_declaration(p):
     '''
@@ -96,25 +96,25 @@ def p_simple_declaration(p):
     '''
 def p_init_declarator_list_opt(p):
     '''
-        init_declarator_list_opt = init_declarator_list
+        init_declarator_list_opt : init_declarator_list
                                  | empty
     '''
 
 def p_attribute_specifier_seq_opt(p):
     '''
-        attribute_specifier_seq_opt = attribute_specifier_seq
+        attribute_specifier_seq_opt : attribute_specifier_seq
                                     | empty
     '''
 def p_ref_qualifier_opt(p):
     '''
-        ref_qualifier_opt = ref_qualifier
+        ref_qualifier_opt : ref_qualifier
                           | empty
     '''
 
 def p_static_assert_declaration(p):
     '''
-        static_assert_declaration = static_assert '(' constant_expression ')' ';'
-                                  | static_assert '(' constant_expression ',' string_literal ')' ';'
+        static_assert_declaration : STATIC_ASSERT '(' constant_expression ')' ';'
+                                  | STATIC_ASSERT '(' constant_expression ',' string_literal ')' ';'
     '''
 
 def p_empty_declaration(p):
@@ -207,7 +207,7 @@ typedef_name:
 
 def p_typedef_name(p):
     '''
-        typedef_name : identifier
+        typedef_name : IDENTIFIER
                      | simple_template_id
     '''
 
@@ -325,8 +325,8 @@ elaborated_enum_specifier:
 
 def p_elaborated_type_specifier(p):
     '''
-        elaborated_type_specifier : class_key attribute_specifier_seqopt identifier
-                                  | class_key attribute_specifier_seqopt nested_name_specifier identifier
+        elaborated_type_specifier : class_key attribute_specifier_seqopt IDENTIFIER
+                                  | class_key attribute_specifier_seqopt nested_name_specifier IDENTIFIER
                                   | class_key simple_template_id
                                   | simple_template_id
                                   | class_key nested_name_specifier template simple_template_id
@@ -334,8 +334,8 @@ def p_elaborated_type_specifier(p):
     '''
 def p_elaborated_enum_specifier(p):
     '''
-        elaborated_enum_specifier : enum nested_name_specifier identifier
-                                  | identifier
+        elaborated_enum_specifier : enum nested_name_specifier IDENTIFIER
+                                  | IDENTIFIER
     '''
 
 '''
