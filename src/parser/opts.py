@@ -92,6 +92,7 @@ def p_init_declarator_list_opt(p):
         init_declarator_list_opt : init_declarator_list
                                  | empty
     '''
+    p[0] = Node('init_declarator_list_opt', '', p[1:])
 
 
 def p_constant_expression_opt(p):
@@ -99,33 +100,42 @@ def p_constant_expression_opt(p):
         constant_expression_opt : constant_expression
                                 | empty
     '''
+    p[0] = Node('constant_expression_opt', '', p[1:])
 
 def p_cv_qualifier_seq_opt(p):
     '''
         cv_qualifier_seq_opt : cv_qualifier_seq
                              | empty
     '''
+    p[0] = Node('cv_qualifier_seq_opt', '', p[1:])
 
 def p_ref_qualifier_opt(p):
     '''
-        cv_ref_qualifier_opt : ref_qualifier
+        ref_qualifier_opt : ref_qualifier
                              | empty
     '''
+    p[0] = Node('ref_qualifier_opt', '', p[1:])
+
 def p_noexcept_specifier_opt(p):
     '''
         noexcept_specifier_opt : noexcept_specifier
                                | empty
     '''
+    p[0] = Node('noexcept_specifier_opt', '', p[1:])
+
 def p_abstract_declarator_opt(p):
     '''
         abstract_declarator_opt : abstract_declarator
                                 | empty
     '''
+    p[0] = Node('abstract_declarator_opt', '', p[1:])
+
 def p_noptr_abstract_declarator_opt(p):
     '''
         noptr_abstract_declarator_opt : noptr_abstract_declarator
                                       | empty
     '''
+    p[0] = Node('noptr_abstract_declarator_opt', '', p[1:])
 
 def p_comma_opt(p):
     ''' comma_opt : ','
@@ -240,12 +250,14 @@ def p_else_groups_opt(p):
 def p_export_opt(p):
     ''' pp_export_opt : EXPORT
                       | empty '''
-    p[0] = Node('export_opt', '', p[1:])
+    p[0] = Node('pp_export_opt', '', p[1:])
 
 def p_template_opt(p):
     ''' template_opt : TEMPLATE
                      | empty '''
+    p[0] = Node('template_opt', '', p[1:])
 
 def p_explicit_specifier_opt(p):
     ''' explicit_specifier_opt : explicit_specifier
                                | empty '''
+    p[0] = Node('explicit_specifier_opt', '', p[1:])

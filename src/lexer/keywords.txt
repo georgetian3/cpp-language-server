@@ -87,3 +87,6 @@ undef
 line
 error
 pragma
+ifdef
+ifndef
+import
