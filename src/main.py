@@ -50,7 +50,6 @@ def run_parser():
     with open(args.i, encoding='utf8') as f:
         source = f.read()
 
-    parser.
     parser.parse(source, debug=True)    
 
 
@@ -82,7 +81,9 @@ def format():
 if __name__ == '__main__':
     #run_lexer()
     #run_parser()
+    print()
     format()
+    print()
     """ expr = '2 * 3 + 4 * (5 - x)'
     ast = AST(parser.parse(expr, debug=False))
     print(expr)
