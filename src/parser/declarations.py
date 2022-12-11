@@ -383,12 +383,16 @@ def p_init_declarator_list(p):
         init_declarator_list : init_declarator
                              | init_declarator_list ',' init_declarator
     '''
+    p[0] = Node('init_declarator_list', '', p[1:])
+
 def p_init_declarator(p):
     '''
         init_declarator : declarator
                         | declarator initializer
                         | declarator requires_clause
     '''
+    p[0] = Node('init_declarator', '', p[1:])
+
 '''
 declarator:
     ptr_declarator
@@ -427,11 +431,15 @@ def p_declarator(p):
         declarator : ptr_declarator
                    | noptr_declarator parameters_and_qualifiers trailing_return_type
     '''
+    p[0] = Node('declarator', '', p[1:])
+
 def p_ptr_declarator(p):
     '''
         ptr_declarator : noptr_declarator
                        | ptr_operator ptr_declarator
     '''
+    p[0] = Node('ptr_declarator', '', p[1:])
+
 def p_noptr_declarator(p):
     '''
         noptr_declarator : declarator_id attribute_specifier_seq_opt
@@ -440,12 +448,14 @@ def p_noptr_declarator(p):
                          | '(' ptr_declarator ')'
     '''
 
+    p[0] = Node('noptr_declarator', '', p[1:])
 
 def p_parameters_and_qualifiers(p):
     '''
         parameters_and_qualifiers : '(' parameter_declaration_clause ')' cv_qualifier_seq_opt
                                   | ref_qualifier_opt noexcept_specifier_opt attribute_specifier_seq_opt
     '''
+    p[0] = Node('parameters_and_qualifiers', '', p[1:])
 
 
 
@@ -453,6 +463,8 @@ def p_trailing_return_type(p):
     '''
        trailing_return_type : ARROW type_id
     '''
+    p[0] = Node('trailing_return_type', '', p[1:])
+
 def p_ptr_operator(p):
     '''
         ptr_operator : '*' attribute_specifier_seq_opt cv_qualifier_seq_opt
@@ -460,26 +472,34 @@ def p_ptr_operator(p):
                      | LAND attribute_specifier_seq_opt
                      | nested_name_specifier '*' attribute_specifier_seq_opt cv_qualifier_seq_opt
     '''
+    p[0] = Node('ptr_operator', '', p[1:])
+
 def p_cv_qualifier_seq(p):
     '''
         cv_qualifier_seq : cv_qualifier cv_qualifier_seq_opt
     '''
+    p[0] = Node('cv_qualifier_seq', '', p[1:])
+
 def p_cv_qualifier(p):
     '''
         cv_qualifier : CONST
                      | VOLATILE 
     '''   
+    p[0] = Node('cv_qualifier', '', p[1:])
 
 def p_ref_qualifier(p):
     '''
         ref_qualifier : '&'
                       | LAND
     '''
+    p[0] = Node('ref_qualifier', '', p[1:])
+
 def p_declarator_id(p):
     '''
         declarator_id : id_expression
                       | ELLIPSIS id_expression  
     '''
+    p[0] = Node('declarator_id', '', p[1:])
 
 '''
 type_id:
@@ -510,33 +530,44 @@ def p_type_id(p):
     '''
         type_id : type_specifier_seq abstract_declarator_opt
     '''
+    p[0] = Node('type_id', '', p[1:])
+
 def p_defining_type_id(p):
     '''
         defining_type_id : defining_type_specifier_seq abstract_declarator_opt
     '''
+    p[0] = Node('defining_type_id', '', p[1:])
+
 def p_abstract_declarator(p):
     '''
         abstract_declarator : ptr_abstract_declarator
                             | noptr_abstract_declarator_opt parameters_and_qualifiers trailing_return_type
                             | abstract_pack_declarator
     '''
+    p[0] = Node('abstract_declarator', '', p[1:])
+
 def p_noptr_abstract_declarator(p):
     '''
         noptr_abstract_declarator : noptr_abstract_declarator_opt parameters_and_qualifiers
                                   | noptr_abstract_declarator_opt '[' constant_expression_opt ']' attribute_specifier_seq_opt
                                   | '(' ptr_abstract_declarator ')'
     '''
+    p[0] = Node('noptr_abstract_declarator', '', p[1:])
+
 def p_abstract_pack_declarator(p):
     '''
         abstract_pack_declarator : noptr_abstract_pack_declarator
                                  | ptr_operator abstract_pack_declarator
     '''
+    p[0] = Node('abstract_pack_declarator', '', p[1:])
+    
 def p_noptr_abstract_pack_declarator(p):
     '''
         noptr_abstract_pack_declarator : noptr_abstract_pack_declarator parameters_and_qualifiers
                                        | noptr_abstract_pack_declarator '[' constant_expression_opt ']' attribute_specifier_seq_opt
                                        | ELLIPSIS
     '''
+    p[0] = Node('noptr_abstract_pack_declarator', '', p[1:])
 
 
 # 9.4 Initializers
