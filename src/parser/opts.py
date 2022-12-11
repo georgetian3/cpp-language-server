@@ -192,7 +192,7 @@ def p_attribute_using_prefix_opt(p):
     p[0] = Node('attribute_using_prefix_opt', '', p[1:])
 
 
-def attribute_opt(p):
+def p_attribute_opt(p):
     ''' attribute_opt : attribute
                       | empty '''
     p[0] = Node('attribute_opt', '', p[1:])
