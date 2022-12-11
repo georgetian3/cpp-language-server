@@ -1,12 +1,12 @@
 """
 Most of the block comments in this repository originate from the C++ Working Draft N4860
 """
-import ply
+import ply.lex as lex
 from ply.yacc import yacc
 
 from lexer.lexhtmlgenerator import LexHTMLGenerator
 
-from lexer.tokens import tokens
+from lexer.tokens import *
 import argparse
 import re
 
@@ -29,7 +29,7 @@ def run_lexer():
     with open('test.cpp', encoding='utf8') as f:
         source = f.read()
 
-    lexer = ply.lex.lex(debug=True)
+    lexer = lex.lex(debug=True)
     lexer.input(source)
 
     hg = LexHTMLGenerator()
@@ -51,7 +51,6 @@ def run_parser():
     with open('test.cpp', encoding='utf8') as f:
         source = f.read()
 
-    print(source)
 
     parser = yacc()
     ast = parser.parse(source, debug=True)
@@ -84,12 +83,7 @@ def format():
     print(text)
 
 if __name__ == '__main__':
-
+    run_lexer()
     run_parser()
-    """ expr = '2 * 3 + 4 * (5 - x)'
-    ast = AST(parser.parse(expr, debug=False))
-    print(expr)
-    pprint(ast.get_list()) """
-
 
     

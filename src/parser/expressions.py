@@ -54,7 +54,7 @@ def p_nested_name_specifier(p):
                               | type_name DCOLON
                               | namespace_name DCOLON
                               | decltype_specifier DCOLON
-                              | nested_name_specifier identifier DCOLON
+                              | nested_name_specifier IDENTIFIER DCOLON
                               | nested_name_specifier TEMPLATE simple_template_id DCOLON 
                               | nested_name_specifier simple_template_id DCOLON '''
     p[0] = Node('nested_name_specifier', '', p[1:])
@@ -124,6 +124,10 @@ def p_unary_operator(p):
                        | '~' '''
     p[0] = Node('unary_operator', '', p[1:])
 
+# 7.6.2.3 Await
+def p_await_expression(p):
+    ''' await_expression : CO_AWAIT cast_expression '''
+
 # 7.6.2.7 New
 # TODO
 # 7.6.2.8 Delete
@@ -186,13 +190,13 @@ def p_equality_expression(p):
 # 7.6.11 Bitwise AND operator
 def p_and_expression(p):
     ''' and_expression : equality_expression
-                       | and_expression AND equality_expression '''
+                       | and_expression '&' equality_expression '''
 
     p[0] = Node('and_expression', '', p[1:])
 # 7.6.12 Bitwise exclusive OR operator
 def p_exclusive_or_expression(p):
     ''' exclusive_or_expression : and_expression
-                                | exclusive_or_expression XOR and_expression '''
+                                | exclusive_or_expression '^' and_expression '''
     p[0] = Node('exclusive_or_expression', '', p[1:])
 
 
@@ -200,7 +204,7 @@ def p_exclusive_or_expression(p):
 # 7.6.13 Bitwise inclusive OR operator
 def p_inclusive_or_expression(p):
     ''' inclusive_or_expression : exclusive_or_expression
-                                | inclusive_or_expression OR exclusive_or_expression '''
+                                | inclusive_or_expression '|' exclusive_or_expression '''
     p[0] = Node('inclusive_or_expression', '', p[1:])
 
 # 7.6.14 Logical AND operator
@@ -218,7 +222,7 @@ def p_logical_or_expression(p):
 # 7.6.16 Conditional operator
 def p_conditional_expression(p):
     ''' conditional_expression : logical_or_expression
-                               | logical_or_expression CONDOP expression COLON assignment_expression '''
+                               | logical_or_expression CONDOP expression ':' assignment_expression '''
     p[0] = Node('conditional_expression', '', p[1:])
 
 # 7.6.17 Yielding a value
@@ -229,7 +233,7 @@ def p_yield_expression(p):
 
 # 7.6.18 Throwing an exception
 def p_throw_expression(p):
-    ''' throw_expression : throw assignment_expression
+    ''' throw_expression : THROW assignment_expression
                          | empty '''
     p[0] = Node('throw_expression', '', p[1:])
 

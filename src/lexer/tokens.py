@@ -4,12 +4,10 @@ from .comments import *
 from .identifiers import t_IDENTIFIER
 from .keywords import keywords
 #from literals import *
-from .operators import preprocessing_operators, operator_or_punctuators
+from .operators import *
 
 from pprint import pprint
 
-import types
-from collections import OrderedDict
 from .literals import *
 
 """
@@ -20,20 +18,6 @@ There are five kinds of tokens: identifiers, keywords, literals, operators, and 
 
 token_tree = {
     'preprocessing': 'adfaasdfasdfsdfas', # TODO
-    'literal': {
-        'floating_point': 't_FLOATING_POINT_LITERAL',
-        'integer': 't_INTEGER_LITERAL',
-        'character': '\'.?\'', #'t_CHARACTER_LITERAL',
-        'string': 't_STRING_LITERAL',
-        'boolean': 'true|false',
-        'pointer': 'nullptr',
-        'user_defined': 'sdasdfasdfasdffsdfsd', # TODO
-    },
-    'operator_or_punctuator': {
-        #'alternative': alternative_tokens,
-        'preprocessing_operators': preprocessing_operators,
-        **operator_or_punctuators,
-    },
     'separator': {
         'comment': {
             'single_line': '//.*\n',
@@ -91,6 +75,8 @@ tokens = ['IDENTIFIER', 'LITERAL']
 
 literals = '{}[]();:?.~!+-*/%^&|=<>,'
 tokens += list(keywords.values())
+tokens += list(key.upper() for key in operator_or_punctuators.keys())
+
 
 
 __special_chars = set(['.', '+', '*', '?', '^', '$', '(', ')', '[', ']', '{', '}', '|', '\\', '#'])
@@ -119,9 +105,6 @@ def generate_tokens(token_tree, path=''):
             else:
                 globals()['t' + new_path] = token_tree[token]
             tokens.append(new_path[1:])
-        elif type(token_tree[token]) == types.FunctionType:
-            #token_tree[token].__name__ = 't' + new_path
-            tokens.append(token_tree[token].__name__[2:])
         else:
             print('???')
             exit()

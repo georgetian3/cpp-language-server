@@ -37,8 +37,8 @@ def p_condition(p):
 
 def p_labeled_statement(p):
     '''
-        labeled_statement : identifier ':' statement
-                         | attribute_specifier_seq identifier ':' statement
+        labeled_statement : IDENTIFIER ':' statement
+                         | attribute_specifier_seq IDENTIFIER ':' statement
                          | CASE constant_expression ':' statement
                          | attribute_specifier_seq CASE constant_expression ':' statement
                          | DEFAULT ':' statement
@@ -71,13 +71,13 @@ def p_statement_seq(p):
 def p_selection_statement(p):
     '''
         selection_statement : IF '(' condition ')' statement
-                            | IF constexpr '(' condition ')' statement
+                            | IF CONSTEXPR '(' condition ')' statement
                             | IF '(' init_statement condition ')' statement
-                            | IF constexpr '(' init_statement condition ')' statement
+                            | IF CONSTEXPR '(' init_statement condition ')' statement
                             | IF '(' condition ')' statement ELSE statement
-                            | IF constexpr '(' condition ')' statement ELSE statement
+                            | IF CONSTEXPR '(' condition ')' statement ELSE statement
                             | IF '(' init_statement condition ')' statement ELSE statement
-                            | IF constexpr '(' init_statement condition ')' statement ELSE statement
+                            | IF CONSTEXPR '(' init_statement condition ')' statement ELSE statement
                             | SWITCH '(' condition ')' statement
                             | SWITCH '('  init_statement condition ')' statement
     '''
@@ -129,7 +129,7 @@ def p_jump_statement(p):
                        | RETURN ';'
                        | RETURN expr_or_braced_init_list ';'
                        | coroutine_return_statement
-                       | GOTO identifier ';'
+                       | GOTO IDENTIFIER ';'
     '''
     p[0] = Node('for_jump_statement', '', p[1:])
 

@@ -247,3 +247,6 @@ def p_export_opt(p):
                       | empty '''
     p[0] = Node('export_opt', '', p[1:])
 
+def p_template_opt(p):
+    ''' template_opt : TEMPLATE
+                     | empty '''

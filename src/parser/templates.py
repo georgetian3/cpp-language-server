@@ -49,7 +49,7 @@ def p_require_clause(p):
 def p_constraint_logical_or_expression(p):
     '''
         constraint_logical_or_expression : constraint_logical_and_expression
-                                         | constraint_logical_or_expression t_LOR constraint_logical_and_expression
+                                         | constraint_logical_or_expression LOR constraint_logical_and_expression
     '''
     p[0] = Node('constraint_logical_or_expression', '', p[1:])
 
@@ -89,17 +89,17 @@ def p_template_parameter(p):
 def p_type_parameter(p):
     '''
         type_parameter : type_parameter_key
-                       | type_parameter_key identifier
+                       | type_parameter_key IDENTIFIER
                        | type_parameter_key '=' type_id
-                       | type_parameter_key identifier '=' type_id
+                       | type_parameter_key IDENTIFIER '=' type_id
                        | type_constraint
-                       | type_constraint identifier
+                       | type_constraint IDENTIFIER
                        | type_constraint '=' type_id
-                       | type_constraint identifier '=' type_id
+                       | type_constraint IDENTIFIER '=' type_id
                        | template_head type_parameter_key
-                       | template_head type_parameter_key identifier
+                       | template_head type_parameter_key IDENTIFIER
                        | template_head type_parameter_key '=' type_id
-                       | template_head type_parameter_key identifier '=' type_id
+                       | template_head type_parameter_key IDENTIFIER '=' type_id
     '''
     p[0] = Node('type_parameter', '', p[1:])
 
@@ -166,10 +166,8 @@ def p_template_name(p):
 
 def p_template_argument_list(p):
     '''
-        template_argument_list : template_argument
-                               | template_argument t_
-                               | template_argument_list ',' template_argument
-                               | template_argument_list ',' template_argument t_
+        template_argument_list : template_argument ellipsis_opt
+                               | template_argument_list ',' ellipsis_opt
     '''
     p[0] = Node('template_argument_list', '', p[1:])
 
@@ -180,3 +178,8 @@ def p_template_argument(p):
                           | id_expression
     '''
     p[0] = Node('template_argument', '', p[1:])
+
+
+def p_typename_specifier(p):
+    ''' typename_specifier : TYPENAME nested_name_specifier IDENTIFIER
+                           | TYPENAME nested_name_specifier template_opt simple_template_id '''

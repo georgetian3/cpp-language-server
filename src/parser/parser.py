@@ -5,6 +5,7 @@ from .declarations import *
 from .modules import *
 from .classes import *
 from .templates import *
+from .overloading import *
 
 from ply.yacc import yacc
 

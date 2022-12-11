@@ -38,40 +38,40 @@ preprocessing_operators = {
 
 }
 operator_or_punctuators = {
-    'lbrace': '{',
-    'rbrace': '}',
-    'lbracket': '[',
-    'rbracket': ']',
-    'lparen': '(', 
-    'rparen': ')',
-    'semi': ';',
-    'colon': ':',
-    'ellipsis': '...',
-    'condop': '?',
+    'lbrace': '\{',
+    'rbrace': '\}',
+    'lbracket': '\[',
+    'rbracket': '\]',
+    'lparen': '\(', 
+    'rparen': '\)',
+    #'semi': ';',
+    #'colon': ':',
+    'ellipsis': '\.\.\.',
+    'condop': '\?',
     'dcolon': '::', # TODO: find official name
-    'period': '.',
-    'periodstar': '.*', # TODO: find official name
+    'period': '\.',
+    'periodstar': '\.\*', # TODO: find official name
     'arrow': '->',
     'arrowstar': '->*', # TODO: find official name
-    'not': '~',
-    'lnot': '!',
-    'plus': '+',
-    'minus': '-',
-    'times': '*',
-    'divide': '/',
-    'mod': '%',
-    'xor': '^',
-    'and': '&',
-    'or': '|',
-    'equals': '=',
-    'plusequal': '+=',
+    #'not': '~',
+    #'lnot': '!',
+    #'plus': '+',
+    #'minus': '-',
+    #'times': '*',
+    #'divide': '/',
+    #'mod': '%',
+    #'xor': '^',
+    #'and': '&',
+    #'or': '|',
+    #'equals': '=',
+    'plusequal': '\+=',
     'minusequal': '-=',
-    'timesequal': '*=',
+    'timesequal': '\*=',
     'divequal': '/=',
     'modequal': '%=',
     'xorequal': '^=',
     'andequal': '&=',
-    'orequal': '|=',
+    'orequal': '\|=',
     'eq': '==',
     'ne': '!=',
     'lt': '<',
@@ -80,14 +80,14 @@ operator_or_punctuators = {
     'ge': '>=',
     'spaceship': '<=>',
     'land': '&&',
-    'lor': '||',
+    'lor': '\|\|',
     'lshift': '<<',
     'rshift': '>>',
     'lshiftequal': '<<=',
     'rshiftequal': '>>=',
-    'plusplus': '++',
-    'minusminus': '--',
-    'comma': ',',
+    'plusplus': '\+\+',
+    'minusminus': '\-\-',
+    #'comma': ',',
 }
 
 # TODO: alternative tokens
@@ -110,6 +110,10 @@ operator_or_punctuators = {
     '': 'xor_eq',
     '': 'not_eq'
 '''
+
+
+for name, symbol in operator_or_punctuators.items():
+    globals()['t_' + name.upper()] = symbol
 
 """ 
 
