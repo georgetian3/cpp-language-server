@@ -14,17 +14,17 @@ def p_statement(p):
                   | declaration_statement
                   | jump_statement '''
 
-    p[0] = ExternalNode('statement', p[1:])
+    p[0] = InternalNode('statement', p[1:])
 
 
 def p_init_statement(p):
     ''' init_statement : expression_statement
                        | simple_declaration '''
-    p[0] = ExternalNode('init_statement', p[1:])
+    p[0] = InternalNode('init_statement', p[1:])
 def p_condition(p):
     ''' condition : expression
                   | simple_definition '''
-    p[0] = ExternalNode('condition', p[1:])
+    p[0] = InternalNode('condition', p[1:])
 
 
 def p_labeled_statement(p):
@@ -33,28 +33,28 @@ def p_labeled_statement(p):
                          | CASE IDENTIFIER ':' statement
                          | DEFAULT ':' statement
     '''
-    p[0] = ExternalNode('labeled_statement', p[1:])
+    p[0] = InternalNode('labeled_statement', p[1:])
 
 
 # 8.3 Expression statement
 def p_expression_statement(p):
     ''' expression_statement : expression
                              | empty '''
-    p[0] = ExternalNode('expression_statement', [p[1]])
+    p[0] = InternalNode('expression_statement', [p[1]])
 
 def p_compound_statement(p):
     '''
         compound_statement : '{' '}'
                            | '{' statement_seq '}'
     '''
-    p[0] = ExternalNode('compound_statement', p[1:])
+    p[0] = InternalNode('compound_statement', p[1:])
 
 def p_statement_seq(p):
     '''
         statement_seq : statement
                       | statement_seq statement
     '''
-    p[0] = ExternalNode('statement_seq', p[1:])
+    p[0] = InternalNode('statement_seq', p[1:])
 
 
 def p_selection_statement(p):
@@ -70,7 +70,7 @@ def p_selection_statement(p):
                         | SWITCH '(' condition ')' statement
                         | SWITCH '('  init_statement condition ')' statement
     '''
-    p[0] = ExternalNode('selection_statement', p[1:])
+    p[0] = InternalNode('selection_statement', p[1:])
 
 def p_iteration_statement(p):
     '''
@@ -81,14 +81,14 @@ def p_iteration_statement(p):
                         | FOR '(' init_statement ';' expression ')' statement
                         | FOR '(' init_statement condition ';' expression ')' statement
     '''
-    p[0] = ExternalNode('iteration_statement', p[1:])
+    p[0] = InternalNode('iteration_statement', p[1:])
 
 def p_identifier_list(p):
     '''
     identifier_list : IDENTIFIER
                     | identifier_list ',' IDENTIFIER   
     '''
-    p[0] = ExternalNode('identifier_list', p[1:])  
+    p[0] = InternalNode('identifier_list', p[1:])  
 
 
 def p_jump_statement(p):
@@ -99,12 +99,16 @@ def p_jump_statement(p):
                     | RETURN expression ';'
                     | GOTO IDENTIFIER ';'
     '''
-    p[0] = ExternalNode('for_jump_statement', p[1:])
+    if len(p) == 4 and str(p[2]) == "IDENTIFIER":
+        p[2] = ExternalNode('IDENTIFIER', p[2])
+    elif len(p) == 4 and str(p[2]) == "expression":
+        p[2] = ExternalNode('expression', [p[2]])
+    p[0] = InternalNode('jump_statement', p[1:])
 
 
 def p_declaration_statement(p):
     '''
-    declaration_statement   : declaration
+    declaration_statement : declaration
     '''
-    p[0] = ExternalNode('declaration_statement', p[1:])
+    p[0] = InternalNode('declaration_statement', [p[1]])
 
