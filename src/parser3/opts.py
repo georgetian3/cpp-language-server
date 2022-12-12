@@ -95,7 +95,9 @@ def p_expression_opt(p):
 def p_initializer_opt(p):
     ''' initializer_opt : initializer
                         | empty '''
+    p[0] = ExternalNode('initializer_opt', p[1:])
 
 def p_constant_expression_opt(p):
     ''' constant_expression_opt : constant_expression
                                 | empty '''
+    p[0] = ExternalNode('constant_expression_opt', p[1:])
