@@ -33,13 +33,18 @@ def p_labeled_statement(p):
                          | CASE IDENTIFIER ':' statement
                          | DEFAULT ':' statement
     '''
+    if len(p) == 4 and p[1] != 'case':
+        p[1] = ExternalNode('IDENTIFIER',p[1])
+    else :
+        p[2] = ExternalNode('IDENTIFIER',p[2])
+
     p[0] = InternalNode('labeled_statement', p[1:])
 
 
 # 8.3 Expression statement
 def p_expression_statement(p):
-    ''' expression_statement : expression
-                             | empty '''
+    ''' expression_statement : expression ';'
+                             | ';' '''
     p[0] = InternalNode('expression_statement', [p[1]])
 
 def p_compound_statement(p):
@@ -88,6 +93,11 @@ def p_identifier_list(p):
     identifier_list : IDENTIFIER
                     | identifier_list ',' IDENTIFIER   
     '''
+    if len(p) == 2:
+        p[1] = ExternalNode('IDENTIFIER',p[1])
+    else :
+        p[3] = ExternalNode('IDENTIFIER',p[3])
+
     p[0] = InternalNode('identifier_list', p[1:])  
 
 
