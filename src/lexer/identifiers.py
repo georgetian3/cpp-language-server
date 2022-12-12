@@ -37,5 +37,7 @@ identifier = r'([A-Za-z_][A-Za-z0-9_]*)'
 def t_IDENTIFIER(t):
     if t.value in keywords:
         t.type = t.value.upper()
+    elif t.value in ['true', 'false']:
+        t.type = 'literal'
 
     return t

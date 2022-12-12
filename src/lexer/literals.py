@@ -48,6 +48,7 @@ escape_sequence = r'[%s|%s|%s]' % (simple_escape_sequence, octal_escape_sequence
 c_char = r'[(?!\'|\\|\n)%s|%s|%s]' % (basic_source_character, escape_sequence, universal_character_name)
 c_char_sequence = r'(%s+)' % c_char
 character_literal = r'(%s?\'%s\')' % (encoding_prefix, c_char_sequence)
+character_literal = r'\'[^\']\''
 
 #############################################################################################################
 # 5.13.4 Floating-point literals
@@ -101,7 +102,7 @@ string_literal = r'\".*?\"' # TODO: not to spec yet
 #############################################################################################################
 # 5.13.6 Boolean literals
 
-boolean_literal = r'[true|false]'
+boolean_literal = r'(true|false)'
 
 #############################################################################################################
 # 5.13.7 Pointer literals
