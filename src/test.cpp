@@ -1,4 +1,4 @@
-/* #include <iostream>
+#include <iostream>
 #include <iomanip>
 #include <limits>
 #include <typeinfo>
@@ -23,7 +23,7 @@ class MyClass {
 int another_function(char* str) {
     return str[0];
 }
- */
+
 int main() {
     char c = 'c';
     c = 'd';
@@ -31,18 +31,28 @@ int main() {
     char* s = "string";
     float f = -3.14;
     MyClass instance;
-    int test = instance.some_function(2);
-    test = instance.some_function();
+    int test = instance.member_function(2);
+    test = instance.member_function();
     test = another_function(s);
 
+    int a = a || a && a;
+    a = a + a - a * a / a;
+    a = a | a & a ^ a;
+    a = a << (a >> a);
+    a += 1;
+    a -= 1;
+    a *= 1;
+    a /= 1;
+    a <<= 1;
+    a >>= 1;
 
     while (test--) {
         cout << "while loop\n";
     }
  
-        for (int i = 0; i < 10; i++) {
-            cout << "for loop\n";
-        }
+    for (int i = 0; i < 10; i++) {
+        cout << "for loop\n";
+    }
 
     if (c == 'd') {
         cout << "if conditional\n";

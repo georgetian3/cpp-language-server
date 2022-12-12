@@ -54,8 +54,8 @@ operator_or_punctuators = {
     'dcolon': '::', # TODO: find official name
     #'period': '\.',
     'periodstar': '\.\*', # TODO: find official name
-    'arrow': '->',
-    'arrowstar': '->*', # TODO: find official name
+    'arrow': '-\>',
+    'arrowstar': '-\>\*', # TODO: find official name
     #'not': '~',
     #'lnot': '!',
     #'plus': '+',
