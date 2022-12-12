@@ -50,6 +50,7 @@ def p_parameter_declaration_list(p):
     '''
     parameter_declaration_list  : simple_declaration_definition
                                 | parameter_declaration_list ',' simple_declaration_definition
+                                | empty
     '''
     p[0] = InternalNode('parameter_declaration_list', p[1:])
 

@@ -24,10 +24,12 @@ def parse_args():
     return args
 
 
+test_file = 'test.cpp'
+
 def run_lexer():
     args = parse_args()
 
-    with open('test.cpp', encoding='utf8') as f:
+    with open(test_file, encoding='utf8') as f:
         source = f.read()
 
     lexer = lex.lex(debug=True)
@@ -43,7 +45,7 @@ def run_lexer():
 
 def run_parser():
     args = parse_args()
-    with open('test.cpp', encoding='utf8') as f:
+    with open(test_file, encoding='utf8') as f:
         source = f.read()
 
 

@@ -4,12 +4,19 @@ from .myast import InternalNode
 
 def p_start(p):
     '''
-        start   : start pp_include 
-                | start declaration 
+        start   : pp_include start
+                | declaration start
                 | pp_include
                 | declaration
     '''
-    p[0] = InternalNode('start', p[1:])
+
+    if len(p) == 2:
+        children = p[1:]
+    else:
+        children = p[1:]
+
+    p[0] = InternalNode('start', children)
+
 
 from .opts import *
 from .preprocessing import *
