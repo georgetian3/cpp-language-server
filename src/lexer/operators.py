@@ -41,18 +41,18 @@ operator_or_punctuators = {
     #'pphash': r'\#',
     'ppdhash': r'\#\#', # TODO: find official name
 
-    'lbrace': '\{',
-    'rbrace': '\}',
-    'lbracket': '\[',
-    'rbracket': '\]',
-    'lparen': '\(', 
-    'rparen': '\)',
+    #'lbrace': '\{',
+    #'rbrace': '\}',
+    #'lbracket': '\[',
+    #'rbracket': '\]',
+    #'lparen': '\(', 
+    #'rparen': '\)',
     #'semi': ';',
     #'colon': ':',
     'ellipsis': '\.\.\.',
-    'condop': '\?',
+    #'condop': '\?',
     'dcolon': '::', # TODO: find official name
-    'period': '\.',
+    #'period': '\.',
     'periodstar': '\.\*', # TODO: find official name
     'arrow': '->',
     'arrowstar': '->*', # TODO: find official name

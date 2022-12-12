@@ -27,7 +27,7 @@ tokens = [
     'USER_DEFINED_STRING_LITERAL'
 ]
 
-literals = '{}[]();:?.~!+-*/%^&|=<>,\#'
+literals = r'{}[]();:?.~!+-*/%^&$|=<>,\#'
 tokens += [keyword.upper() for keyword in keywords]
 
 for name, symbol in operator_or_punctuators.items():

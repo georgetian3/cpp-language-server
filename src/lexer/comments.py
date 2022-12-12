@@ -7,18 +7,20 @@ The characters /* start a comment, which terminates with the characters */. Thes
 — end note ]
 """
 
-def t_WHITESPACE(t):
-    r'\s+'
-    t.lexer.lineno += t.value.count('\n')
+
 
 
 single_line_comment = r'(//.*?(\n|$))'
 multi_line_comment = r'(/\*(.|\n)*?\*/)'
-comment = r'[%s|%s]' % (single_line_comment, multi_line_comment)
+comment = r'[%s|%s]' % ('f', 'f')
 
 @TOKEN(comment)
 def t_COMMENT(t):
-    r'(//.*?(\n|$))'
-    t.type = 'WHITESPACE'
+    print(t.type, t.value)
+    t.type = 'COMMENT'
     t.lexer.lineno += t.value.count("\n")
     return t
+
+def t_WHITESPACE(t):
+    r'\s+'
+    t.lexer.lineno += t.value.count('\n')
