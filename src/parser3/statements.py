@@ -18,8 +18,8 @@ def p_statement(p):
 
 
 def p_init_statement(p):
-    ''' init_statement : expression_statement
-                       | simple_declaration '''
+    ''' init_statement : simple_declaration_definition ';'
+                       | simple_definition ';' '''
     p[0] = InternalNode('init_statement', p[1:])
 def p_condition(p):
     ''' condition : expression

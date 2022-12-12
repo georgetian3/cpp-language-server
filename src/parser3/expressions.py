@@ -17,15 +17,10 @@ def p_primary_expression(p):
                            | IDENTIFIER
                            | '(' expression ')' '''
     if len(p) == 2:
-        print('################################################')
-        print(p[1])
         if re.match(literal, p[1]):
-            print('literal')
             p[0] = ExternalNode('literal', p[1])
         else:
-            print('identifier')
             p[0] = ExternalNode('IDENTIFIER', p[1])
-
     else:
         p[0] = InternalNode('primary_expression', [p[2]])
 

@@ -1,4 +1,4 @@
-#include <iostream>
+/* #include <iostream>
 #include <iomanip>
 #include <limits>
 #include <typeinfo>
@@ -7,32 +7,45 @@
 class MyClass {
 
     MyClass() {
-        cout << "MyClass constructor" << endl;
+        cout << "MyClass constructor\n";
     }
 
-    int some_function(int a) {
+    int member_function(int a = 1) {
         return a;
+    }
+
+    ~MyClass() {
+        cout << "MyClass destructor\n";
     }
 
 };
 
+int another_function(char* str) {
+    return str[0];
+}
+ */
 int main() {
-    char c = 'c';
-    char c = 'c';
+/*     char c = 'c';
     c = 'd';
     bool b = true;
-    int i = 1;
     char* s = "string";
     float f = 3.14;
-    /* 
-        multiline comment
-    */
-    i *= b || i && c;
- 
-    for (; i < 10; i++) {
-        if (DEBUG) {
-            cout << c << b << i << s << (f + d / i);
-        }
+    MyClass instance;
+    int test = instance.some_function(2);
+    test = instance.some_function();
+    test = another_function(s);
+ */
+/* 
+    while (test--) {
+        cout << "while loop\n";
     }
+  */
+        for (int i = 0; i < 10; i++) {
+            cout << "for loop\n";
+        }
+/* 
+    if (c == 'd') {
+        cout << "if conditional\n";
+    } */
 
 }
