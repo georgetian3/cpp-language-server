@@ -20,6 +20,7 @@ tokens = [
     'WHITESPACE',
     'LITERAL',
     'STRING_LITERAL',
+    'IDENTIFIER',
 ]
 
 literals = r'{}[]();:?.~!+-*/%^&$|=<>,\#'

@@ -17,7 +17,6 @@ def p_primary_expression(p):
                            | IDENTIFIER
                            | '(' expression ')' '''
     if len(p) == 2:
-        print('######################################', p[1], type(p[1]))
         if re.match(literal, p[1]):
             p[0] = ExternalNode('literal', p[1])
         else:
@@ -191,3 +190,11 @@ def p_class_name(p):
     class_name : IDENTIFIER
     '''
     p[0] = InternalNode('class_name', p[1:])
+
+
+def p_redirection(p):
+    '''
+    ptr : '*'
+        | '&'
+    '''
+    p[0] = ExternalNode('indirection', p[1])

@@ -55,7 +55,7 @@ def run_parser():
     tree = traverse(ast)
     print(tree)
     with open('out.json', 'w') as f:
-        json.dump(tree, f, indent=4)
+        json.dump(tree, f, indent=1)
 
 
 def format():
