@@ -21,8 +21,8 @@ def p_start(p):
 from .opts import *
 from .preprocessing import *
 from .expressions import *
-from .statements import *
 from .declarations import *
+from .statements import *
 from .classes import *
 
 def p_empty(p):
