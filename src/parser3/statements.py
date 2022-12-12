@@ -99,10 +99,9 @@ def p_jump_statement(p):
                     | RETURN expression ';'
                     | GOTO IDENTIFIER ';'
     '''
-    if len(p) == 4 and str(p[2]) == "IDENTIFIER":
-        p[2] = ExternalNode('IDENTIFIER', p[2])
-    elif len(p) == 4 and str(p[2]) == "expression":
-        p[2] = ExternalNode('expression', [p[2]])
+
+    if len(p) == 4 and str(p[1]) == "goto":
+        p[2] = ExternalNode('IDENTIFIER',p[2])
     p[0] = InternalNode('jump_statement', p[1:])
 
 

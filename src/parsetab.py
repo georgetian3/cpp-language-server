@@ -199,7 +199,7 @@ _lr_productions = [
   ('relational_expression -> relational_expression > shift_expression','relational_expression',3,'p_relational_expression','expressions.py',109),
   ('relational_expression -> relational_expression LE shift_expression','relational_expression',3,'p_relational_expression','expressions.py',110),
   ('relational_expression -> relational_expression GE shift_expression','relational_expression',3,'p_relational_expression','expressions.py',111),
-  ('declaration_statement -> declaration','declaration_statement',1,'p_declaration_statement','statements.py',112),
+  ('declaration_statement -> declaration','declaration_statement',1,'p_declaration_statement','statements.py',111),
   ('equality_expression -> relational_expression','equality_expression',1,'p_equality_expression','expressions.py',114),
   ('equality_expression -> equality_expression EQ relational_expression','equality_expression',3,'p_equality_expression','expressions.py',115),
   ('equality_expression -> equality_expression NE relational_expression','equality_expression',3,'p_equality_expression','expressions.py',116),
