@@ -3,7 +3,7 @@ from .keywords import keywords
 from .operators import operator_or_punctuators
 
 
-from .literals import t_STRING_LITERAL, t_LITERAL
+from .literals import t_LITERAL
 from .comments import t_COMMENT, t_WHITESPACE
 from .identifiers import t_IDENTIFIER
 
@@ -19,7 +19,6 @@ tokens = [
     'COMMENT',
     'WHITESPACE',
     'LITERAL',
-    'STRING_LITERAL',
     'IDENTIFIER',
 ]
 
