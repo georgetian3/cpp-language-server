@@ -1,65 +1,34 @@
-from .myast import InternalNode, ExternalNode
+from .myast import InternalNode, InternalNode
 
-def p_class_name(p):
+
+def p_class_declaration(p):
     '''
-    class_name : IDENTIFIER
+    class_declaration   : CLASS IDENTIFIER
     '''
-    p[0] = InternalNode('class_name', p[1])
+    p[0] = InternalNode('class_declaration', p[1:])
 
-
-def p_class_specifier(p):
+def p_class_declaration_definition(p):
     '''
-    class_specifier : class_name '{' member_specification_opt '}'
+    class_declaration_definition    : class_declaration '{' member_specification '}'
     '''
-    p[0] = ExternalNode('class_specifier', p[1:])
-
-
+    p[0] = InternalNode('class_declaration_definition', p[1:])
 
 
 
 def p_member_specification(p):
     '''
-    member_specification : member_declaration member_specification_opt
-                         | access_specifier ':' member_specification_opt
+    member_specification    : declaration member_specification
+                            | access_specifier ':' member_specification
+                            | empty
     '''
-    p[0] = ExternalNode('member_specification', p[1:])
-
-
-
-def p_member_declaration(p):
-    '''
-    member_declaration : decl_specifier_seq_opt member_declarator_list_opt ';'
-                       | function_definition
-                       | empty_declaration
-    '''
-    p[0] = ExternalNode('member_declaration', p[1:])
-
-def p_member_declarator_list(p):
-    '''
-    member_declarator_list : member_declarator
-                           | member_declarator_list ',' member_declarator
-    '''
-    p[0] = ExternalNode('member_declarator_list', p[1:])
-
-
-
-
-
-def p_member_declarator(p):
-    '''
-    member_declarator : declarator
-                      | declarator initializer_opt
-                      | identifier_opt ':' initializer_opt
-    '''
-    p[0] = InternalNode('member_declarator', p[1:])
-
+    p[0] = InternalNode('member_specification', p[1:])
 
 
 def p_access_specifier(p):
     '''
-    access_specifier : PRIVATE
-                     | PROTECTED
-                     | PUBLIC
+    access_specifier    : PRIVATE
+                        | PROTECTED
+                        | PUBLIC
     '''
-    p[0] = ExternalNode('access_specifier', p[1:])
+    p[0] = InternalNode('access_specifier', p[1:])
 

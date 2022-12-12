@@ -3,10 +3,12 @@
 from .myast import InternalNode
 
 def p_start(p):
-    ''' start : start pp_include 
-              | start declaration 
-              | pp_include
-              | declaration '''
+    '''
+        start   : start pp_include 
+                | start declaration 
+                | pp_include
+                | declaration
+    '''
     p[0] = InternalNode('start', p[1:])
 
 from .opts import *

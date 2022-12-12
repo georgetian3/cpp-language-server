@@ -3,156 +3,55 @@ from .myast import InternalNode, InternalNode
 
 def p_declaration_seq(p):
     '''
-        declaration_seq : declaration
-                        | declaration_seq declaration
+    declaration_seq : declaration
+                    | declaration_seq declaration
     '''
     p[0] = InternalNode('declaration_seq', p[1:])
 
 def p_declaration(p):
     '''
-        declaration : simple_declaration
-                    | function_declaration
-                    | function_definition
-                    | empty_declaration
+    declaration : simple_declaration
+                | simple_declaration_definition
+                | function_declaration
+                | function_declaration_definition
+                | class_declaration
+                | class_declaration_definition
     '''
     p[0] = InternalNode('declaration', p[1:])
 
-
-def p_nodeclspec_function_declaration(p):
-    '''
-        function_declaration : declarator ';'
-    '''
-    p[0] = InternalNode('function_declaration', p[1:])
-
-
-def p_function_head(p):
-    ''' function_head : type_specifier IDENTIFIER '(' parameter_declaration_list ')' '''
-    p[0] = InternalNode('function_head', p[1:])
-
-def p_function_declaration(p):
-    ''' function_declaration : function_head ';' '''
-    p[0] = InternalNode('function_declaration', p[1:])
-
-
-
-
-def p_function_definition(p):
-    ''' function_definition : function_head function_body '''
-    p[0] = InternalNode('function_definition', p[1:])
-
 def p_simple_declaration(p):
     '''
-        simple_declaration : decl_specifier_seq init_declarator_list_opt ';'
+    simple_declaration  : type_specifier IDENTIFIER
     '''
     p[0] = InternalNode('simple_declaration', p[1:])
-
-
-
-def p_empty_declaration(p):
+def p_simple_declaration_definition(p):
     '''
-        empty_declaration : ';'
+        simple_declaration_definition   : simple_declaration
+                                        | simple_declaration '=' assignment_expression
     '''
-    p[0] = InternalNode('empty_declaration', p[1:])
-
-
-def p_defining_type_specifier(p):
+    p[0] = InternalNode('simple_declaration_definition', p[1:])
+def p_definition(p):
     '''
-        defining_type_specifier : type_specifier
-                                | class_specifier
+        definition  : simple_definition
     '''
-
-def p_decl_specifier(p):
+    p[0] = InternalNode('definition', p[1:])
+def p_simple_definition(p):
     '''
-        decl_specifier : defining_type_specifier
+        simple_definition   : IDENTIFIER '=' assignment_expression
     '''
-    p[0] = InternalNode('decl_specifier', p[1:])
-
-def p_decl_specifier_seq(p):
-    '''
-        decl_specifier_seq : decl_specifier
-                           | decl_specifier decl_specifier_seq
-    '''
-    p[0] = InternalNode('decl_specifier_seq', p[1:])
-
-
-
-
-
-def p_type_specifier_seq(p):
-    '''
-        type_specifier_seq : type_specifier
-                           | type_specifier type_specifier_seq
-    '''
-
-
-def p_init_declarator_list(p):
-    '''
-        init_declarator_list : init_declarator
-                             | init_declarator_list ',' init_declarator
-    '''
-    p[0] = InternalNode('init_declarator_list', p[1:])
-
-def p_init_declarator(p):
-    '''
-        init_declarator : declarator
-                        | declarator initializer
-    '''
-    p[0] = InternalNode('init_declarator', p[1:])
-
-
-def p_declarator(p):
-    '''
-        declarator : ptr_declarator
-                   | noptr_declarator
-    '''
-    p[0] = InternalNode('declarator', p[1:])
-
-def p_ptr_declarator(p):
-    '''
-        ptr_declarator : noptr_declarator
-                       | ptr_operator ptr_declarator
-    '''
-    p[0] = InternalNode('ptr_declarator', p[1:])
-
-
-def p_noptr_declarator(p):
-    '''
-        noptr_declarator : declarator_id
-                         | noptr_declarator '[' constant_expression_opt ']'
-                         | '(' ptr_declarator ')'
-    '''
-
-    p[0] = InternalNode('noptr_declarator', p[1:])
-
-
-
-
-def p_ptr_operator(p):
-    '''
-        ptr_operator : '*'
-                     | '&'
-                     | LAND
-    '''
-    p[0] = InternalNode('ptr_operator', p[1:])
-
-def p_declarator_id(p):
-    '''
-        declarator_id : IDENTIFIER
-    '''
-    p[0] = InternalNode('declarator_id', p[1:])
-
-
-# 9.3.3.5 Functions
-
-def p_parameter_declaration(p):
-    ''' parameter_declaration : decl_specifier_seq declarator 
-                              | decl_specifier_seq declarator '=' assignment_expression
-    '''
+    p[0] = InternalNode('simple_definition', p[1:])
+def p_function_declaration(p):
+    ''' function_declaration : simple_declaration '(' parameter_declaration_list ')' '''
+    p[0] = InternalNode('function_declaration', p[1:])
+def p_function_declaration_definition(p):
+    ''' function_declaration_definition : function_declaration function_body '''
+    p[0] = InternalNode('function_declaration_definition', p[1:])
 def p_parameter_declaration_list(p):
-    ''' parameter_declaration_list : parameter_declaration
-                                   | parameter_declaration_list ',' parameter_declaration '''
-
-
+    '''
+    parameter_declaration_list  : simple_declaration_definition
+                                | parameter_declaration_list ',' simple_declaration_definition
+    '''
+    p[0] = InternalNode('parameter_declaration_list', p[1:])
 
 
 # 9.5 Function definitions

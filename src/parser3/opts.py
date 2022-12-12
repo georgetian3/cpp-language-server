@@ -9,13 +9,6 @@ def p_member_specification_opt(p):
     
 
 
-def p_member_declarator_list_opt(p):
-    '''
-    member_declarator_list_opt : member_declarator_list
-                               | empty
-    '''
-    p[0] = ExternalNode('member_declarator_list_opt', p[1:])
-
 
 def initializer_opt(p):
     '''
@@ -49,14 +42,6 @@ def p_expression_list_opt(p):
     '''
     p[0] = ExternalNode('expression_list_opt', p[1:])
 
-def p_init_declarator_list_opt(p):
-    '''
-        init_declarator_list_opt : init_declarator_list
-                                 | empty
-    '''
-    p[0] = ExternalNode('init_declarator_list_opt', p[1:])
-
-
 
 
 
@@ -65,10 +50,7 @@ def p_comma_opt(p):
                   | empty '''
     p[0] = ExternalNode('comma_opt', p[1:])
 
-def p_decl_specifier_seq_opt(p):
-    ''' decl_specifier_seq_opt : decl_specifier_seq
-                               | empty '''
-    p[0] = ExternalNode('decl_specifier_seq_opt', p[1:])
+
 
 
 
