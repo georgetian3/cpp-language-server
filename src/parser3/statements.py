@@ -104,7 +104,7 @@ def p_jump_statement(p):
 
 def p_declaration_statement(p):
     '''
-    declaration_statement   : declaration ';'
+    declaration_statement   : declaration
     '''
     p[0] = ExternalNode('declaration_statement', p[1:])
 

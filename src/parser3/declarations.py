@@ -10,12 +10,12 @@ def p_declaration_seq(p):
 
 def p_declaration(p):
     '''
-    declaration : simple_declaration
-                | simple_declaration_definition
-                | function_declaration
+    declaration : simple_declaration ';'
+                | simple_declaration_definition ';'
+                | function_declaration ';'
                 | function_declaration_definition
-                | class_declaration
-                | class_declaration_definition
+                | class_declaration ';'
+                | class_declaration_definition ';'
     '''
     p[0] = InternalNode('declaration', p[1:])
 
