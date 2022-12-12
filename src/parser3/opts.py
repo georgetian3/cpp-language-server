@@ -58,17 +58,21 @@ def p_redirection_opt(p):
     redirection_opt : redirection
                     | empty
     '''
+    p[0] = InternalNode('redirection_opt', p[1:])
+
 def p_qualifier_opt(p):
     '''
     qualifier_opt   : qualifier
                     | empty
     '''
+    p[0] = InternalNode('qualifier_opt', p[1:])
 
 def p_brackets_opt(p):
     '''
     brackets_opt    : brackets
                     | empty
     '''
+    p[0] = InternalNode('brackets_opt', p[1:])
 
 def p_declaration_seq_opt(p):
     ''' declaration_seq_opt : declaration_seq
