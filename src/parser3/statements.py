@@ -41,7 +41,11 @@ def p_labeled_statement(p):
 # 8.3 Expression statement
 def p_expression_statement(p):
     ''' expression_statement : expression ';'
+<<<<<<< HEAD
                              | empty '''
+=======
+                             | ';' '''
+>>>>>>> e839ac182b0347a31810405cbd5a9a1b01440562
     p[0] = InternalNode('expression_statement', [p[1]])
 
 def p_compound_statement(p):
@@ -90,6 +94,11 @@ def p_identifier_list(p):
     identifier_list : IDENTIFIER
                     | identifier_list ',' IDENTIFIER   
     '''
+    if len(p) == 2:
+        p[1] = ExternalNode('IDENTIFIER',p[1])
+    else :
+        p[3] = ExternalNode('IDENTIFIER',p[3])
+
     p[0] = InternalNode('identifier_list', p[1:])  
 
 
