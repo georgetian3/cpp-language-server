@@ -32,7 +32,7 @@ integer_literal = r'(%s%s?|%s%s?|%s%s?|%s%s?)' % (
     hexadecimal_literal, integer_suffix,
 )
 
-integer_literal = r'[0-9]+'
+integer_literal = r'[\+-]?[0-9]+'
 
 
 #############################################################################################################
@@ -81,7 +81,7 @@ floating_point_literal = r'[%s|%s]' % (
 
 floating_point_literal = r'[%s\.%s?|%s?\.%s]' % ('[0-9]+', '[0-9]+', '[0-9]+', '[0-9]+') # TODO: not to spec yet
 
-floating_point_literal = r'[0-9]+\.[0-9]+'
+floating_point_literal = r'[\+-]?[0-9]+\.[0-9]+'
 
 #############################################################################################################
 # 5.13.5 String literals

@@ -25,27 +25,27 @@ int another_function(char* str) {
 }
  */
 int main() {
-/*     char c = 'c';
+    char c = 'c';
     c = 'd';
     bool b = true;
     char* s = "string";
-    float f = 3.14;
+    float f = -3.14;
     MyClass instance;
     int test = instance.some_function(2);
     test = instance.some_function();
     test = another_function(s);
- */
-/* 
+
+
     while (test--) {
         cout << "while loop\n";
     }
-  */
+ 
         for (int i = 0; i < 10; i++) {
             cout << "for loop\n";
         }
-/* 
+
     if (c == 'd') {
         cout << "if conditional\n";
-    } */
+    }
 
 }
