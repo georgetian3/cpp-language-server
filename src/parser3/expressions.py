@@ -179,4 +179,4 @@ def p_class_name(p):
     '''
     class_name : IDENTIFIER
     '''
-    p[0] = InternalNode('class_name', p[1])
+    p[0] = InternalNode('class_name', p[1:])
