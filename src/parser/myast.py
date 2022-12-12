@@ -12,12 +12,14 @@ class InternalNode(Node):
         for i in range(len(self.children)):
             if not isinstance(self.children[i], Node):
                 self.children[i] = ExternalNode(str(self.children[i]), str(self.children[i]))
-
+    def __str__(self):
+        return ' '.join(map(str,self.children))
 class ExternalNode(Node):
     def __init__(self, type, value):
         super().__init__(type)
         self.value = value
-
+    def __str__(self):
+        return self.value
 def traverse(node):
     if isinstance(node, InternalNode):
         tree = {node.type: {}}
