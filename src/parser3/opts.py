@@ -49,7 +49,7 @@ def p_expression_list_opt(p):
 def p_comma_opt(p):
     ''' comma_opt : ','
                   | empty '''
-    p[0] = ExternalNode('comma_opt', p[1:])
+    p[0] = InternalNode('comma_opt', p[1:])
 
 
 
@@ -73,7 +73,7 @@ def p_brackets_opt(p):
 def p_declaration_seq_opt(p):
     ''' declaration_seq_opt : declaration_seq
                             | empty '''
-    p[0] = ExternalNode('declaration_seq_opt', p[1:])
+    p[0] = InternalNode('declaration_seq_opt', p[1:])
 
 
 
@@ -81,13 +81,13 @@ def p_declaration_seq_opt(p):
 def p_balanced_token_seq_opt(p):
     ''' balanced_token_seq_opt : balanced_token_seq
                                | empty '''
-    p[0] = ExternalNode('balanced_token_seq_opt', p[1:])
+    p[0] = InternalNode('balanced_token_seq_opt', p[1:])
 
 
 def p_identifier_list_opt(p):
     ''' identifier_list_opt : identifier_list
                             | empty '''
-    p[0] = ExternalNode('identifier_list_opt', p[1:])
+    p[0] = InternalNode('identifier_list_opt', p[1:])
 
 
 
@@ -95,7 +95,7 @@ def p_identifier_list_opt(p):
 def p_parameter_declaration_list_opt(p):
     ''' parameter_declaration_list_opt : parameter_declaration_list
                                        | empty '''
-    p[0] = ExternalNode('parameter_declaration_list_opt', p[1:])
+    p[0] = InternalNode('parameter_declaration_list_opt', p[1:])
 
 def p_typename_opt(p):
     ''' typename_opt : TYPENAME
