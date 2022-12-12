@@ -13,8 +13,8 @@ import re
 import json
 
 
-from parser2.myast import traverse
-from parser2.parser import *
+from parser3.myast import traverse
+from parser3.parser import *
 
 def parse_args():
     parser = argparse.ArgumentParser()

@@ -32,7 +32,7 @@ integer_literal = r'(%s%s?|%s%s?|%s%s?|%s%s?)' % (
     hexadecimal_literal, integer_suffix,
 )
 
-integer_literal = '\d+'
+integer_literal = r'[0-9]+'
 
 
 #############################################################################################################
@@ -137,7 +137,9 @@ def t_BOOLEAN_LITERAL(t):
 @TOKEN(pointer_literal)
 def t_POINTER_LITERAL(t):
     return t
-
+@TOKEN(literal)
+def t_LITERAL(t):
+    return t
 
 
 

@@ -23,6 +23,12 @@ class LexHTMLGenerator:
         value = token.value
         value = value.replace('\n', '<br>')
         value = value.replace(' ', '&nbsp')
+
+        
+        if token.type == '>':
+            token.type = 'GT'
+        elif    token.type == '>':
+            token.type = 'LT'
             
         self.__tokens.append(f'<span id="{len(self.__tokens)}" class={token.type} onmouseover="show_info({len(self.__tokens)})" onmouseleave="hide_info({len(self.__tokens)})">{value}</span>')
 

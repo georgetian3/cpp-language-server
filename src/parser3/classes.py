@@ -2,7 +2,7 @@ from .myast import InternalNode, ExternalNode
 
 def p_class_name(p):
     '''
-    class_name : CONSTEXPR
+    class_name : IDENTIFIER
     '''
     p[0] = InternalNode('class_name', p[1])
 

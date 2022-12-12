@@ -74,25 +74,7 @@ def p_decl_specifier_seq(p):
 
 
 
-def p_type_specifier(p):
-    '''
-        type_specifier : class_name
-                       | CHAR
-                       | CHAR8_T
-                       | CHAR16_T
-                       | CHAR32_T
-                       | WCHAR_T
-                       | BOOL
-                       | SHORT
-                       | INT
-                       | LONG
-                       | SIGNED
-                       | UNSIGNED
-                       | FLOAT
-                       | DOUBLE
-                       | VOID
-    '''
-    p[0] = ExternalNode('type_specifier', p[1:])
+
 
 def p_type_specifier_seq(p):
     '''
@@ -143,12 +125,6 @@ def p_noptr_declarator(p):
 
 
 
-def p_trailing_return_type(p):
-    '''
-       trailing_return_type : ARROW type_id
-    '''
-    p[0] = ExternalNode('trailing_return_type', p[1:])
-
 def p_ptr_operator(p):
     '''
         ptr_operator : '*'
@@ -164,13 +140,6 @@ def p_declarator_id(p):
     p[0] = ExternalNode('declarator_id', p[1:])
 
 
-def p_type_id(p):
-    '''
-        type_id : type_specifier_seq
-    '''
-    p[0] = ExternalNode('type_id', p[1:])
-
-
 
 # 9.3.3.5 Functions
 
@@ -182,18 +151,7 @@ def p_parameter_declaration_list(p):
     ''' parameter_declaration_list : parameter_declaration
                                    | parameter_declaration_list ',' parameter_declaration '''
 
-# 9.4 Initializers
 
-def p_initializer(p):
-    ''' initializer : '=' assignment_expression
-                    | '(' expression_list ')' '''
-    p[0] = ExternalNode('initializer', p[1:])
-
-
-def p_initializer_list(p):
-    ''' initializer_list : assignment_expression
-                         | initializer_list ',' assignment_expression '''
-    p[0] = ExternalNode('initializer_list', p[1:])
 
 
 # 9.5 Function definitions

@@ -11,20 +11,33 @@ def p_expression(p):
 
 def p_primary_expression(p):
     ''' primary_expression : LITERAL
+                           | IDENTIFIER
                            | '(' expression ')' '''
     p[0] = ExternalNode('primary_expression', p[1:])
 
-def p_id_expression(p):
-    ''' id_expression : unqualified_id '''
-    p[0] = ExternalNode('id_expression', p[1:])
-
-def p_unqualified_id(p):
-    ''' unqualified_id : IDENTIFIER
-                       | '~' type_specifier '''
-    p[0] = ExternalNode('unqualified_id', p[1:])
-
 
 # 7.6 Compound expressions
+
+
+def p_type_specifier(p):
+    '''
+        type_specifier : class_name
+                       | CHAR
+                       | CHAR8_T
+                       | CHAR16_T
+                       | CHAR32_T
+                       | WCHAR_T
+                       | BOOL
+                       | SHORT
+                       | INT
+                       | LONG
+                       | SIGNED
+                       | UNSIGNED
+                       | FLOAT
+                       | DOUBLE
+                       | VOID
+    '''
+    p[0] = ExternalNode('type_specifier', p[1:])
 
 # 7.6.1 Postfix expressions
 def p_postfix_expression(p):
@@ -65,86 +78,69 @@ def p_unary_operator(p):
     p[0] = ExternalNode('unary_operator', p[1:])
 
 def p_cast_expression(p):
-    ''' cast_expression : unary_expression
-                        | '(' type_id ')' cast_expression '''
+    ''' cast_expression : unary_expression '''
     p[0] = ExternalNode('cast_expression', p[1:])
 
-# 7.6.4 Pointer-to-member operators
-def p_pm_expression(p):
+
+def p_pm_expression(p): # 7.6.4 Pointer-to-member operators
     ''' pm_expression : cast_expression
                       | pm_expression PERIODSTAR cast_expression
                       | pm_expression ARROWSTAR cast_expression '''
     p[0] = ExternalNode('pm_expression', p[1:])
-
-# 7.6.5 Multiplicative operators
-def p_multiplicative_expression(p):
+def p_multiplicative_expression(p): # 7.6.5 Multiplicative operators
     ''' multiplicative_expression : pm_expression
                                   | multiplicative_expression '*' pm_expression
                                   | multiplicative_expression '/' pm_expression
                                   | multiplicative_expression '%' pm_expression ''' 
     p[0] = ExternalNode('multiplicative_expression', p[1:])
-
-# 7.6.6 Additive operators
-def p_additive_expression(p):
+def p_additive_expression(p): # 7.6.6 Additive operators
     ''' additive_expression : multiplicative_expression
                             | additive_expression '+' multiplicative_expression
                             | additive_expression '-' multiplicative_expression '''
     p[0] = ExternalNode('additive_expression', p[1:])
-
-# 7.6.7 Shift operators
-def p_shift_expression(p):
+def p_shift_expression(p): # 7.6.7 Shift operators
     ''' shift_expression : additive_expression
                          | shift_expression LSHIFT additive_expression
                          | shift_expression RSHIFT additive_expression '''
     p[0] = ExternalNode('shift_expression', p[1:])
-
-# 7.6.9 Relational operators
-def p_relational_expression(p):
+def p_relational_expression(p): # 7.6.9 Relational operators
     ''' relational_expression : shift_expression
                               | relational_expression '<' shift_expression
                               | relational_expression '>' shift_expression
                               | relational_expression LE shift_expression
                               | relational_expression GE shift_expression '''
     p[0] = ExternalNode('relational_expression', p[1:])
-# 7.6.10 Equality operators
-def p_equality_expression(p):
+def p_equality_expression(p): # 7.6.10 Equality operators
     ''' equality_expression : relational_expression
                             | equality_expression EQ relational_expression
                             | equality_expression NE relational_expression '''
     p[0] = ExternalNode('equality_expression', p[1:])
-# 7.6.11 Bitwise AND operator
-def p_and_expression(p):
+def p_and_expression(p): # 7.6.11 Bitwise AND operator
     ''' and_expression : equality_expression
                        | and_expression '&' equality_expression '''
 
     p[0] = ExternalNode('and_expression', p[1:])
-# 7.6.12 Bitwise exclusive OR operator
-def p_exclusive_or_expression(p):
+def p_exclusive_or_expression(p): # 7.6.12 Bitwise exclusive OR operator
     ''' exclusive_or_expression : and_expression
                                 | exclusive_or_expression '^' and_expression '''
     p[0] = ExternalNode('exclusive_or_expression', p[1:])
-# 7.6.13 Bitwise inclusive OR operator
-def p_inclusive_or_expression(p):
+def p_inclusive_or_expression(p): # 7.6.13 Bitwise inclusive OR operator
     ''' inclusive_or_expression : exclusive_or_expression
                                 | inclusive_or_expression '|' exclusive_or_expression '''
     p[0] = ExternalNode('inclusive_or_expression', p[1:])
-# 7.6.14 Logical AND operator
-def p_logical_and_expression(p):
+def p_logical_and_expression(p): # 7.6.14 Logical AND operator
     ''' logical_and_expression : inclusive_or_expression
                                | logical_and_expression LAND inclusive_or_expression '''
     p[0] = ExternalNode('logical_and_expression', p[1:])
-# 7.6.15 Logical OR operator
-def p_logical_or_expression(p):
+def p_logical_or_expression(p): # 7.6.15 Logical OR operator
     ''' logical_or_expression : logical_and_expression
                               | logical_or_expression LOR logical_and_expression '''
     p[0] = ExternalNode('logical_or_expression', p[1:])
-# 7.6.16 Conditional operator
-def p_conditional_expression(p):
+def p_conditional_expression(p): # 7.6.16 Conditional operator
     ''' conditional_expression : logical_or_expression
                                | logical_or_expression '?' expression ':' assignment_expression '''
     p[0] = ExternalNode('conditional_expression', p[1:])
-# 7.6.19 Assignment and compound assignment operators
-def p_assignment_expression(p):
+def p_assignment_expression(p): # 7.6.19 Assignment and compound assignment operators
     ''' assignment_expression : conditional_expression
                               | logical_or_expression assignment_operator assignment_expression '''
     p[0] = ExternalNode('assignment_expression', p[1:])
@@ -161,7 +157,26 @@ def p_assignment_operator(p):
                             | XOREQUAL
                             | OREQUAL '''
     p[0] = ExternalNode('assignment_operator', p[1:])
-# 7.7 Constant expressions
-def p_constant_expression(p):
+
+def p_constant_expression(p): # 7.7 Constant expressions
     ''' constant_expression : conditional_expression '''
     p[0] = ExternalNode('constant_expression', p[1:])
+
+
+
+def p_initializer(p): # 9.4 Initializers
+    ''' initializer : '=' assignment_expression
+                    | '(' expression_list ')' '''
+    p[0] = ExternalNode('initializer', p[1:])
+
+
+def p_initializer_list(p):
+    ''' initializer_list : assignment_expression
+                         | initializer_list ',' assignment_expression '''
+    p[0] = ExternalNode('initializer_list', p[1:])
+
+def p_class_name(p):
+    '''
+    class_name : IDENTIFIER
+    '''
+    p[0] = InternalNode('class_name', p[1])

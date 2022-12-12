@@ -5,12 +5,18 @@ from .statements import *
 from .declarations import *
  """
 
+
+def p_start(p):
+    ''' start : pp_include start
+              | expression start 
+              | empty '''
+
 #from .opts import *
-#from .classes import *
 from .preprocessing import *
 from .expressions import *
 #from .statements import *
 #from .declarations import *
+#from .classes import *
 
 def p_empty(p):
     'empty :'

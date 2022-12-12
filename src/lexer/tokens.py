@@ -4,7 +4,7 @@ from .keywords import keywords
 from .operators import operator_or_punctuators
 
 
-from .literals import t_STRING_LITERAL
+from .literals import t_STRING_LITERAL, t_LITERAL
 from .comments import t_COMMENT, t_WHITESPACE
 
 """
