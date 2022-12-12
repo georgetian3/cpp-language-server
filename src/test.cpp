@@ -1,21 +1,13 @@
 #include <iostream>
-
-
-class MyClass {
-
-    MyClass() {
-
-    }
-
-};
-
-// test
+#include <iomanip>
+#include <limits>
+#include <typeinfo>
+using namespace std;
 
 int a = 3 + 5.5;
 char c = 'c';
 char* s = "string";
 int main() {
-    c = 'd';
-    bool a = true;
-    return 0;
+    char c = 'c';
+    c = 'd' ;
 }
