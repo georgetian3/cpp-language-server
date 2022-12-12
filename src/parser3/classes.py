@@ -17,7 +17,7 @@ def p_class_declaration_definition(p):
 
 def p_member_specification(p):
     '''
-    member_specification    : declaration member_specification
+    member_specification    : declaration ';' member_specification 
                             | access_specifier ':' member_specification
                             | special_function_declaration member_specification
                             | special_function_declaration_definition member_specification
@@ -30,13 +30,13 @@ def p_member_specification(p):
 
 def p_special_function_declaration(p):
     '''
-    special_function_declaration : class_name '(' parameter_declaration_list ')' ';'
+    special_function_declaration : class_name '(' parameter_declaration_list ')'
     '''
     p[0] = InternalNode('special_function_declaration', p[1:])
 
 def p_special_function_declaration_definition(p):
     '''
-    special_function_declaration_definition : special_function_declaration function_body ';'
+    special_function_declaration_definition : special_function_declaration function_body
     '''
     p[0] = InternalNode('special_function_declaration_definition', p[1:])
 
