@@ -27,7 +27,7 @@ def p_brackets(p):
 
 def p_simple_declaration(p):
     '''
-    simple_declaration  : qualifier_opt type_specifier redirection_opt IDENTIFIER brackets_opt
+    simple_declaration  : type_specifier redirection_opt IDENTIFIER
     '''
     if len(p) == 4:
         p[3] = ExternalNode('IDENTIFIER',p[3])
