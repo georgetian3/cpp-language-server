@@ -24,7 +24,7 @@ def p_primary_expression(p):
             p[0] = ExternalNode('literal', p[1])
         else:
             print('identifier')
-            p[0] = ExternalNode('identifier', p[1])
+            p[0] = ExternalNode('IDENTIFIER', p[1])
 
     else:
         p[0] = InternalNode('primary_expression', [p[2]])
@@ -67,6 +67,8 @@ def p_postfix_expression(p):
                            | postfix_expression ARROW IDENTIFIER
                            | postfix_expression PLUSPLUS
                            | postfix_expression MINUSMINUS '''
+    if len(p) == 4 and p[1] != '(':
+        p[3] = ExternalNode('IDENTIFIER',p[3])
     p[0] = InternalNode('postfix_expression', p[1:])
  
 def p_expression_list(p):
@@ -193,6 +195,7 @@ def p_class_name(p):
     '''
     class_name : IDENTIFIER
     '''
+    p[1] = ExternalNode('IDENTIFIER',p[1])
     p[0] = InternalNode('class_name', p[1:])
 
 

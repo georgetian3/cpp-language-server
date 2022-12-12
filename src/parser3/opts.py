@@ -22,7 +22,8 @@ def p_identifier_opt(p):
     identifier_opt : IDENTIFIER
                    | empty
     '''
-    p[0] = ExternalNode('identifier_opt', p[1:])
+    
+    p[0] = InternalNode('identifier_opt', p[1:])
 
 
 
