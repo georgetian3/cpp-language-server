@@ -172,7 +172,7 @@ def p_assignment_operator(p):
                             | ANDEQUAL
                             | XOREQUAL
                             | OREQUAL '''
-    p[0] = InternalNode('assignment_operator', p[1])
+    p[0] = InternalNode('assignment_operator', p[1:])
 
 def p_constant_expression(p): # 7.7 Constant expressions
     ''' constant_expression : conditional_expression '''
