@@ -5,18 +5,6 @@
 using namespace std;
 #define DEBUG true
 
-class MyClass {
-
-    MyClass() {
-        std::cout << "MyClass constructor" << std::endl;
-    }
-
-    int some_function(int a) {
-        return a;
-    }
-
-};
-
 int main() {
     char c = 'c';
     char c = 'c';

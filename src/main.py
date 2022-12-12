@@ -43,7 +43,7 @@ def run_lexer():
 
 def run_parser():
     args = parse_args()
-    with open('test.cpp', encoding='utf8') as f:
+    with open('test1.cpp', encoding='utf8') as f:
         source = f.read()
 
 
