@@ -53,7 +53,22 @@ def p_comma_opt(p):
 
 
 
+def p_redirection_opt(p):
+    '''
+    redirection_opt : redirection
+                    | empty
+    '''
+def p_qualifier_opt(p):
+    '''
+    qualifier_opt   : qualifier
+                    | empty
+    '''
 
+def p_brackets_opt(p):
+    '''
+    brackets_opt    : brackets
+                    | empty
+    '''
 
 def p_declaration_seq_opt(p):
     ''' declaration_seq_opt : declaration_seq

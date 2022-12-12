@@ -20,16 +20,29 @@ def p_declaration(p):
     '''
     p[0] = InternalNode('declaration', p[1:])
 
+def p_brackets(p):
+    '''
+    brackets    : '[' expression_opt ']'
+    '''
+
 def p_simple_declaration(p):
     '''
-    simple_declaration  : type_specifier IDENTIFIER
-                        | type_specifier redirection IDENTIFIER
+    simple_declaration  : qualifier_opt type_specifier redirection_opt IDENTIFIER brackets_opt
     '''
     if len(p) == 3:
         p[2] = ExternalNode('IDENTIFIER',p[2])
     elif len(p) == 2:
         p[1] = ExternalNode('IDENTIFIER',p[1])
     p[0] = InternalNode('simple_declaration', p[1:])
+
+
+def p_qualifier(p):
+    '''
+    qualifier   : CONST
+                | VOLATILE
+    '''
+    p[0] = ExternalNode('qualifier', p[1])
+
 def p_simple_declaration_definition(p):
     '''
         simple_declaration_definition   : simple_declaration

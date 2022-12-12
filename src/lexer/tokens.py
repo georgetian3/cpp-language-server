@@ -2,7 +2,7 @@
 from .keywords import keywords
 from .operators import operator_or_punctuators
 
-
+from .preprocessing import t_INCLUDE
 from .literals import t_LITERAL
 from .comments import t_COMMENT, t_WHITESPACE
 from .identifiers import t_IDENTIFIER
@@ -18,6 +18,7 @@ There are five kinds of tokens: identifiers, keywords, literals, operators, and 
 tokens = [
     'COMMENT',
     'WHITESPACE',
+    'INCLUDE',
     'LITERAL',
     'IDENTIFIER',
 ]
