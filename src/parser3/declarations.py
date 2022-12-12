@@ -11,7 +11,7 @@ def p_declaration_seq(p):
 def p_declaration(p):
     '''
         declaration : simple_declaration
-                    | nodeclspec_function_declaration
+                    | function_declaration
                     | function_definition
                     | empty_declaration
     '''
@@ -20,20 +20,20 @@ def p_declaration(p):
 
 def p_nodeclspec_function_declaration(p):
     '''
-        nodeclspec_function_declaration : declarator ';'
+        function_declaration : declarator ';'
     '''
-    p[0] = InternalNode('nodeclspec_function_declaration', p[1:])
-
-
-
-def p_function_declaration(p):
-    ''' function_declaration : function_head '''
     p[0] = InternalNode('function_declaration', p[1:])
 
 
 def p_function_head(p):
     ''' function_head : type_specifier IDENTIFIER '(' parameter_declaration_list ')' '''
     p[0] = InternalNode('function_head', p[1:])
+
+def p_function_declaration(p):
+    ''' function_declaration : function_head ';' '''
+    p[0] = InternalNode('function_declaration', p[1:])
+
+
 
 
 def p_function_definition(p):
@@ -44,6 +44,8 @@ def p_simple_declaration(p):
     '''
         simple_declaration : decl_specifier_seq init_declarator_list_opt ';'
     '''
+    p[0] = InternalNode('simple_declaration', p[1:])
+
 
 
 def p_empty_declaration(p):
