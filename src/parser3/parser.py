@@ -4,8 +4,8 @@ from .myast import InternalNode
 
 def p_start(p):
     '''
-        start   : start pp_include 
-                | start declaration 
+        start   : pp_include start
+                | declaration start
                 | pp_include
                 | declaration
     '''
