@@ -1,26 +1,27 @@
-""" 
-from .basics import *
+
+
+from .myast import InternalNode
+
+def p_start(p):
+    ''' start : start pp_include 
+              | start declaration 
+              | pp_include
+              | declaration '''
+    p[0] = InternalNode('start', p[1:])
+
+from .opts import *
+from .preprocessing import *
 from .expressions import *
 from .statements import *
 from .declarations import *
- """
-
-
-def p_start(p):
-    ''' start : pp_include start
-              | expression start 
-              | empty '''
-
-#from .opts import *
-from .preprocessing import *
-from .expressions import *
-#from .statements import *
-#from .declarations import *
-#from .classes import *
+from .classes import *
 
 def p_empty(p):
     'empty :'
     p[0] = {'empty': 'empty'}
+
+
+start = 'start'
 
 from ply.yacc import yacc
 

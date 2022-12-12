@@ -1,19 +1,24 @@
 from pprint import pprint
+from collections import OrderedDict
 
 
-class InternalNode:
+class Node:
+    pass
+
+class InternalNode(Node):
     def __init__(self, type, children):
         self.type = type
         self.children = children
         for i in range(len(self.children)):
-            pass
+            if not isinstance(self.children[i], Node):
+                self.children[i] = ExternalNode(str(self.children[i]), str(self.children[i]))
         ast = traverse(self)
         print('--------------------------------------------------------------')
         print(ast)
         print('--------------------------------------------------------------')
 
     
-class ExternalNode:
+class ExternalNode(Node):
     def __init__(self, type, value):
         self.type = type
         self.value = value
@@ -32,5 +37,6 @@ def traverse(node):
         return {node.type: node.value}
     else:
         print('???????????????????')
+        print(node)
         return {None: None}
     return tree

@@ -1,4 +1,4 @@
-from .myast import InternalNode, ExternalNode
+from .myast import InternalNode, InternalNode
 
 
 def p_declaration_seq(p):
@@ -6,7 +6,7 @@ def p_declaration_seq(p):
         declaration_seq : declaration
                         | declaration_seq declaration
     '''
-    p[0] = ExternalNode('declaration_seq', p[1:])
+    p[0] = InternalNode('declaration_seq', p[1:])
 
 def p_declaration(p):
     '''
@@ -15,14 +15,14 @@ def p_declaration(p):
                     | function_definition
                     | empty_declaration
     '''
-    p[0] = ExternalNode('declaration', p[1:])
+    p[0] = InternalNode('declaration', p[1:])
 
 
 def p_nodeclspec_function_declaration(p):
     '''
         nodeclspec_function_declaration : declarator ';'
     '''
-    p[0] = ExternalNode('nodeclspec_function_declaration', p[1:])
+    p[0] = InternalNode('nodeclspec_function_declaration', p[1:])
 
 
 
@@ -50,7 +50,7 @@ def p_empty_declaration(p):
     '''
         empty_declaration : ';'
     '''
-    p[0] = ExternalNode('empty_declaration', p[1:])
+    p[0] = InternalNode('empty_declaration', p[1:])
 
 
 def p_defining_type_specifier(p):
@@ -63,14 +63,14 @@ def p_decl_specifier(p):
     '''
         decl_specifier : defining_type_specifier
     '''
-    p[0] = ExternalNode('decl_specifier', p[1:])
+    p[0] = InternalNode('decl_specifier', p[1:])
 
 def p_decl_specifier_seq(p):
     '''
         decl_specifier_seq : decl_specifier
                            | decl_specifier decl_specifier_seq
     '''
-    p[0] = ExternalNode('decl_specifier_seq', p[1:])
+    p[0] = InternalNode('decl_specifier_seq', p[1:])
 
 
 
@@ -88,14 +88,14 @@ def p_init_declarator_list(p):
         init_declarator_list : init_declarator
                              | init_declarator_list ',' init_declarator
     '''
-    p[0] = ExternalNode('init_declarator_list', p[1:])
+    p[0] = InternalNode('init_declarator_list', p[1:])
 
 def p_init_declarator(p):
     '''
         init_declarator : declarator
                         | declarator initializer
     '''
-    p[0] = ExternalNode('init_declarator', p[1:])
+    p[0] = InternalNode('init_declarator', p[1:])
 
 
 def p_declarator(p):
@@ -103,14 +103,14 @@ def p_declarator(p):
         declarator : ptr_declarator
                    | noptr_declarator
     '''
-    p[0] = ExternalNode('declarator', p[1:])
+    p[0] = InternalNode('declarator', p[1:])
 
 def p_ptr_declarator(p):
     '''
         ptr_declarator : noptr_declarator
                        | ptr_operator ptr_declarator
     '''
-    p[0] = ExternalNode('ptr_declarator', p[1:])
+    p[0] = InternalNode('ptr_declarator', p[1:])
 
 
 def p_noptr_declarator(p):
@@ -120,7 +120,7 @@ def p_noptr_declarator(p):
                          | '(' ptr_declarator ')'
     '''
 
-    p[0] = ExternalNode('noptr_declarator', p[1:])
+    p[0] = InternalNode('noptr_declarator', p[1:])
 
 
 
@@ -131,14 +131,13 @@ def p_ptr_operator(p):
                      | '&'
                      | LAND
     '''
-    p[0] = ExternalNode('ptr_operator', p[1:])
+    p[0] = InternalNode('ptr_operator', p[1:])
 
 def p_declarator_id(p):
     '''
-        declarator_id : id_expression
+        declarator_id : IDENTIFIER
     '''
-    p[0] = ExternalNode('declarator_id', p[1:])
-
+    p[0] = InternalNode('declarator_id', p[1:])
 
 
 # 9.3.3.5 Functions
@@ -160,14 +159,14 @@ def p_parameter_declaration_list(p):
 
 def p_function_body(p):
     ''' function_body : compound_statement '''
-    p[0] = ExternalNode('function_body', p[1:])
+    p[0] = InternalNode('function_body', p[1:])
 # 9.6 Structured binding declarations
 
 
 def p_balanced_token_seq(p):
     ''' balanced_token_seq : balanced_token
                            | balanced_token_seq balanced_token '''
-    p[0] = ExternalNode('balanced_token_seq', p[1:])
+    p[0] = InternalNode('balanced_token_seq', p[1:])
 
 def p_balanced_token(p):
     ''' balanced_token : '(' balanced_token_seq_opt ')'
@@ -175,4 +174,4 @@ def p_balanced_token(p):
                        | '{' balanced_token_seq_opt '}' '''
     #  any token other than a parenthesis, a bracket, or a brace '''  
     # TODO
-    p[0] = ExternalNode('balanced_token', p[1:])
+    p[0] = InternalNode('balanced_token', p[1:])
