@@ -23,11 +23,11 @@ def p_declaration(p):
 def p_brackets(p):
     '''
     brackets    : '[' expression_opt ']'
-    '''
+    ''' 
 
 def p_simple_declaration(p):
     '''
-    simple_declaration  : qualifier_opt type_specifier redirection_opt IDENTIFIER brackets_opt
+    simple_declaration  : type_specifier redirection_opt IDENTIFIER
     '''
     if len(p) == 4:
         p[3] = ExternalNode('IDENTIFIER',p[3])
@@ -65,7 +65,7 @@ def p_function_declaration(p):
     ''' function_declaration : simple_declaration '(' parameter_declaration_list ')' '''
     p[0] = InternalNode('function_declaration', p[1:])
 def p_function_declaration_definition(p):
-    ''' function_declaration_definition : function_declaration function_body '''
+    ''' function_declaration_definition : function_declaration compound_statement '''
     p[0] = InternalNode('function_declaration_definition', p[1:])
 def p_parameter_declaration_list(p):
     '''
