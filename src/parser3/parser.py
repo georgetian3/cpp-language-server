@@ -9,7 +9,14 @@ def p_start(p):
                 | pp_include
                 | declaration
     '''
-    p[0] = InternalNode('start', p[1:])
+
+    if len(p) == 2:
+        children = p[1:]
+    else:
+        children = p[1:]
+
+    p[0] = InternalNode('start', children)
+
 
 from .opts import *
 from .preprocessing import *

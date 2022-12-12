@@ -28,10 +28,9 @@ class ExternalNode(Node):
 
 def traverse(node):
     if isinstance(node, InternalNode):
-        tree = {node.type: {}}
+        tree = [node.type, []]
         for child in node.children:
-            res = traverse(child)
-            tree[node.type][list(res.keys())[0]] = list(res.values())[0]
+            tree[1].append(traverse(child))
     elif isinstance(node, ExternalNode):
         print(node.type, node.value)
         return {node.type: node.value}
