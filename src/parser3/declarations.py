@@ -45,7 +45,7 @@ def p_simple_definition(p):
     '''
         simple_definition   : IDENTIFIER '=' assignment_expression
     '''
-    p[1] = ExternalNode('IDENTIFIER',p[1])
+    #p[1] = ExternalNode('IDENTIFIER',p[1])
     p[0] = InternalNode('simple_definition', p[1:])
 
 def p_function_declaration(p):

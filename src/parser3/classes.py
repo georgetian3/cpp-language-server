@@ -5,7 +5,7 @@ def p_class_declaration(p):
     '''
     class_declaration   : CLASS class_name
     '''
-    p[2] = ExternalNode('IDENTIFIER', p[2])
+    #p[2] = ExternalNode('IDENTIFIER', p[2])
     p[0] = InternalNode('class_declaration',p[1:])
 def p_class_declaration_definition(p):
     '''
