@@ -1,4 +1,4 @@
-from .myast import InternalNode, InternalNode
+from .myast import InternalNode, ExternalNode
 
 
 def p_declaration_seq(p):
@@ -22,6 +22,7 @@ def p_declaration(p):
 def p_simple_declaration(p):
     '''
     simple_declaration  : type_specifier IDENTIFIER
+                        | type_specifier redirection IDENTIFIER
     '''
     p[0] = InternalNode('simple_declaration', p[1:])
 def p_simple_declaration_definition(p):

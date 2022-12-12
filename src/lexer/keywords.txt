@@ -33,7 +33,6 @@ explicit
 export
 extern
 final
-false
 float
 for
 friend
@@ -67,7 +66,6 @@ template
 this
 thread_local
 throw
-true
 try
 typedef
 typeid

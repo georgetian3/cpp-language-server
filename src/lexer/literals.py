@@ -48,6 +48,7 @@ escape_sequence = r'[%s|%s|%s]' % (simple_escape_sequence, octal_escape_sequence
 c_char = r'[(?!\'|\\|\n)%s|%s|%s]' % (basic_source_character, escape_sequence, universal_character_name)
 c_char_sequence = r'(%s+)' % c_char
 character_literal = r'(%s?\'%s\')' % (encoding_prefix, c_char_sequence)
+character_literal = r'\'[^\']\''
 
 #############################################################################################################
 # 5.13.4 Floating-point literals
@@ -80,6 +81,7 @@ floating_point_literal = r'[%s|%s]' % (
 
 floating_point_literal = r'[%s\.%s?|%s?\.%s]' % ('[0-9]+', '[0-9]+', '[0-9]+', '[0-9]+') # TODO: not to spec yet
 
+floating_point_literal = r'[0-9]+\.[0-9]+'
 
 #############################################################################################################
 # 5.13.5 String literals
@@ -101,7 +103,7 @@ string_literal = r'\".*?\"' # TODO: not to spec yet
 #############################################################################################################
 # 5.13.6 Boolean literals
 
-boolean_literal = r'[true|false]'
+boolean_literal = r'(true|false)'
 
 #############################################################################################################
 # 5.13.7 Pointer literals
@@ -111,24 +113,24 @@ pointer_literal = r'(nullptr)'
 
 
 literal = '[%s|%s|%s|%s|%s|%s]' % (
+    floating_point_literal,
     integer_literal,
     character_literal,
-    floating_point_literal,
     string_literal,
     boolean_literal,
     pointer_literal,
 )
-
+""" 
 @TOKEN(integer_literal)
 def t_INTEGER_LITERAL(t):
     return t
 @TOKEN(character_literal)
 def t_CHARACTER_LITERAL(t):
-    return t
+    return t """
 @TOKEN(floating_point_literal)
 def t_FLOATING_POINT_LITERAL(t):
     return t
-@TOKEN(string_literal)
+""" @TOKEN(string_literal)
 def t_STRING_LITERAL(t):
     return t
 @TOKEN(boolean_literal)
@@ -136,7 +138,7 @@ def t_BOOLEAN_LITERAL(t):
     return t
 @TOKEN(pointer_literal)
 def t_POINTER_LITERAL(t):
-    return t
+    return t """
 @TOKEN(literal)
 def t_LITERAL(t):
     return t

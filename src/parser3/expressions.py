@@ -1,5 +1,8 @@
-from .myast import InternalNode, InternalNode
-
+from .myast import InternalNode, ExternalNode
+import re
+from lexer.identifiers import identifier
+from lexer.keywords import keywords
+from lexer.literals import literal
 
 def p_expression(p):
     ''' expression : assignment_expression
@@ -13,7 +16,18 @@ def p_primary_expression(p):
     ''' primary_expression : LITERAL
                            | IDENTIFIER
                            | '(' expression ')' '''
-    p[0] = InternalNode('primary_expression', p[1:])
+    if len(p) == 2:
+        print('################################################')
+        print(p[1])
+        if re.match(literal, p[1]):
+            print('literal')
+            p[0] = ExternalNode('literal', p[1])
+        else:
+            print('identifier')
+            p[0] = ExternalNode('identifier', p[1])
+
+    else:
+        p[0] = InternalNode('primary_expression', [p[2]])
 
 
 # 7.6 Compound expressions
@@ -180,3 +194,11 @@ def p_class_name(p):
     class_name : IDENTIFIER
     '''
     p[0] = InternalNode('class_name', p[1:])
+
+
+def p_redirection(p):
+    '''
+    redirection : '*'
+                | '&'
+    '''
+    p[0] = ExternalNode('redirection', p[1])

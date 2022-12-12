@@ -47,7 +47,7 @@ def p_compound_statement(p):
         compound_statement : '{' '}'
                            | '{' statement_seq '}'
     '''
-    p[0] = InternalNode('compound_statement', p[1:])
+    p[0] = InternalNode('compound_statement', [p[2]])
 
 def p_statement_seq(p):
     '''
