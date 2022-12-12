@@ -32,7 +32,6 @@ def traverse(node):
         for child in node.children:
             tree[1].append(traverse(child))
     elif isinstance(node, ExternalNode):
-        print(node.type, node.value)
         return {node.type: node.value}
     else:
         print('???????????????????')

@@ -33,7 +33,7 @@ def p_simple_declaration_definition(p):
     p[0] = InternalNode('simple_declaration_definition', p[1:])
 def p_definition(p):
     '''
-        definition  : simple_definition
+        definition  : simple_definition ';'
     '''
     p[0] = InternalNode('definition', p[1:])
 def p_simple_definition(p):

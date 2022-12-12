@@ -38,7 +38,7 @@ def p_labeled_statement(p):
 
 # 8.3 Expression statement
 def p_expression_statement(p):
-    ''' expression_statement : expression
+    ''' expression_statement : expression ';'
                              | empty '''
     p[0] = InternalNode('expression_statement', [p[1]])
 
