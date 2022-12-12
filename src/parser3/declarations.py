@@ -24,6 +24,10 @@ def p_simple_declaration(p):
     simple_declaration  : type_specifier IDENTIFIER
                         | type_specifier redirection IDENTIFIER
     '''
+    if len(p) == 3:
+        p[2] = ExternalNode('IDENTIFIER',p[2])
+    elif len(p) == 2:
+        p[1] = ExternalNode('IDENTIFIER',p[1])
     p[0] = InternalNode('simple_declaration', p[1:])
 def p_simple_declaration_definition(p):
     '''
@@ -40,6 +44,7 @@ def p_simple_definition(p):
     '''
         simple_definition   : IDENTIFIER '=' assignment_expression
     '''
+    p[1] = ExternalNode('IDENTIFIER',p[1])
     p[0] = InternalNode('simple_definition', p[1:])
 def p_function_declaration(p):
     ''' function_declaration : simple_declaration '(' parameter_declaration_list ')' '''
