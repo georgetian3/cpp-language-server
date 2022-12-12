@@ -4,8 +4,10 @@
 #include <typeinfo>
 
 class student{
+private:
     int id;
     char stu;
+public:
     void eat(){
         return;
     }
@@ -18,7 +20,6 @@ int main() {
     int b = 1;
     if (a == b){
         a = 3;
-        b = 4;
     }
 
     student kennyl;
