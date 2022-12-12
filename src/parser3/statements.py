@@ -33,11 +33,8 @@ def p_labeled_statement(p):
                          | CASE IDENTIFIER ':' statement
                          | DEFAULT ':' statement
     '''
-    if len(p) == 4 and p[1] != 'case':
-        p[1] = ExternalNode('IDENTIFIER',p[1])
-    else :
-        p[2] = ExternalNode('IDENTIFIER',p[2])
-
+    if len(p) == 5 and str(p[1]) == "case":
+        p[2] = ExternalNode('IDENTIFIER', p[2])
     p[0] = InternalNode('labeled_statement', p[1:])
 
 
@@ -109,9 +106,17 @@ def p_jump_statement(p):
                     | RETURN expression ';'
                     | GOTO IDENTIFIER ';'
     '''
-
-    if len(p) == 4 and str(p[1]) == "goto":
+    if len(p) == 4 and str(p[1]) == "return":
+        p[1] = ExternalNode('RETURN', p[1])
+    elif len(p) == 4 and str(p[1]) == "goto":
+        p[1] = ExternalNode('GOTO', p[1])
         p[2] = ExternalNode('IDENTIFIER',p[2])
+    elif len(p) == 3 and str(p[1]) == "return":
+        p[1] = ExternalNode('RETURN', p[1])
+    elif len(p) == 3 and str(p[1]) == "break":
+        p[1] = ExternalNode('BREAK', p[1])
+    elif len(p) == 3 and str(p(1)) == "continue":
+        p[1] = ExternalNode('CONTINUE', p[1])
     p[0] = InternalNode('jump_statement', p[1:])
 
 
