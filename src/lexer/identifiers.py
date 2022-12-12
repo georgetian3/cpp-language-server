@@ -38,6 +38,6 @@ def t_IDENTIFIER(t):
     if t.value in keywords:
         t.type = t.value.upper()
     elif t.value in ['true', 'false']:
-        t.type = 'literal'
+        t.type = 'LITERAL'
 
     return t

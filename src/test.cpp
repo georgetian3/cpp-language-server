@@ -4,12 +4,10 @@
 #include <typeinfo>
 using namespace std;
 
+int a = 3 + 5.5;
+char c = 'c';
+char* s = "string";
 int main() {
     char c = 'c';
-    char c = 'c';
-    c = 'd';
-    int i = 1;
-    char s = "string" ;
-    float x = 3.14;
-
+    c = 'd' ;
 }

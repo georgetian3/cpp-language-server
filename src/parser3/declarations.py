@@ -8,6 +8,7 @@ def p_declaration_seq(p):
     '''
     p[0] = InternalNode('declaration_seq', p[1:])
 
+
 def p_declaration(p):
     '''
     declaration : simple_declaration ';'
@@ -37,7 +38,7 @@ def p_simple_declaration_definition(p):
     p[0] = InternalNode('simple_declaration_definition', p[1:])
 def p_definition(p):
     '''
-        definition  : simple_definition
+        definition  : simple_definition ';'
     '''
     p[0] = InternalNode('definition', p[1:])
 def p_simple_definition(p):
@@ -46,6 +47,7 @@ def p_simple_definition(p):
     '''
     p[1] = ExternalNode('IDENTIFIER',p[1])
     p[0] = InternalNode('simple_definition', p[1:])
+
 def p_function_declaration(p):
     ''' function_declaration : simple_declaration '(' parameter_declaration_list ')' '''
     p[0] = InternalNode('function_declaration', p[1:])

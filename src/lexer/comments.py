@@ -12,14 +12,11 @@ The characters /* start a comment, which terminates with the characters */. Thes
 
 single_line_comment = r'(//.*?(\n|$))'
 multi_line_comment = r'(/\*(.|\n)*?\*/)'
-comment = r'[%s|%s]' % ('f', 'f')
+comment = r'(%s|%s)' % (single_line_comment, multi_line_comment)
 
 @TOKEN(comment)
 def t_COMMENT(t):
-    print(t.type, t.value)
-    t.type = 'COMMENT'
     t.lexer.lineno += t.value.count("\n")
-    return t
 
 def t_WHITESPACE(t):
     r'\s+'
