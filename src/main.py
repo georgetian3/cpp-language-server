@@ -92,5 +92,3 @@ def format():
 if __name__ == '__main__':
     run_lexer()
     run_parser()
-
-    
