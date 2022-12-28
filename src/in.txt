@@ -1,3 +1,0 @@
-expr-or-braced-init-list :
-expression
-braced-init-list

@@ -1,0 +1,31 @@
+body {
+  background-color: black;
+  color: white;
+}
+
+#box {
+  display: flex;
+  flex-direction: row;
+}
+
+#editor {
+  border-style: solid;
+  border-color: red;
+  height: 90vh;
+  width: 60vw;
+  overflow-wrap: break-word;
+}
+
+#suggestions {
+  display: flex;
+  flex-direction: column;
+}
+
+.suggestion {
+  color: rgb(125, 215, 246);
+  display: block;
+}
+
+.suggestion:hover {
+  background-color: grey;
+}
