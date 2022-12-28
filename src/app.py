@@ -49,7 +49,7 @@ def process():
     data = request.get_json()
     src = data['text']
     cursor = data['cursor']
-    print('Source:', src)
+    #print('Source:', src)
     print('Cursor:', cursor)
 
     tokens = get_tokens(src)
@@ -58,7 +58,6 @@ def process():
     global ast
     if temp != {None: None}:
         ast = temp
-    print(ast)
     formatted_tokens = []
     prev_index = 0
     for token in tokens:
@@ -98,16 +97,13 @@ def process():
         for k,v in table.items():
             if partial[-1] == '.' :
                 if partial[:-1] == k.split('@')[0]:
-                    print(f'!!!! v is {v}')
                     if isinstance(v,dict):
                         type_list = ['int','float','double','char','bool']
                         if v['type'] not in type_list:
                             
                             members = table[v['type']]['member']
                             for member in members:
-                                print('???')
                                 if isinstance(member,str):
-                                    print('@@ @')
                                     suggestions.append({'full':member,'complete':member})
                                 elif isinstance(member,dict):
                                     suggestions.append({'full':member['full'],'complete':member['complete']})
@@ -123,8 +119,11 @@ def process():
                                 elif isinstance(member,dict):
                                     suggestions.append({'full':member['full'],'complete':member['complete']})
             else:
-                if partial == k.split('@')[0][:len(partial)] and partial != k.split('@')[0] and 'domain' in v and v['domain'] == now_domain:
-                    suggestions.append({'full':k.split('@')[0],'complete':k.split('@')[0][len(partial):]})
+                if partial == k.split('@')[0][:len(partial)] and partial != k.split('@')[0]:
+                    if  'domain' in v and v['domain'] == now_domain:
+                        suggestions.append({'full':k.split('@')[0],'complete':k.split('@')[0][len(partial):]})
+                    else:                    
+                        suggestions.append({'full':k.split('@')[0],'complete':k.split('@')[0][len(partial):]})
 
 
     res = ''.join(formatted_tokens)
