@@ -16,9 +16,7 @@ int add(int a ,int b){
     return a + b;
 }
 int main(){
-
     base b;
-
     b.a = 1;
     b.a = 1;
     b.add(2,3);

@@ -60,21 +60,7 @@ def process():
         ast = temp
     formatted_tokens = []
     prev_index = 0
-    for token in tokens:
-        #print(token.value.ljust(20, ' '), token.type)
-        index = src.find(token.value, prev_index)
-        whitespace = src[prev_index : index]
-        whitespace = whitespace.replace(' ', '&ensp;')
-        whitespace = whitespace.replace('\n', '<br>')
-        formatted_tokens.append(whitespace)
-        prev_index = index + len(token.value)
 
-        type = token.type.lower()
-        if type in keywords:
-            type = 'keyword'
-        elif type in literals or type in operator_or_punctuators or type in operator_or_punctuators.values():
-            type = 'operator'
-        formatted_tokens.append(f'<span class="{type}">{html.escape(token.value)}</span>')
     elements,table = find_element(ast)
     elements = list_dict_duplicate_removal(elements)
     print(elements)
@@ -125,7 +111,22 @@ def process():
                     else:                    
                         suggestions.append({'full':k.split('@')[0],'complete':k.split('@')[0][len(partial):]})
 
-
+        for token in tokens:
+           #print(token.value.ljust(20, ' '), token.type)
+            index = src.find(token.value, prev_index)
+            whitespace = src[prev_index : index]
+            whitespace = whitespace.replace(' ', '&ensp;')
+            whitespace = whitespace.replace('\n', '<br>')
+            formatted_tokens.append(whitespace)
+            prev_index = index + len(token.value)
+            type = token.type.lower()
+            if type in keywords:
+                type = 'keyword'
+            elif type in literals or type in operator_or_punctuators or type in operator_or_punctuators.values():
+                type = 'operator'
+            if token.value in table and table[token.value]['type'] == 'class':
+                type = 'class'
+            formatted_tokens.append(f'<span class="{type}">{html.escape(token.value)}</span>')
     res = ''.join(formatted_tokens)
     #print('Formatting:', res)
     print('Autocomplete:', suggestions)
