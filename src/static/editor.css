@@ -1,6 +1,6 @@
 body {
   background-color: black;
-  color: white;
+  color: black;
 }
 
 #box {
@@ -9,24 +9,37 @@ body {
 }
 
 #editor {
+  height: 80vh;
+  width: 90vw;
+  margin: 5%;
+  margin-top: 2%;
+  border-color: grey;
   border-style: solid;
-  border-color: red;
-  height: 90vh;
-  width: 60vw;
-  overflow-wrap: break-word;
+}
+
+#suggestions-box {
   color: white;
+  font-family: monospace;
+  position: fixed;
+  bottom: 0;
+  display: flex;
+  flex-direction: row;
+  width: 90vw;
+  margin-left: 5%;
+  margin-bottom: 2%;
+  padding-left: 1%;
+  height: 7em;
+  border-color: grey;
+  border-style: solid;
 }
 
-#suggestions {
-  counter-reset: item;
-  list-style-type: none;
+#suggestions > li {
+  list-style-position: inside;
+  float: left;
+  padding-left: 25px;
+  position: relative;
 }
 
-#suggestions > li::before {
-  display: inline-block;
-  content: 'ctrl + ' counter(item, decimal) ":    ";
-  counter-increment: item;
-}
 
 .suggestion {
   color: rgb(125, 215, 246);
@@ -34,10 +47,6 @@ body {
 
 .suggestion:hover {
   background-color: grey;
-}
-
-#autocomplete-box {
-  color: white;
 }
 
 #remaining {
