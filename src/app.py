@@ -102,8 +102,10 @@ def process_function(function_list,full = '',complete = '',flag = 0):
             flag = 0
             full = full + ' ' + list(v)[0]
     return full.lstrip(),complete.lstrip()
-def find_element(ast,result = []):
+def find_element(ast,result = None):
     flag = 0
+    if result is None:
+        result = []
     for i,item in enumerate(ast):
         if flag == 1:
             flag = 0
