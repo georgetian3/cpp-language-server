@@ -69,6 +69,8 @@ def process():
     while(i <= len(src) and i > 0 and  not ' ' in src[i-1] and not '\n' in src[i-1] and not ',' in src[i-1]):
         i -= 1
     partial = src[i:cursor]
+    if cursor == len(src) or (' ' not in src[cursor] and '\n' not in src[cursor]):
+        partial = ''
     print(f'partial is {partial}')
     now_domain = find_now_domain(src,cursor,elements)
     if len(tokens) > 0 and partial!='' :
@@ -112,7 +114,7 @@ def process():
                         suggestions.append({'full':k.split('@')[0],'complete':k.split('@')[0][len(partial):]})
 
     for token in tokens:
-        print(token.value.ljust(20, ' '), token.type)
+        #print(token.value.ljust(20, ' '), token.type)
         index = src.find(token.value, prev_index)
         whitespace = src[prev_index : index]
         whitespace = whitespace.replace(' ', '&ensp;')
