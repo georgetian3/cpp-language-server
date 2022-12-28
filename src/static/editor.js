@@ -12,8 +12,8 @@ function handle_update(element) {
             console.log(suggestion);
             let button = document.createElement('code');
             button.setAttribute('class', 'suggestion');
-            button.setAttribute('onclick', 'autocomplete(this.innerText);');
-            button.innerText = suggestion;
+            button.setAttribute('onclick', 'autocomplete(this);');
+            button.innerHTML = suggestion;
             suggestions.appendChild(button);
         }
     });
@@ -30,11 +30,12 @@ function register() {
     ));
 }
 
-function autocomplete(text) {
+function autocomplete(suggestion) {
     let editor_parent = document.getElementById('editor');
     let editor_textarea = editor_parent.getElementsByTagName('textarea')[0];
     let editor_value = editor_parent.getElementsByTagName('pre')[0].getElementsByTagName('code')[0];
     console.log(editor_parent, editor_textarea, editor_value);
+    text = suggestion.getElementsByTagName('span')[0].innerText;
     editor_value.innerHTML += text;
     editor_parent.value += text;
     editor_textarea.dispatchEvent(new Event('input'));

@@ -30,9 +30,20 @@ body {
   background-color: grey;
 }
 
+#remaining {
+  color: green;
+  display: inline;
+}
+
 span.keyword {
   color: rgb(46, 107, 213);
 }
 span.identifier {
   color: lightblue;
+}
+span.literal {
+  color: orange;
+}
+span.operator {
+  color: yellow;
 }
