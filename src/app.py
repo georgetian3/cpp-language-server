@@ -6,11 +6,24 @@ from lexer.tokens import *
 from lexer.keywords import keywords
 from lexer.tokens import literals
 from lexer.operators import operator_or_punctuators
+from functools import reduce
 from parser.myast import traverse
 from parser.parser import *
 import html
 import time
 import logging
+
+def list_dict_duplicate_removal(data_list):
+    run_function = lambda x, y: x if y in x else x + [y]
+    return reduce(run_function, [[], ] + data_list)
+
+class hashabledict(dict):
+    def __key(self):
+        return tuple((k,self[k]) for k in sorted(self))
+    def __hash__(self):
+        return hash(self.__key())
+    def __eq__(self, other):
+        return self.__key() == other.__key()
 log = logging.getLogger('werkzeug')
 log.setLevel(logging.ERROR)
 
@@ -58,7 +71,7 @@ def process():
         #print(token.value.ljust(20, ' '), token.type)
         index = src.find(token.value, prev_index)
         whitespace = src[prev_index : index]
-        whitespace = whitespace.replace(' ', '&nbsp;')
+        whitespace = whitespace.replace(' ', '&ensp;')
         whitespace = whitespace.replace('\n', '<br>')
         formatted_tokens.append(whitespace)
         prev_index = index + len(token.value)
@@ -70,6 +83,7 @@ def process():
             type = 'operator'
         formatted_tokens.append(f'<span class="{type}">{html.escape(token.value)}</span>')
     elements = find_element(ast)
+    elements = list_dict_duplicate_removal(elements)
     print(elements)
     suggestions = []
     if len(tokens) > 0:
@@ -81,10 +95,9 @@ def process():
             if partial == element['complete'][:len(partial)] and partial != element['complete']:
                 suggestions.append({'full':element['full'],'complete':element['complete'][len(partial):]})
     res = ''.join(formatted_tokens)
-
     #print('Formatting:', res)
-    #print('Autocomplete:', suggestions)
-    return {'formatting': res, 'suggestions': suggestions}
+    print('Autocomplete:', suggestions)
+    return {'formatting': res, 'suggestions': list(suggestions)}
 def process_function(function_list,full = '',complete = '',flag = 0):
     for i, item in enumerate(function_list):
         if isinstance(item,str):
