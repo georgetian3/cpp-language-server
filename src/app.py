@@ -39,8 +39,11 @@ ast = {}
 
 @app.post('/process')
 def process():
-    src = request.data.decode('utf8')
+    data = request.get_json()
+    src = data['text']
+    cursor = data['cursor']
     print('Source:', src)
+    print('Cursor:', cursor)
 
     tokens = get_tokens(src)
     temp = run_parser(src)
