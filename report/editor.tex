@@ -1,0 +1,14 @@
+\section{代码高亮与提示}
+
+\subsection{前端}
+
+代码高亮与提示的可视化是通过网页在 \fileref{editor/} 下的 HTML, JS 与 CSS 文件实现的。其中使用了 Bootstrap 做格式化，与定义了一个 HTML 元素、提供了文本输入的基本框架与格式的 \href{https://github.com/WebCoder49/code-input}{\code{code-input}} 。此页面中包括文本编译器的几个基本功能，其描述以及实现方法如下：
+
+\begin{enumerate}
+    \item 代码高亮：\code{code-input} 提供了一个 JS 接口，让开发者定义一个函数，其参数为包含用户代码输入的文本框。用户每次改变文本框的内容会调用这个函数，并由这个函数根据用户的输入而提供包含高亮的 HTML 代码。此函数在 \fileref{editor/editor.js} 中的 \code{handle_update} 函数实现。它将用户的输入发给后端，并接收后端的响应而更新网页上的高亮状态。后端返回的 HTML 中包括每个记号本身与其类名。\code{editor/editor.css} 根据类名进行高亮。
+    \item 代码提示：前端发给后端的信息中包括用户的光标目前所在的位置。后端根据光标的位置与已有的代码提供若干个提示，由 \code{handle_update} 显示这些提示。当用户通过点击或者使用快捷键选择某个提示后，\fileref{editor/editor.js} 中的 \code{autocomplete} 函数将进行补全。
+    \item 快捷键：
+\end{enumerate}
+
+
+\subsection{后端}

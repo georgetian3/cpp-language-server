@@ -66,3 +66,7 @@ span.literal {
 span.operator {
   color: yellow;
 }
+
+span.include {
+  color: green;
+}

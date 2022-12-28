@@ -40,7 +40,7 @@ def run_parser(src):
 
 @app.get('/')
 def index_get():
-    return send_file('static/editor.html')
+    return send_file('editor/editor.html')
 
 ast = {}
 
