@@ -1,7 +1,7 @@
 import sys
 sys.path.append('..')
 
-import test_literals
 
 if __name__ == '__main__':
-    pass
+    string = '1 2 3 4'
+    print(string.index(' '))

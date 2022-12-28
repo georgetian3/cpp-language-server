@@ -17,13 +17,7 @@ def list_dict_duplicate_removal(data_list):
     run_function = lambda x, y: x if y in x else x + [y]
     return reduce(run_function, [[], ] + data_list)
 
-class hashabledict(dict):
-    def __key(self):
-        return tuple((k,self[k]) for k in sorted(self))
-    def __hash__(self):
-        return hash(self.__key())
-    def __eq__(self, other):
-        return self.__key() == other.__key()
+
 log = logging.getLogger('werkzeug')
 log.setLevel(logging.ERROR)
 
@@ -86,8 +80,14 @@ def process():
     elements = list_dict_duplicate_removal(elements)
     print(elements)
     suggestions = []
-    if len(tokens) > 0:
-        partial = tokens[-1].value
+    i = cursor
+
+    if cursor >=len(src)-1  or src[cursor+1] != ' ':
+        partial = ''
+    while(i <= len(src) and i > 0 and  not ' ' in src[i-1] and not '\n' in src[i-1]):
+        i -= 1
+    partial = src[i:cursor]
+    if len(tokens) > 0 and partial !='':
         for keyword in keywords:
             if partial == keyword[:len(partial)] and partial != keyword:
                 suggestions.append({'full':keyword,'complete':keyword[len(partial):]})
