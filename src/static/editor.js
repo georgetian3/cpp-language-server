@@ -5,14 +5,23 @@ var need_update = false;
 var editor_parent;
 var editor_textarea;
 var editor_value;
+var suggestions_list;
 
+function escapeHtml(unsafe) {
+    return unsafe
+         .replace(/&/g, "&amp;")
+         .replace(/</g, "&lt;")
+         .replace(/>/g, "&gt;")
+         .replace(/"/g, "&quot;")
+         .replace(/'/g, "&#039;");
+}
 
 async function handle_update(element) {
     if (editor_parent === undefined) {
         editor_parent = document.getElementById('editor');
         editor_textarea = editor_parent.getElementsByTagName('textarea')[0];
         editor_value = editor_parent.getElementsByTagName('pre')[0].getElementsByTagName('code')[0];
-        console.log(editor_parent, editor_textarea, editor_value);
+        suggestions_list = document.getElementById('suggestions');
     }
     if (updating) {
         console.log('already updating');
@@ -26,16 +35,19 @@ async function handle_update(element) {
         body: JSON.stringify({'text': element.innerText, 'cursor': editor_textarea.selectionStart})
     });
     let data = await response.json();
+    console.log('Formatting:', data.formatting);
     element.innerHTML = data.formatting;
-    let suggestions = document.getElementById('suggestions')
+    let suggestions = document.getElementById('suggestions');
     suggestions.innerHTML = '';
+    console.log('Suggestions:', data.suggestions);
     for (const suggestion of data.suggestions) {
         console.log(suggestion);
-        let button = document.createElement('code');
-        button.setAttribute('class', 'suggestion');
-        button.setAttribute('onclick', 'autocomplete(this);');
-        button.innerHTML = suggestion;
-        suggestions.appendChild(button);
+        let li = document.createElement('li');
+        li.setAttribute('class', 'suggestion');
+        li.setAttribute('onclick', 'autocomplete(this);');
+        li.setAttribute('data-complete', suggestion.complete);
+        li.innerHTML = suggestion.full;
+        suggestions.appendChild(li);
     }
     updating = false;
     if (need_update) {
@@ -59,17 +71,28 @@ function register() {
         true, /* Optional - Is the `pre` element styled as well as the `code` element? Changing this to false uses the code element as the scrollable one rather than the pre element */
         true, /* Optional - This is used for editing code - setting this to true overrides the Tab key and uses it for indentation */
     ));
-    document.addEventListener('keydown', function(key) {
-        if (key.keyCode != 9) { // not a tab key
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'Tab') { // not a tab key
+            event.preventDefault();
+            event.stopPropagation();
+            append_text('    ');
             return;
+        } else if (event.ctrlKey && event.key >= 1 && event.key <= 9) {
+            suggestions = suggestions_list.getElementsByTagName('li');
+            if (suggestions.length < event.key) {
+                return;
+            }
+            event.preventDefault();
+            event.stopPropagation();
+            autocomplete(suggestions[event.key - 1]);
         }
-        key.preventDefault();
-        key.stopPropagation();
-        append_text('    ');
+        
     });
 }
 
 function autocomplete(suggestion) {
-    text = suggestion.getElementsByTagName('span')[0].innerText;
+    console.log(suggestion);
+    text = suggestion.dataset.complete;
+    console.log('value:', text);
     append_text(text);
 }
