@@ -13,18 +13,18 @@ class InternalNode(Node):
             if not isinstance(self.children[i], Node):
                 self.children[i] = ExternalNode(str(self.children[i]), str(self.children[i]))
         ast = traverse(self)
-        print('--------------------------------------------------------------')
-        print(ast)
-        print('--------------------------------------------------------------')
+        #print('--------------------------------------------------------------')
+        #print(ast)
+        #print('--------------------------------------------------------------')
 
     
 class ExternalNode(Node):
     def __init__(self, type, value):
         self.type = type
         self.value = value
-        print('--------------------------------------------------------------')
-        print({self.type: self.value})
-        print('--------------------------------------------------------------')
+        #print('--------------------------------------------------------------')
+        #print({self.type: self.value})
+        #print('--------------------------------------------------------------')
 
 def traverse(node):
     if isinstance(node, InternalNode):
@@ -34,7 +34,7 @@ def traverse(node):
     elif isinstance(node, ExternalNode):
         return {node.type: node.value}
     else:
-        print('???????????????????')
-        print(node)
+        #print('???????????????????')
+        #print(node)
         return {None: None}
     return tree

@@ -1,6 +1,5 @@
 body {
   background-color: black;
-  color: white;
 }
 
 #box {
@@ -28,6 +27,10 @@ body {
 
 .suggestion:hover {
   background-color: grey;
+}
+
+#autocomplete-box {
+  color: white;
 }
 
 #remaining {

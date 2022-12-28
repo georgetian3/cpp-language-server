@@ -66,12 +66,15 @@ class PlyLogger(object):
         self.f = f
 
     def critical(self, msg, *args, **kwargs):
+        return # MODIFIED
         self.f.write((msg % args) + '\n')
 
     def warning(self, msg, *args, **kwargs):
+        return # MODIFIED
         self.f.write('WARNING: ' + (msg % args) + '\n')
 
     def error(self, msg, *args, **kwargs):
+        return # MODIFIED
         self.f.write('ERROR: ' + (msg % args) + '\n')
 
     info = critical

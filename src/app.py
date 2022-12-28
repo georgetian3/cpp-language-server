@@ -17,13 +17,14 @@ app = Flask(__name__)
 CORS(app)
 
 lexer = lex.lex(debug=False)
+parser = yacc(debug=False)
+
 
 def get_tokens(src):
     lexer.input(src)
     return list(lexer)
 
 def run_parser(src):
-    parser = yacc(debug=False)
     ast = parser.parse(src, debug=False)
     tree = traverse(ast)
     return tree
@@ -33,19 +34,25 @@ def run_parser(src):
 def index_get():
     return send_file('static/editor.html')
 
+ast = {}
+
 @app.post('/process')
 def process():
     src = request.data.decode('utf8')
     print('Source:', src)
 
     tokens = get_tokens(src)
-    #tokens.sort(key=lambda x: len(x.value), reverse=True)
-    #print(tokens)
+    temp = run_parser(src)
+
+    global ast
+    if temp != {None: None}:
+        ast = temp
+    print(ast)
 
     formatted_tokens = []
     prev_index = 0
     for token in tokens:
-        print(token.value.ljust(20, ' '), token.type)
+        #print(token.value.ljust(20, ' '), token.type)
         index = src.find(token.value, prev_index)
         whitespace = src[prev_index : index]
         whitespace = whitespace.replace(' ', '&nbsp;')
