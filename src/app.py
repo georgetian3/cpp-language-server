@@ -21,7 +21,7 @@ def list_dict_duplicate_removal(data_list):
 log = logging.getLogger('werkzeug')
 log.setLevel(logging.ERROR)
 
-app = Flask(__name__,static_folder='editor')
+app = Flask(__name__, static_folder='editor')
 CORS(app)
 
 lexer = lex.lex(debug=False)
