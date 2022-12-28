@@ -37,13 +37,6 @@ def process():
     print('Autocomplete:', suggestions)
     return {'formatting': res, 'suggestions': suggestions}
 
-src = """
-#include <iostream>
-
-int main() {
-    cout << "Hello world";
-}"""
 
 if __name__ == '__main__':
-    #print(get_tokens(src))
     app.run(debug=False, port='5000')
