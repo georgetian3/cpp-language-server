@@ -76,7 +76,7 @@ def process():
         elif type in literals or type in operator_or_punctuators or type in operator_or_punctuators.values():
             type = 'operator'
         formatted_tokens.append(f'<span class="{type}">{html.escape(token.value)}</span>')
-    elements,tables = find_element(ast)
+    elements,table = find_element(ast)
     elements = list_dict_duplicate_removal(elements)
     print(elements)
     suggestions = []
@@ -92,10 +92,25 @@ def process():
         for element in elements:
             if partial == element['complete'][:len(partial)] and partial != element['complete']:
                 suggestions.append({'full':element['full'],'complete':element['complete'][len(partial):]})
+        if partial[-1] == '.':
+            for k,v in table.items():
+                if partial[:-1] == k:
+                    if isinstance(v,str):
+                        type_list = ['int','float','double','char','bool']
+                        if v not in type_list:
+                            members = table[v]['member']
+                            for member in members:
+                                if isinstance(member,str):
+                                    suggestions.append({'full':member,'complete':member})
+                                elif isinstance(member,dict):
+                                    suggestions.append({'full':member['full'],'complete':member['complete']})
+
+
     res = ''.join(formatted_tokens)
     #print('Formatting:', res)
     print('Autocomplete:', suggestions)
     return {'formatting': res, 'suggestions': list(suggestions)}
+    
 def process_function(function_list,full = '',complete = '',flag = 0):
     for i, item in enumerate(function_list):
         if isinstance(item,str):
