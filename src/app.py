@@ -58,7 +58,7 @@ def process():
         #print(token.value.ljust(20, ' '), token.type)
         index = src.find(token.value, prev_index)
         whitespace = src[prev_index : index]
-        whitespace = whitespace.replace(' ', '&nbsp;')
+        whitespace = whitespace.replace(' ', '&ensp;')
         whitespace = whitespace.replace('\n', '<br>')
         formatted_tokens.append(whitespace)
         prev_index = index + len(token.value)

@@ -18,13 +18,18 @@ body {
 }
 
 #suggestions {
-  display: flex;
-  flex-direction: column;
+  counter-reset: item;
+  list-style-type: none;
+}
+
+#suggestions > li::before {
+  display: inline-block;
+  content: 'ctrl + ' counter(item, decimal) ":    ";
+  counter-increment: item;
 }
 
 .suggestion {
   color: rgb(125, 215, 246);
-  display: block;
 }
 
 .suggestion:hover {
