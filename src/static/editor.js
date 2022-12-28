@@ -1,7 +1,19 @@
 var updating = false;
 var need_update = false;
 
+
+var editor_parent;
+var editor_textarea;
+var editor_value;
+
+
 async function handle_update(element) {
+    if (editor_parent === undefined) {
+        editor_parent = document.getElementById('editor');
+        editor_textarea = editor_parent.getElementsByTagName('textarea')[0];
+        editor_value = editor_parent.getElementsByTagName('pre')[0].getElementsByTagName('code')[0];
+        console.log(editor_parent, editor_textarea, editor_value);
+    }
     if (updating) {
         console.log('already updating');
         need_update = true;
@@ -10,7 +22,8 @@ async function handle_update(element) {
     updating = true;
     let response = await fetch('http://127.0.0.1:5000/process', {
         method: 'POST',
-        body: element.innerText
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({'text': element.innerText, 'cursor': editor_textarea.selectionStart})
     });
     let data = await response.json();
     element.innerHTML = data.formatting;
@@ -33,17 +46,14 @@ async function handle_update(element) {
 
 function append_text(text) {
     console.log('Appending text');
-    var editor_parent = document.getElementById('editor');
-    var editor_textarea = editor_parent.getElementsByTagName('textarea')[0];
-    var editor_value = editor_parent.getElementsByTagName('pre')[0].getElementsByTagName('code')[0];
     
     editor_value.innerHTML += text;
     editor_parent.value += text;
     editor_textarea.dispatchEvent(new Event('input'));
 }
 
+
 function register() {
-    console.log('here')
     codeInput.registerTemplate("syntax-highlighted", codeInput.templates.custom(
         handle_update,
         true, /* Optional - Is the `pre` element styled as well as the `code` element? Changing this to false uses the code element as the scrollable one rather than the pre element */
@@ -57,7 +67,6 @@ function register() {
         key.stopPropagation();
         append_text('    ');
     });
-    
 }
 
 function autocomplete(suggestion) {
