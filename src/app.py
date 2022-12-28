@@ -49,7 +49,6 @@ def process():
     if temp != {None: None}:
         ast = temp
     print(ast)
-    print(find_element(ast))
     formatted_tokens = []
     prev_index = 0
     for token in tokens:
@@ -67,30 +66,39 @@ def process():
         elif type in literals or type in operator_or_punctuators or type in operator_or_punctuators.values():
             type = 'operator'
         formatted_tokens.append(f'<span class="{type}">{html.escape(token.value)}</span>')
-
+    elements = find_element(ast)
+    print(elements)
     suggestions = []
     if len(tokens) > 0:
         partial = tokens[-1].value
         for keyword in keywords:
             if partial == keyword[:len(partial)] and partial != keyword:
-                suggestions.append(f'{html.escape(partial)}<span class="remaining">{html.escape(keyword[len(partial):])}</span>')
-
+                suggestions.append({'full':keyword,'complete':keyword[len(partial):]})
+        for element in elements:
+            if partial == element['complete'][:len(partial)] and partial != element['complete']:
+                suggestions.append({'full':element['full'],'complete':element['complete'][len(partial):]})
     res = ''.join(formatted_tokens)
+
     #print('Formatting:', res)
     #print('Autocomplete:', suggestions)
     return {'formatting': res, 'suggestions': suggestions}
-def process_function(function_list,result  = ''):
+def process_function(function_list,full = '',complete = '',flag = 0):
     for i, item in enumerate(function_list):
         if isinstance(item,str):
-            continue
+            if item == 'type_specifier':
+                flag = 1
         elif isinstance(item,list):
-            result = process_function(item,result)
+            full,complete = process_function(item,full,complete,flag)
         elif isinstance(item,dict):
+            k = item.keys()
             v = item.values()
             if list(v)[0] == "{'empty': 'empty'}":
                 continue
-            result = result + ' ' + list(v)[0]
-    return result
+            if flag != 1:
+                complete = complete + ' ' + list(v)[0]
+            flag = 0
+            full = full + ' ' + list(v)[0]
+    return full.lstrip(),complete.lstrip()
 def find_element(ast,result = []):
     flag = 0
     for i,item in enumerate(ast):
@@ -99,13 +107,15 @@ def find_element(ast,result = []):
             continue
         if isinstance(item,str):
             if item == 'function_declaration':
-               result.append(process_function(ast[i+1]))
-               flag = 1
+                full , complete = process_function(ast[i+1])
+                print(f'there is a function')
+                result.append({'full':full,'complete':complete})
+                flag = 1
         elif isinstance(item,list):
             result = find_element(item,result)
         elif isinstance(item,dict):
             if 'IDENTIFIER' in item:
-                result.append(item['IDENTIFIER'])
+                result.append({'full':item['IDENTIFIER'],'complete':item['IDENTIFIER']})
     return result
 if __name__ == '__main__':
     app.run(debug=False, port='5000')
