@@ -27,7 +27,9 @@ async function handle_update(element) {
 
 function append_text(text) {
     
-    console.log(editor_parent, editor_textarea, editor_value);
+    var editor_parent = document.getElementById('editor');
+    var editor_textarea = editor_parent.getElementsByTagName('textarea')[0];
+    var editor_value = editor_parent.getElementsByTagName('pre')[0].getElementsByTagName('code')[0];
     
     editor_value.innerHTML += text;
     editor_parent.value += text;
@@ -52,9 +54,7 @@ function register() {
         console.log(key);
         autocomplete();
     });
-    var editor_parent = document.getElementById('editor');
-    var editor_textarea = editor_parent.getElementsByTagName('textarea')[0];
-    var editor_value = editor_parent.getElementsByTagName('pre')[0].getElementsByTagName('code')[0];
+    
 }
 
 function autocomplete(suggestion) {
