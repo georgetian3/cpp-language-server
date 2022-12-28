@@ -16,6 +16,10 @@ function escapeHtml(unsafe) {
          .replace(/'/g, "&#039;");
 }
 
+function get_cursor() {
+    return editor_textarea.selectionStart;
+}
+
 async function handle_update(element) {
     if (editor_parent === undefined) {
         editor_parent = document.getElementById('editor');
@@ -32,7 +36,7 @@ async function handle_update(element) {
     let response = await fetch('http://127.0.0.1:5000/process', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({'text': element.innerText, 'cursor': editor_textarea.selectionStart})
+        body: JSON.stringify({'text': element.innerText, 'cursor': get_cursor()})
     });
     let data = await response.json();
     console.log('Formatting:', data.formatting);
@@ -57,13 +61,17 @@ async function handle_update(element) {
 }
 
 function append_text(text) {
-    console.log('Appending text');
-    
-    editor_value.innerHTML += text;
     editor_parent.value += text;
     editor_textarea.dispatchEvent(new Event('input'));
 }
 
+function insert_text(str, pos) {
+    text = editor_parent.value;
+    editor_parent.value = text.substring(0, pos) + str + text.substring(pos, text.length);
+    editor_textarea.dispatchEvent(new Event('input'));
+    editor_textarea.selectionStart = pos + str.length;
+    editor_textarea.selectionEnd = pos + str.length;
+}
 
 function register() {
     codeInput.registerTemplate("syntax-highlighted", codeInput.templates.custom(
@@ -75,7 +83,8 @@ function register() {
         if (event.key === 'Tab') { // not a tab key
             event.preventDefault();
             event.stopPropagation();
-            append_text('    ');
+            insert_text('    ', get_cursor());
+            //append_text('    ');
             return;
         } else if (event.ctrlKey && event.key >= 1 && event.key <= 9) {
             suggestions = suggestions_list.getElementsByTagName('li');
