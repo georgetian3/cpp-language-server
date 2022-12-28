@@ -1,8 +1,10 @@
 var updating = false;
+var need_update = false;
 
 async function handle_update(element) {
     if (updating) {
-        console.log('updating');
+        console.log('already updating');
+        need_update = true;
         return;
     }
     updating = true;
@@ -23,10 +25,14 @@ async function handle_update(element) {
         suggestions.appendChild(button);
     }
     updating = false;
+    if (need_update) {
+        append_text('');
+    }
+    need_update = false;
 }
 
 function append_text(text) {
-    
+    console.log('Appending text');
     var editor_parent = document.getElementById('editor');
     var editor_textarea = editor_parent.getElementsByTagName('textarea')[0];
     var editor_value = editor_parent.getElementsByTagName('pre')[0].getElementsByTagName('code')[0];
@@ -42,8 +48,6 @@ function register() {
         handle_update,
         true, /* Optional - Is the `pre` element styled as well as the `code` element? Changing this to false uses the code element as the scrollable one rather than the pre element */
         true, /* Optional - This is used for editing code - setting this to true overrides the Tab key and uses it for indentation */
-        false /* Optional - Setting this to true passes the `<code-input>` element as a second argument to the highlight function to be used for getting data- attribute values and using the DOM for the code-input */,
-        [] // Array of plugins (see below)
     ));
     document.addEventListener('keydown', function(key) {
         if (key.keyCode != 9) { // not a tab key
@@ -51,8 +55,7 @@ function register() {
         }
         key.preventDefault();
         key.stopPropagation();
-        console.log(key);
-        autocomplete();
+        append_text('    ');
     });
     
 }

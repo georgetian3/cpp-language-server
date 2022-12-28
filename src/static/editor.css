@@ -1,5 +1,6 @@
 body {
   background-color: black;
+  color: white;
 }
 
 #box {
@@ -13,6 +14,7 @@ body {
   height: 90vh;
   width: 60vw;
   overflow-wrap: break-word;
+  color: white;
 }
 
 #suggestions {
