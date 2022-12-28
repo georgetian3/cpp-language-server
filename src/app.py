@@ -85,32 +85,62 @@ def process():
         i -= 1
     partial = src[i:cursor]
     print(f'partial is {partial}')
+    now_domain = find_now_domain(src,cursor,elements)
     if len(tokens) > 0 and partial !='':
+        print(f'now domain is {now_domain}')
         for keyword in keywords:
             if partial == keyword[:len(partial)] and partial != keyword:
                 suggestions.append({'full':keyword,'complete':keyword[len(partial):]})
         for element in elements:
             if partial == element['complete'][:len(partial)] and partial != element['complete']:
                 suggestions.append({'full':element['full'],'complete':element['complete'][len(partial):]})
-        if partial[-1] == '.':
-            for k,v in table.items():
-                if partial[:-1] == k:
-                    if isinstance(v,str):
+        
+        for k,v in table.items():
+            if partial[-1] == '.' :
+                if partial[:-1] == k.split('@')[0]:
+                    print(f'!!!! v is {v}')
+                    if isinstance(v,dict):
                         type_list = ['int','float','double','char','bool']
-                        if v not in type_list:
-                            members = table[v]['member']
+                        if v['type'] not in type_list:
+                            
+                            members = table[v['type']]['member']
+                            for member in members:
+                                print('???')
+                                if isinstance(member,str):
+                                    print('@@ @')
+                                    suggestions.append({'full':member,'complete':member})
+                                elif isinstance(member,dict):
+                                    suggestions.append({'full':member['full'],'complete':member['complete']})
+            elif partial[-2:] == '->':
+                if partial[:-2] == k.split('@')[0]:
+                    if isinstance(v,dict):
+                        type_list = ['int','float','double','char','bool']
+                        if v['type'] not in type_list:
+                            members = table[v['type']]['member']
                             for member in members:
                                 if isinstance(member,str):
                                     suggestions.append({'full':member,'complete':member})
                                 elif isinstance(member,dict):
                                     suggestions.append({'full':member['full'],'complete':member['complete']})
+            else:
+                if partial == k.split('@')[0][:len(partial)] and partial != k.split('@')[0] and 'domain' in v and v['domain'] == now_domain:
+                    suggestions.append({'full':k.split('@')[0],'complete':k.split('@')[0][len(partial):]})
 
 
     res = ''.join(formatted_tokens)
     #print('Formatting:', res)
     print('Autocomplete:', suggestions)
     return {'formatting': res, 'suggestions': list(suggestions)}
-    
+def find_now_domain(src,cursor,functions):
+    src = src.replace(' ','')
+    min = 10e9
+    domain = ''
+    for function in functions:
+        idx = src.find(function['full'].replace(' ',''))
+        if  cursor-idx < min :
+            min = cursor-idx
+            domain = function['full'].replace(' ','')
+    return domain
 def process_function(function_list,full = '',complete = '',flag = 0):
     for i, item in enumerate(function_list):
         if isinstance(item,str):
@@ -147,7 +177,7 @@ def find_member(declarations,result=None):
             flag = 0
             continue
         if isinstance(item,str):
-            if item == 'function_declaration_definition':
+            if item == 'function_declaration_definition' :
                 full,complete = process_function(declarations[i+1][0][1])
                 flag = 1
                 result.append({'full':full,'complete':complete})
@@ -169,7 +199,7 @@ def find_type(declarations , result = None):
                 if type in item:
                     result = item[type] 
     return result
-def add_to_table(type,declarations,table):
+def add_to_table(type,declarations,table,domain):
     if type == 'class_declaration_definition':
         class_name = find_class_name(declarations[0])
         table[class_name] = {'type':'class','member':[]}
@@ -177,10 +207,10 @@ def add_to_table(type,declarations,table):
         table[class_name]['member']=member
     elif type == 'simple_declaration':
         type = find_type(declarations[0])
-        name = declarations[2]['IDENTIFIER']
-        table[name] = type
+        name = declarations[2]['IDENTIFIER'] + '@' + domain
+        table[name] = {'type':type,'domain':domain}
     return table
-def find_element(ast,result = None,table = None):
+def find_element(ast,result = None,table = None,domain = 'all'):
     flag = 0
     if result is None:
         result = []
@@ -191,16 +221,21 @@ def find_element(ast,result = None,table = None):
             flag = 0
             continue
         if isinstance(item,str):
+            if item == 'expression_statement' or item == 'expression':
+                flag = 1
+            if item == 'function_declaration_definition':
+                full , complete = process_function(ast[i+1][0][1])
+                domain = full.replace(' ','')
             if item == 'function_declaration':
                 full , complete = process_function(ast[i+1])
                 result.append({'full':full,'complete':complete})
                 flag = 1
             if item == 'class_declaration_definition' or item == 'simple_declaration':
-                table = add_to_table(ast[i],ast[i+1],table)
+                table = add_to_table(ast[i],ast[i+1],table,domain)
                 print(f'table is {table}')
                 flag = 1 
         elif isinstance(item,list):
-            result,table = find_element(item,result,table)
+            result,table = find_element(item,result,table,domain)
         elif isinstance(item,dict):
             if 'IDENTIFIER' in item:
                 result.append({'full':item['IDENTIFIER'],'complete':item['IDENTIFIER']})

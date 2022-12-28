@@ -12,10 +12,13 @@ class base{
 };
 
 int add(int a ,int b){
+    int flag = 0;
     return a + b;
 }
 int main(){
+
     base b;
+
     b.a = 1;
     b.a = 1;
     b.add(2,3);
