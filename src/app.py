@@ -76,7 +76,7 @@ def process():
         elif type in literals or type in operator_or_punctuators or type in operator_or_punctuators.values():
             type = 'operator'
         formatted_tokens.append(f'<span class="{type}">{html.escape(token.value)}</span>')
-    elements = find_element(ast)
+    elements,table = find_element(ast)
     elements = list_dict_duplicate_removal(elements)
     print(elements)
     suggestions = []
@@ -92,10 +92,25 @@ def process():
         for element in elements:
             if partial == element['complete'][:len(partial)] and partial != element['complete']:
                 suggestions.append({'full':element['full'],'complete':element['complete'][len(partial):]})
+        if partial[-1] == '.':
+            for k,v in table.items():
+                if partial[:-1] == k:
+                    if isinstance(v,str):
+                        type_list = ['int','float','double','char','bool']
+                        if v not in type_list:
+                            members = table[v]['member']
+                            for member in members:
+                                if isinstance(member,str):
+                                    suggestions.append({'full':member,'complete':member})
+                                elif isinstance(member,dict):
+                                    suggestions.append({'full':member['full'],'complete':member['complete']})
+
+
     res = ''.join(formatted_tokens)
     #print('Formatting:', res)
     print('Autocomplete:', suggestions)
     return {'formatting': res, 'suggestions': list(suggestions)}
+    
 def process_function(function_list,full = '',complete = '',flag = 0):
     for i, item in enumerate(function_list):
         if isinstance(item,str):
@@ -113,10 +128,64 @@ def process_function(function_list,full = '',complete = '',flag = 0):
             flag = 0
             full = full + ' ' + list(v)[0]
     return full.lstrip(),complete.lstrip()
-def find_element(ast,result = None):
+def find_class_name(declarations,result=None):
+    for i,item in enumerate(declarations):
+        if isinstance(item,str):
+            continue
+        elif isinstance(item,list):
+            result = find_class_name(item)
+        elif isinstance(item,dict):
+            if 'IDENTIFIER' in item:
+                result = item['IDENTIFIER']
+    return result
+def find_member(declarations,result=None):
+    if result is None:
+        result = []
+    flag = 0
+    for i,item in enumerate(declarations):
+        if flag == 1:
+            flag = 0
+            continue
+        if isinstance(item,str):
+            if item == 'function_declaration_definition':
+                full,complete = process_function(declarations[i+1][0][1])
+                flag = 1
+                result.append({'full':full,'complete':complete})
+        elif isinstance(item,list):
+            result = find_member(item,result)
+        elif isinstance(item,dict):
+            if 'IDENTIFIER' in item:
+                result.append(item['IDENTIFIER']) 
+    return result
+def find_type(declarations , result = None):
+    for i,item in enumerate(declarations):
+        if isinstance(item,str):
+            continue
+        elif isinstance(item,list):
+            result = find_type(item,result)
+        elif isinstance(item,dict):
+            type_list = ['IDENTIFIER','int','float','double','char','bool']
+            for type in type_list:
+                if type in item:
+                    result = item[type] 
+    return result
+def add_to_table(type,declarations,table):
+    if type == 'class_declaration_definition':
+        class_name = find_class_name(declarations[0])
+        table[class_name] = {'type':'class','member':[]}
+        member = find_member(declarations[1:])
+        table[class_name]['member']=member
+    elif type == 'simple_declaration':
+        type = find_type(declarations[0])
+        name = declarations[2]['IDENTIFIER']
+        table[name] = type
+    return table
+def find_element(ast,result = None,table = None):
     flag = 0
     if result is None:
         result = []
+    if table is None:
+        table = {}
     for i,item in enumerate(ast):
         if flag == 1:
             flag = 0
@@ -124,14 +193,17 @@ def find_element(ast,result = None):
         if isinstance(item,str):
             if item == 'function_declaration':
                 full , complete = process_function(ast[i+1])
-                print(f'there is a function')
                 result.append({'full':full,'complete':complete})
                 flag = 1
+            if item == 'class_declaration_definition' or item == 'simple_declaration':
+                table = add_to_table(ast[i],ast[i+1],table)
+                print(f'table is {table}')
+                flag = 1 
         elif isinstance(item,list):
-            result = find_element(item,result)
+            result,table = find_element(item,result,table)
         elif isinstance(item,dict):
             if 'IDENTIFIER' in item:
                 result.append({'full':item['IDENTIFIER'],'complete':item['IDENTIFIER']})
-    return result
+    return result,table
 if __name__ == '__main__':
     app.run(debug=False, port='5000')
