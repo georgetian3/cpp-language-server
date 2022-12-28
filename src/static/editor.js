@@ -40,6 +40,7 @@ async function handle_update(element) {
     });
     let data = await response.json();
     console.log('Formatting:', data.formatting);
+    element.hidden = true;
     element.innerHTML = data.formatting;
     let suggestions = document.getElementById('suggestions');
     suggestions.innerHTML = '';
@@ -53,16 +54,21 @@ async function handle_update(element) {
         li.innerHTML = suggestion.full;
         suggestions.appendChild(li);
     }
+    element.hidden = false;
     updating = false;
     if (need_update) {
-        append_text('');
+        update();
     }
     need_update = false;
 }
 
+
+function update() {
+    editor_textarea.dispatchEvent(new Event('input'));
+}
 function append_text(text) {
     editor_parent.value += text;
-    editor_textarea.dispatchEvent(new Event('input'));
+    update();
 }
 
 function insert_text(str, pos) {
@@ -84,7 +90,6 @@ function register() {
             event.preventDefault();
             event.stopPropagation();
             insert_text('    ', get_cursor());
-            //append_text('    ');
             return;
         } else if (event.ctrlKey && event.key >= 1 && event.key <= 9) {
             suggestions = suggestions_list.getElementsByTagName('li');
@@ -103,5 +108,5 @@ function autocomplete(suggestion) {
     console.log(suggestion);
     text = suggestion.dataset.complete;
     console.log('value:', text);
-    append_text(text);
+    insert_text(text, get_cursor());
 }
