@@ -52,7 +52,7 @@ def process():
     if temp != {None: None}:
         ast = temp
     print(ast)
-
+    print(find_element(ast))
     formatted_tokens = []
     prev_index = 0
     for token in tokens:
@@ -82,7 +82,33 @@ def process():
     #print('Formatting:', res)
     #print('Autocomplete:', suggestions)
     return {'formatting': res, 'suggestions': suggestions}
-
-
+def process_function(function_list,result  = ''):
+    for i, item in enumerate(function_list):
+        if isinstance(item,str):
+            continue
+        elif isinstance(item,list):
+            result = process_function(item,result)
+        elif isinstance(item,dict):
+            v = item.values()
+            if list(v)[0] == "{'empty': 'empty'}":
+                continue
+            result = result + ' ' + list(v)[0]
+    return result
+def find_element(ast,result = []):
+    flag = 0
+    for i,item in enumerate(ast):
+        if flag == 1:
+            flag = 0
+            continue
+        if isinstance(item,str):
+            if item == 'function_declaration':
+               result.append(process_function(ast[i+1]))
+               flag = 1
+        elif isinstance(item,list):
+            result = find_element(item,result)
+        elif isinstance(item,dict):
+            if 'IDENTIFIER' in item:
+                result.append(item['IDENTIFIER'])
+    return result
 if __name__ == '__main__':
     app.run(debug=False, port='5000')
