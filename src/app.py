@@ -9,6 +9,7 @@ from lexer.operators import operator_or_punctuators
 from parser.myast import traverse
 from parser.parser import *
 import html
+import time
 import logging
 log = logging.getLogger('werkzeug')
 log.setLevel(logging.ERROR)
