@@ -81,9 +81,10 @@ def process():
     print(elements)
     suggestions = []
     i = cursor
-    while(i <= len(src) and i > 0 and  not ' ' in src[i-1] and not '\n' in src[i-1]):
+    while(i <= len(src) and i > 0 and  not ' ' in src[i-1] and not '\n' in src[i-1] and not ',' in src[i-1]):
         i -= 1
     partial = src[i:cursor]
+    print(f'partial is {partial}')
     if len(tokens) > 0 and partial !='':
         for keyword in keywords:
             if partial == keyword[:len(partial)] and partial != keyword:
