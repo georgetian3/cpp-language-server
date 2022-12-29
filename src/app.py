@@ -58,7 +58,7 @@ def process():
     temp = run_parser(src)
 
     global ast
-    if temp != None:
+    if temp is not None:
         ast = temp
     formatted_tokens = []
     prev_index = 0
