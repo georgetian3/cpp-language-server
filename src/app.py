@@ -60,6 +60,7 @@ def process():
     global ast
     if temp is not None:
         ast = temp
+    print(ast)
     formatted_tokens = []
     prev_index = 0
 
