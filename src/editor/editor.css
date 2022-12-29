@@ -55,29 +55,29 @@ body {
 }
 
 span.keyword {
-  color: rgb(46, 107, 213);
+  color: rgb(73, 156, 214);
 }
 span.identifier {
-  color: lightblue;
+  color: rgb(156, 220, 218);
 }
 span.num_literal {
-  color: blue;
+  color: rgb(167,206,168);
 }
 span.char_literal{
-  color: orange;
+  color: rgb(195,145,120);
 }
 span.operator {
   color: white;
 }
 span.class {
-  color: rgb(24, 251, 24);
+  color: rgb(78, 188, 162);
 }
 span.include {
-  color: purple;
+  color: rgb(186, 134, 192);
 }
 span.function {
-  color:yellow;
+  color:rgb(220,220,139);
 }
 span.comment {
-  color: rgb(2, 85, 2);
+  color: rgb(106, 153, 85);
 }
