@@ -22,7 +22,7 @@ integer_suffix = r'(%s%s?|%s%s?|%s%s?|%s%s?)' % (
 
 binary_literal = r'(0[bB](\'?%s)+)' % binary_digit
 octal_literal = r'(0(\'?%s)+)' % octal_digit
-decimal_literal = r'(%s(\'?%s)*)' % (nonzero_digit, digit)
+decimal_literal = r'(%s(\'?%s)*|%s)' % (nonzero_digit, digit, digit)
 hexadecimal_literal = r'(%s%s)' % (hexadecimal_prefix, hexadecimal_digit_sequence)
 
 integer_literal = r'(%s%s?|%s%s?|%s%s?|%s%s?)' % (
@@ -45,7 +45,6 @@ escape_sequence = r'(%s|%s|%s)' % (simple_escape_sequence, octal_escape_sequence
 c_char = r'((?!\'|\\|\n)%s|%s|%s)' % (basic_source_character, escape_sequence, universal_character_name)
 c_char_sequence = r'(%s+)' % c_char
 character_literal = r'(%s?\'%s\')' % (encoding_prefix, c_char_sequence)
-character_literal = r'\'.*?\''
 
 #############################################################################################################
 # 5.13.4 Floating-point literals

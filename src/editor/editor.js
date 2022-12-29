@@ -37,6 +37,7 @@ async function handle_update(element) {
         need_update = true;
         return;
     }
+    console.log('cursor', get_cursor());
     updating = true;
     let response = await fetch('http://127.0.0.1:5000/process', {
         method: 'POST',

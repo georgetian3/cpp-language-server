@@ -94,7 +94,11 @@ import lexer.literals
 import lexer.digits
 import lexer.identifiers
 if __name__ == '__main__':
-    text = '1.1e4'
+    run_lexer()
+    run_parser()
+    exit()
+    text = 'u\'e\''
     #print(lexer.literals.fractional_constant)
     #print(re.fullmatch(lexer.digits.digit_sequence, text))
-    print(lexer.identifiers.identifier)
+    print(lexer.literals.character_literal)
+    print(re.fullmatch(lexer.literals.character_literal, text))

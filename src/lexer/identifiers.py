@@ -40,7 +40,6 @@ identifier = r'((?!%s)%s(%s|%s)*)' % (
     digit
 )
 
-# currently not standard compliant, TODO: change later
 @TOKEN(identifier)
 def t_IDENTIFIER(t):
     if t.value in keywords:
