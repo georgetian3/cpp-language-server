@@ -21,8 +21,8 @@ integer_suffix = r'(%s%s?|%s%s?|%s%s?|%s%s?)' % (
 )
 
 binary_literal = r'(0[bB](\'?%s)+)' % binary_digit
-octal_literal = r'(0(\'?%s)+)' % octal_digit
-decimal_literal = r'(%s(\'?%s)*|%s)' % (nonzero_digit, digit, digit)
+octal_literal = r'(0(\'?%s)*)' % octal_digit
+decimal_literal = r'(%s(\'?%s)*)' % (nonzero_digit, digit)
 hexadecimal_literal = r'(%s%s)' % (hexadecimal_prefix, hexadecimal_digit_sequence)
 
 integer_literal = r'(%s%s?|%s%s?|%s%s?|%s%s?)' % (
