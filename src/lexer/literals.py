@@ -20,9 +20,9 @@ integer_suffix = r'(%s%s?|%s%s?|%s%s?|%s%s?)' % (
     long_long_suffix, unsigned_suffix
 )
 
-binary_literal = r'(0[b|B](\'?%s)+)' % binary_digit
+binary_literal = r'(0[bB](\'?%s)+)' % binary_digit
 octal_literal = r'(0(\'?%s)+)' % octal_digit
-decimal_literal = r'(%s(\'?%s)+)' % (nonzero_digit, digit)
+decimal_literal = r'(%s(\'?%s)*)' % (nonzero_digit, digit)
 hexadecimal_literal = r'(%s%s)' % (hexadecimal_prefix, hexadecimal_digit_sequence)
 
 integer_literal = r'(%s%s?|%s%s?|%s%s?|%s%s?)' % (
@@ -31,9 +31,6 @@ integer_literal = r'(%s%s?|%s%s?|%s%s?|%s%s?)' % (
     decimal_literal, integer_suffix,
     hexadecimal_literal, integer_suffix,
 )
-
-integer_literal = r'[\+-]?[0-9]+'
-
 
 #############################################################################################################
 # 5.13.3 Character literals
@@ -53,7 +50,7 @@ character_literal = r'\'.*?\''
 #############################################################################################################
 # 5.13.4 Floating-point literals
 
-floating_point_suffix = r'[flFL]'
+floating_point_suffix = r'(fl|FL)'
 sign = r'[\+-]'
 exponent_part = r'([eE]%s?%s)' % (sign, digit_sequence)
 binary_exponent_part = r'([pP]%s?%s)' % (sign, digit_sequence)
@@ -79,10 +76,6 @@ floating_point_literal = r'(%s|%s)' % (
     hexadecimal_floating_point_literal
 )
 
-#floating_point_literal = r'[%s\.%s?|%s?\.%s]' % ('[0-9]+', '[0-9]+', '[0-9]+', '[0-9]+') # TODO: not to spec yet
-
-#floating_point_literal = r'[\+-]?[0-9]+\.[0-9]+'
-
 #############################################################################################################
 # 5.13.5 String literals
 
@@ -97,8 +90,6 @@ r_char_sequence = r'(%s+)' % r_char
 raw_string = r'%s?\(%s?\)%s?' % (d_char_sequence, r_char_sequence, d_char_sequence)
 
 string_literal = r'(%s?(\"%s?\"|R%s))' % (encoding_prefix, s_char_sequence, raw_string)
-
-string_literal = r'\".*?\"' # TODO: not to spec yet
 
 #############################################################################################################
 # 5.13.6 Boolean literals
@@ -120,6 +111,7 @@ literal = r'(%s|%s|%s|%s|%s|%s)' % (
     boolean_literal,
     pointer_literal,
 )
+
 """ 
 @TOKEN(integer_literal)
 def t_INTEGER_LITERAL(t):
@@ -127,9 +119,9 @@ def t_INTEGER_LITERAL(t):
 @TOKEN(character_literal)
 def t_CHARACTER_LITERAL(t):
     return t """
-@TOKEN(floating_point_literal)
+""" @TOKEN(floating_point_literal)
 def t_FLOATING_POINT_LITERAL(t):
-    return t
+    return t """
 """ @TOKEN(string_literal)
 def t_STRING_LITERAL(t):
     return t

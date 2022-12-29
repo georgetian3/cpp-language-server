@@ -1,5 +1,6 @@
 from ply.lex import TOKEN
 from .keywords import keywords
+from .digits import digit
 
 """
 5.10 Identifiers
@@ -23,14 +24,21 @@ digit : one of
 1   An identifier is an arbitrarily long sequence of letters and digits. Each universal-character-name in an identifier shall designate a character whose encoding in ISO/IEC 10646 falls into one of the ranges specified in `names_allowed`. The initial element shall not be a universal-character-name designating a character whose encoding falls into one of the ranges specified in Table `names_disallowed`. Upper- and lower-case letters are different. All characters are significant.
 """
 
-names_allowed = [
-    '\u00A8', '\u00AA', '\u00AD', '\u00AF', '\u00B2-\u00B5', '\u00B7-\u00BA', '\u00BC-\u00BE', '\u00C0-\u00D6', '\u00D8-\u00F6', '\u00F8-\u00FF', '\u0100-\u167F', '\u1681-\u180D', '\u180F-\u1FFF', '\u200B-\u200D', '\u202A-\u202E', '\u203F-\u2040', '\u2054', '\u2060-\u206F', '\u2070-\u218F', '\u2460-\u24FF', '\u2776-\u2793', '\u2C00-\u2DFF', '\u2E80-\u2FFF', '\u3004-\u3007', '\u3021-\u302F', '\u3031-\uD7FF', '\uF900-\uFD3D', '\uFD40-\uFDCF', '\uFDF0-\uFE44', '\uFE47-\uFFFD', '\u10000-\u1FFFD', '\u20000-\u2FFFD', '\u30000-\u3FFFD', '\u40000-\u4FFFD', '\u50000-\u5FFFD', '\u60000-\u6FFFD', '\u70000-\u7FFFD', '\u80000-\u8FFFD', '\u90000-\u9FFFD', '\uA0000-\uAFFFD', '\uB0000-\uBFFFD', '\uC0000-\uCFFFD', '\uD0000-\uDFFFD', '\uE0000-\uEFFFD'
-]
+universal_character_name = r'[\u00A8\u00AA\u00AD\u00AF\u00B2-\u00B5\u00B7-\u00BA\u00BC-\u00BE\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u00FF\u0100-\u167F\u1681-\u180D\u180F-\u1FFF\u200B-\u200D\u202A-\u202E\u203F-\u2040\u2054\u2060-\u206F\u2070-\u218F\u2460-\u24FF\u2776-\u2793\u2C00-\u2DFF\u2E80-\u2FFF\u3004-\u3007\u3021-\u302F\u3031-\uD7FF\uF900-\uFD3D\uFD40-\uFDCF\uFDF0-\uFE44\uFE47-\uFFFD\U00010000-\U0001FFFD\U00020000-\U0002FFFD\U00030000-\U0003FFFD\U00040000-\U0004FFFD\U00050000-\U0005FFFD\U00060000-\U0006FFFD\U00070000-\U0007FFFD\U00080000-\U0008FFFD\U00090000-\U0009FFFD\U000A0000-\U000AFFFD\U000B0000-\U000BFFFD\U000C0000-\U000CFFFD\U000D0000-\U000DFFFD\U000E0000-\U000EFFFD]'
 
-names_disallowed = ['\u0300-\u036F', '\u1DC0-\u1DFF', '\u20D0-\u20FF', '\uFE20-\uFE2F']
+names_disallowed = r'[\u0300-\u036F\u1DC0-\u1DFF\u20D0-\u20FF\uFE20-\uFE2F]'
 
 
-identifier = r'([A-Za-z_][A-Za-z0-9_]*)'
+nondigit = r'[_a-zA-Z]'
+
+identifier_nondigit = r'(%s|%s)' % (nondigit, universal_character_name)
+
+identifier = r'((?!%s)%s(%s|%s)*)' % (
+    names_disallowed,
+    identifier_nondigit,
+    identifier_nondigit,
+    digit
+)
 
 # currently not standard compliant, TODO: change later
 @TOKEN(identifier)
