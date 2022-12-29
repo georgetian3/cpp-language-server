@@ -13,6 +13,7 @@ from parser.parser import *
 import html
 import time
 import logging
+from main import NoCommentsLexer
 
 def list_dict_duplicate_removal(data_list):
     run_function = lambda x, y: x if y in x else x + [y]
@@ -34,7 +35,7 @@ def get_tokens(src):
     return list(lexer)
 
 def run_parser(src):
-    ast = parser.parse(src, debug=False)
+    ast = parser.parse(src, debug=False, lexer=NoCommentsLexer(lex.lexer))
     tree = traverse(ast)
     return tree
 
