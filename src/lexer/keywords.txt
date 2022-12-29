@@ -45,7 +45,6 @@ mutable
 namespace
 new
 noexcept
-nullptr
 operator
 private
 protected
