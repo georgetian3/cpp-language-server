@@ -10,7 +10,7 @@ class base{
         int c;
     
 };
-
+class base1{};
 int add(int a ,int b){
     int flag = 0;
     return a + b;
