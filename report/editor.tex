@@ -10,5 +10,6 @@
     \item 快捷键：用户可以使用制表键插入四个空格符号。使用 \code{ctrl + n} 使用序号为 \code{n} 的提示进行代码补全。
 \end{enumerate}
 
-
 \subsection{后端}
+
+由于输入到语法分析器中的记号中不能包含注释，但是代码高亮中需要展示注释，所以传给语法分析器的词法分析器是继承 \code{lex.Lexer} 的 \code{NoCommentsLexer}。除了在调用 \code{token} 函数时它会跳过所有注释，\code{NoCommentsLexer} 与 \code{lex.Lexer} 的功能完全一样。
