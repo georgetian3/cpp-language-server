@@ -23,6 +23,6 @@ int main(){
     base b;
     b.a = 1;
     b.a = 1;
-    b.add(2,3);
+    b.add(2.1415,3);
     return 0;
 }

@@ -55,29 +55,29 @@ body {
 }
 
 span.keyword {
-  color: rgb(73, 156, 214);
+  color: #569cd6;
 }
 span.identifier {
-  color: rgb(156, 220, 218);
+  color: #9cdcfe;
 }
 span.num_literal {
-  color: rgb(167,206,168);
+  color: #b5cea8;
 }
 span.char_literal{
-  color: rgb(195,145,120);
+  color: #ce9178;
 }
 span.operator {
   color: white;
 }
 span.class {
-  color: rgb(78, 188, 162);
+  color: #4ec9b0;
 }
 span.include {
-  color: rgb(186, 134, 192);
+  color: #c586c0;
 }
 span.function {
-  color:rgb(220,220,139);
+  color:#dcdcaa;
 }
 span.comment {
-  color: rgb(106, 153, 85);
+  color: #6a9955;
 }
