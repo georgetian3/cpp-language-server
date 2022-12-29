@@ -184,11 +184,13 @@ def process():
     print('Autocomplete:', suggestions)
     return {'formatting': res, 'suggestions': list(suggestions)}
 def find_now_domain(src,cursor,functions):
+    src = src[:cursor]
+    src = src.replace(' ','')
     min = 10e9
     domain = ''
     for function in functions:
-        idx = src.find(function['full'])
-        if  cursor-idx < min and cursor > idx:
+        idx = src.find(function['full'].replace(' ',''))
+        if  cursor-idx < min :
             min = cursor-idx
             domain = function['full'].replace(' ','')
     return domain
