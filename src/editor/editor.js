@@ -109,7 +109,7 @@ function register() {
             insert_text(event.key, get_cursor());
             set_cursor(get_cursor() - 1);
         } else if (event.key === '(') {
-            insert_text('()', get_cursor() + 1);
+            insert_text('()', get_cursor());
             set_cursor(get_cursor() - 1);
             event.preventDefault();
             event.stopPropagation();

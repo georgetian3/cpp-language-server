@@ -50,7 +50,7 @@ def process():
     src = data['text']
     cursor = data['cursor']
     #print('Source:', src)
-    print('Cursor:', cursor)
+    #print('Cursor:', cursor)
 
     tokens = get_tokens(src)
     temp = run_parser(src)
@@ -84,29 +84,63 @@ def process():
                 suggestions.append({'full':element['full'],'complete':element['complete'][len(partial):].replace(' ','')})
         
         for k,v in table.items():
-            if partial[-1] == '.' :
-                if partial[:-1] == k.split('@')[0]:
-                    if isinstance(v,dict):
-                        type_list = ['int','float','double','char','bool','string']
-                        if v['type'] not in type_list:
-                            
-                            members = table[v['type']]['member']
-                            for member in members:
-                                if isinstance(member,str):
-                                    suggestions.append({'full':member,'complete':member})
-                                elif isinstance(member,dict):
-                                    suggestions.append({'full':member['full'],'complete':member['complete']})
-            elif partial[-2:] == '->':
-                if partial[:-2] == k.split('@')[0]:
-                    if isinstance(v,dict):
-                        type_list = ['int','float','double','char','bool','string']
-                        if v['type'] not in type_list:
-                            members = table[v['type']]['member']
-                            for member in members:
-                                if isinstance(member,str):
-                                    suggestions.append({'full':member,'complete':member})
-                                elif isinstance(member,dict):
-                                    suggestions.append({'full':member['full'],'complete':member['complete']})
+            if '.' in partial:
+                if partial[-1] == '.' :
+                    if partial[:-1] == k.split('@')[0]:
+                        if isinstance(v,dict):
+                            type_list = ['int','float','double','char','bool']
+                            if v['type'] not in type_list:
+                                members = table[v['type']]['member']
+                                for member in members:
+                                    if isinstance(member,str):
+                                        suggestions.append({'full':member,'complete':member})
+                                    elif isinstance(member,dict):
+                                        suggestions.append({'full':member['full'],'complete':member['complete']})
+                else :
+                    class_name = partial.split('.')[0]
+                    member_parser = partial.split('.')[-1]
+
+                    if class_name == k.split('@')[0]:
+                        if isinstance(v,dict):
+                            type_list = ['int','float','double','char','bool']
+                            if v['type'] not in type_list:
+                                members = table[v['type']]['member']
+                                for member in members:
+                                    if isinstance(member,str):
+                                        if member_parser == member[:len(member_parser)] and member_parser != member:
+                                            suggestions.append({'full':member,'complete':member[len(member_parser):]})
+                                    elif isinstance(member,dict):
+                                        if member_parser == member['complete'][:len(member_parser)] and member_parser != member['complete']:
+                                            suggestions.append({'full':member['full'],'complete':member['complete'][len(member_parser):]})
+            elif '->' in partial: 
+                if partial[-2:] == '->':
+                    if partial[:-2] == k.split('@')[0]:
+                        if isinstance(v,dict):
+                            type_list = ['int','float','double','char','bool']
+                            if v['type'] not in type_list:
+                                members = table[v['type']]['member']
+                                for member in members:
+                                    if isinstance(member,str):
+                                        suggestions.append({'full':member,'complete':member})
+                                    elif isinstance(member,dict):
+                                        suggestions.append({'full':member['full'],'complete':member['complete']})
+                else:
+                    class_name = partial.split('->')[0]
+                    member_parser = partial.split('->')[-1]
+
+                    if class_name == k.split('@')[0]:
+                        if isinstance(v,dict):
+                            type_list = ['int','float','double','char','bool']
+                            if v['type'] not in type_list:
+                                members = table[v['type']]['member']
+                                for member in members:
+                                    if isinstance(member,str):
+                                        if member_parser == member[:len(member_parser)] and member_parser != member:
+                                            suggestions.append({'full':member,'complete':member[len(member_parser):]})
+                                    elif isinstance(member,dict):
+                                        if member_parser == member['complete'][:len(member_parser)] and member_parser != member['complete']:
+                                            suggestions.append({'full':member['full'],'complete':member['complete'][len(member_parser):]})
+              
             else:
                 if partial == k.split('@')[0][:len(partial)] and partial != k.split('@')[0]:
                     if  'domain' in v :
@@ -201,7 +235,7 @@ def find_type(declarations , result = None):
         elif isinstance(item,list):
             result = find_type(item,result)
         elif isinstance(item,dict):
-            type_list = ['IDENTIFIER','int','float','double','char','bool','string']
+            type_list = ['IDENTIFIER','int','float','double','char','bool']
             for type in type_list:
                 if type in item:
                     result = item[type] 
