@@ -6,6 +6,7 @@ public:
     int a = 1;
     int b = 2LL;
     char s = 's';
+    char t = u8't';
     char* str = "asjdfoa";
     double lit = 0.0;
     bool educated = true;
@@ -35,7 +36,7 @@ int main(){
         in_main = in_main - fa;
     }
     int count = 0;
-    for( int a=0; a<3; a++){
+    for(int a=0; a<3; a++){
         count++;
     }
     return 0;
