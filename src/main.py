@@ -20,8 +20,10 @@ from parser.parser import *
 
 def parse_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument('-i', help='Source file to be lexed')
-    parser.add_argument('-o', help='Destination file to save token stream')
+    parser.add_argument('-i', help='Source file to be lexed',default='test.cpp')
+    parser.add_argument('-gui',action='store_true')
+    parser.add_argument('-lexer',action='store_true')
+    parser.add_argument('-parser',action='store_true')
     args = parser.parse_args()
     return args
 
@@ -42,7 +44,7 @@ test_file = 'test.cpp'
 def run_lexer():
     args = parse_args()
 
-    with open(test_file, encoding='utf8') as f:
+    with open(args.i, encoding='utf8') as f:
         source = f.read()
     l = lex.lex(debug=True, name_order=name_order)
     l.input(source)
@@ -59,8 +61,6 @@ def run_parser():
     args = parse_args()
     with open(test_file, encoding='utf8') as f:
         source = f.read()
-
-
     parser = yacc(debugfile='parser.out', debug=True)
     ast = parser.parse(source, debug=True, lexer=NoCommentsLexer(lex.lexer))
     print(ast)
@@ -108,11 +108,12 @@ import lexer.literals
 import lexer.digits
 import lexer.identifiers
 if __name__ == '__main__':
-    run_lexer()
-    run_parser()
-    exit()
-    text = 'u\'e\''
-    #print(lexer.literals.fractional_constant)
-    #print(re.fullmatch(lexer.digits.digit_sequence, text))
-    print(lexer.literals.character_literal)
-    print(re.fullmatch(lexer.literals.character_literal, text))
+    args = parse_args()
+    if args.lexer:
+        run_lexer()
+    if args.parser:
+        run_parser()
+
+    if args.gui:
+        from app import app
+        app.run()
