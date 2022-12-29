@@ -30,8 +30,8 @@ class NoCommentsLexer(lex.Lexer):
     def token(self):
         while True:
             token = super().token()
-            if token == None:
-                return token
+            if token is None:
+                return None
             elif token.type != 'comment':
                 return token
 

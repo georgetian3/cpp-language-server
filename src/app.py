@@ -190,7 +190,7 @@ def find_now_domain(src,cursor,functions):
     domain = ''
     for function in functions:
         idx = src.find(function['full'].replace(' ',''))
-        if  cursor-idx < min :
+        if  cursor-idx < min and idx != -1:
             min = cursor-idx
             domain = function['full'].replace(' ','')
     return domain
