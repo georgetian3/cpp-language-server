@@ -152,7 +152,7 @@ def process():
                         suggestions.append({'full':k.split('@')[0],'complete':k.split('@')[0][len(partial):]})
 
     for token in tokens:
-        print(token.value.ljust(20, ' '), token.type)
+        #print(token.value.ljust(20, ' '), token.type)
         index = src.find(token.value, prev_index)
         whitespace = src[prev_index : index]
         whitespace = whitespace.replace(' ', '&ensp;')
@@ -176,7 +176,7 @@ def process():
         for element in elements:
             if token.value == element['complete'].split(' ')[0]:
                 type = 'function'
-        print(f'type is {type}')
+        #print(f'type is {type}')
         formatted_tokens.append(f'<span class="{type}">{html.escape(token.value)}</span>')
     res = ''.join(formatted_tokens)
     #print('Formatting:', res)
