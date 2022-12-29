@@ -1,8 +1,8 @@
 """
 Most of the block comments in this repository originate from the C++ Working Draft N4860
 """
-import ply.lex as lex
-from ply.yacc import yacc
+import myply.lex as lex
+from myply.yacc import yacc
 
 from lexer.lexhtmlgenerator import LexHTMLGenerator
 
