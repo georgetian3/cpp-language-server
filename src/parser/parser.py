@@ -29,6 +29,8 @@ def p_empty(p):
     'empty :'
     p[0] = {'empty': 'empty'}
 
+def p_error(p):
+    raise ValueError('Parsing Error')
 
 start = 'start'
 
