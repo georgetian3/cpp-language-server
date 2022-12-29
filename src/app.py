@@ -87,7 +87,7 @@ def process():
             if partial[-1] == '.' :
                 if partial[:-1] == k.split('@')[0]:
                     if isinstance(v,dict):
-                        type_list = ['int','float','double','char','bool']
+                        type_list = ['int','float','double','char','bool','string']
                         if v['type'] not in type_list:
                             
                             members = table[v['type']]['member']
@@ -99,7 +99,7 @@ def process():
             elif partial[-2:] == '->':
                 if partial[:-2] == k.split('@')[0]:
                     if isinstance(v,dict):
-                        type_list = ['int','float','double','char','bool']
+                        type_list = ['int','float','double','char','bool','string']
                         if v['type'] not in type_list:
                             members = table[v['type']]['member']
                             for member in members:
@@ -110,7 +110,7 @@ def process():
             else:
                 if partial == k.split('@')[0][:len(partial)] and partial != k.split('@')[0]:
                     if  'domain' in v :
-                        if v['domain'] == now_domain:
+                        if v['domain'] == now_domain or v['domain'] == 'all':
                             suggestions.append({'full':k.split('@')[0],'complete':k.split('@')[0][len(partial):]})
                     else:                   
                         suggestions.append({'full':k.split('@')[0],'complete':k.split('@')[0][len(partial):]})
@@ -201,7 +201,7 @@ def find_type(declarations , result = None):
         elif isinstance(item,list):
             result = find_type(item,result)
         elif isinstance(item,dict):
-            type_list = ['IDENTIFIER','int','float','double','char','bool']
+            type_list = ['IDENTIFIER','int','float','double','char','bool','string']
             for type in type_list:
                 if type in item:
                     result = item[type] 
