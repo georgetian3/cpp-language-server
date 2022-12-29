@@ -144,12 +144,3 @@ def t_LITERAL(t):
     return t
 
 
-
-if __name__ == '__main__':
-    l=lex.lex()
-    input = '''
-            "u8"absid""
-            '''
-    l.input(input)
-    for tok in l:
-        print(tok)

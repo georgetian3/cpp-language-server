@@ -89,6 +89,8 @@ def format():
 ) """
 
 
+import re
+import lexer.literals
 if __name__ == '__main__':
-    run_lexer()
-    run_parser()
+    text = 'e4'
+    print(re.fullmatch(lexer.literals.exponent_part, text))
