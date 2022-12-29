@@ -16,6 +16,7 @@ comment = r'(%s|%s)' % (single_line_comment, multi_line_comment)
 
 @TOKEN(comment)
 def t_COMMENT(t):
+    t.type = 'comment'
     t.lexer.lineno += t.value.count("\n")
     return t
 

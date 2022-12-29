@@ -24,6 +24,17 @@ def parse_args():
     return args
 
 
+class NoCommentsLexer(lex.Lexer):
+    def __init__(self, parent):
+        self.__dict__ = parent.__dict__.copy()
+    def token(self):
+        while True:
+            token = super().token()
+            if token == None:
+                return token
+            elif token.type != 'comment':
+                return token
+
 test_file = 'test.cpp'
 
 def run_lexer():
@@ -50,7 +61,7 @@ def run_parser():
 
 
     parser = yacc(debugfile='parser.out', debug=True)
-    ast = parser.parse(source, debug=True)
+    ast = parser.parse(source, debug=True, lexer=NoCommentsLexer(lex.lexer))
     print(ast)
     tree = traverse(ast)
     print(tree)
@@ -87,6 +98,8 @@ def format():
 """ precedence = (
     ('left', 'function_definition', 'IDENTIFIER'),
 ) """
+
+
 
 
 import re
