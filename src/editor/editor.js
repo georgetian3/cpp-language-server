@@ -123,6 +123,11 @@ function register() {
             set_cursor(get_cursor() - 1);
             event.preventDefault();
             event.stopPropagation();
+        }else if (event.key === '<') {
+            insert_text('<>', get_cursor());
+            set_cursor(get_cursor() - 1);
+            event.preventDefault();
+            event.stopPropagation();
         }
         
     });
