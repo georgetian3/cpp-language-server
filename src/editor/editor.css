@@ -3,32 +3,33 @@ body {
   color: black;
 }
 
-#box {
-  display: flex;
-  flex-direction: row;
-}
-
 #editor {
   height: 80vh;
   width: 90vw;
   margin: 5%;
-  margin-top: 2%;
+  margin-bottom: 32px;
+  margin-top: 32px;
   border-color: grey;
   border-style: solid;
+}
+
+#box {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
 }
 
 #suggestions-box {
   color: white;
   font-family: monospace;
-  position: fixed;
-  bottom: 0;
   display: flex;
   flex-direction: row;
   width: 90vw;
   margin-left: 5%;
-  margin-bottom: 2%;
+  margin-bottom: 32px;
   padding-left: 1%;
-  height: 7em;
+  height: 2em;
+  flex-grow: 1;
   border-color: grey;
   border-style: solid;
 }
@@ -39,7 +40,6 @@ body {
   padding-left: 25px;
   position: relative;
 }
-
 
 .suggestion {
   color: rgb(125, 215, 246);
@@ -64,14 +64,14 @@ span.literal {
   color: orange;
 }
 span.operator {
-  color: yellow;
+  color: white;
 }
 span.class {
-  color: red;
-}
-span.include {
   color: green;
 }
+span.include {
+  color: purple;
+}
 span.function {
-  color:purple;
+  color:yellow;
 }

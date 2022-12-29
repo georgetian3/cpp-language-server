@@ -18,17 +18,17 @@
     
     
 
-    <code-input id="editor" placeholder="Type code here" template="syntax-highlighted" ></code-input>
-
-    <div id="suggestions-box">
-      <div>
-        <br>
-        Suggestions:
-        <br>
-        <kbd>ctrl + </kbd>
+    
+    <div id="box">
+      <code-input id="editor" placeholder="Type code here" template="syntax-highlighted" ></code-input>
+      <div id="suggestions-box">
+        <div id="suggestions-title">
+          Suggestions:<br><kbd>ctrl + </kbd>
+        </div>
+        <ol id="suggestions"></ol>
       </div>
-      <ol id="suggestions"></ol>
     </div>
+
     
 
   </body>
