@@ -70,49 +70,7 @@ def run_parser():
         json.dump(tree, f, indent=1)
 
 
-def format():
-    with open('in.txt') as f:
-        text = f.read()
-    text = text.replace('\\br', '')
-    text = text.replace('-', '_')
-    text = re.sub(r'\\.+?\{(.*?)\}', r'\1', text)
-
-
-    head, *prods = text.split('\n')
-    head = head[:-2]
-
-    f_def = f'def p_{head}(p):\n'
-    head = "    ''' " + head + ' '
-    prefix = ' ' * len(head) + '| '
-    head += ': ' + prods[0] + '\n'
-    del prods[0]
-    for i in range(len(prods)):
-        prods[i] = prefix + prods[i]
-    if prods:
-        prods[-1] += " '''"
-    else:
-        head = head[:-1] + " '''"
-    text = f_def + head + '\n'.join(prods)
-    print(text)
-
-
-""" precedence = (
-    ('left', 'function_definition', 'IDENTIFIER'),
-) """
-
-
-
-
-import re
-import lexer.literals
-import lexer.digits
-import lexer.identifiers
 if __name__ == '__main__':
     run_lexer()
     run_parser()
     exit()
-    text = 'u\'e\''
-    #print(lexer.literals.fractional_constant)
-    #print(re.fullmatch(lexer.digits.digit_sequence, text))
-    print(lexer.literals.character_literal)
-    print(re.fullmatch(lexer.literals.character_literal, text))
