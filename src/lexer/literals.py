@@ -102,6 +102,7 @@ pointer_literal = r'(nullptr)'
 #############################################################################################################
 
 
+
 literal = r'(%s|%s|%s|%s|%s|%s)' % (
     floating_point_literal,
     integer_literal,

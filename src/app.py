@@ -6,6 +6,7 @@ from lexer.tokens import *
 from lexer.keywords import keywords
 from lexer.tokens import literals
 from lexer.operators import operator_or_punctuators
+from lexer.literals import character_literal , string_literal
 from functools import reduce
 from parser.myast import traverse
 from parser.parser import *
@@ -69,8 +70,8 @@ def process():
     while(i <= len(src) and i > 0 and  not ' ' in src[i-1] and not '\n' in src[i-1] and not ',' in src[i-1]):
         i -= 1
     partial = src[i:cursor]
-    if cursor == len(src) or (' ' not in src[cursor] and '\n' not in src[cursor]):
-        if cursor != len(src):
+    if cursor >= len(src) or (' ' not in src[cursor] and '\n' not in src[cursor]):
+        if cursor > len(src):
             partial = ''
     print(f'partial is {partial}')
     now_domain = find_now_domain(src,cursor,elements)
@@ -158,15 +159,23 @@ def process():
         formatted_tokens.append(whitespace)
         prev_index = index + len(token.value)
         type = token.type.lower()
+    
         if type in keywords:
             type = 'keyword'
         elif type in literals or type in operator_or_punctuators or type in operator_or_punctuators.values():
             type = 'operator'
         if token.value in table and table[token.value]['type'] == 'class':
             type = 'class'
+        if type == 'literal':
+            print(token.value)
+            if re.match(r'(%s|%s)'%(string_literal,character_literal),token.value):
+                type = 'char_literal'
+            else:
+                type = 'num_literal'
         for element in elements:
             if token.value == element['complete'].split(' ')[0]:
                 type = 'function'
+        print(f'type is {type}')
         formatted_tokens.append(f'<span class="{type}">{html.escape(token.value)}</span>')
     res = ''.join(formatted_tokens)
     #print('Formatting:', res)
