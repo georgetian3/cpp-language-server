@@ -20,6 +20,11 @@ function get_cursor() {
     return editor_textarea.selectionStart;
 }
 
+function set_cursor(pos) {
+    editor_textarea.selectionStart = pos;
+    editor_textarea.selectionEnd = pos;
+}
+
 async function handle_update(element) {
     if (editor_parent === undefined) {
         editor_parent = document.getElementById('editor');
@@ -44,6 +49,7 @@ async function handle_update(element) {
     element.innerHTML = data.formatting;
     let suggestions = document.getElementById('suggestions');
     suggestions.innerHTML = '';
+    data.suggestions.length = Math.min(data.suggestions.length, 9);
     console.log('Suggestions:', data.suggestions);
     for (const suggestion of data.suggestions) {
         console.log(suggestion);
@@ -74,9 +80,9 @@ function append_text(text) {
 function insert_text(str, pos) {
     text = editor_parent.value;
     editor_parent.value = text.substring(0, pos) + str + text.substring(pos, text.length);
-    editor_textarea.dispatchEvent(new Event('input'));
     editor_textarea.selectionStart = pos + str.length;
     editor_textarea.selectionEnd = pos + str.length;
+    editor_textarea.dispatchEvent(new Event('input'));
 }
 
 function register() {
@@ -99,6 +105,24 @@ function register() {
             event.preventDefault();
             event.stopPropagation();
             autocomplete(suggestions[event.key - 1]);
+        } else if (event.key === `"` || event.key === `'`) {
+            insert_text(event.key, get_cursor());
+            set_cursor(get_cursor() - 1);
+        } else if (event.key === '(') {
+            insert_text('()', get_cursor() + 1);
+            set_cursor(get_cursor() - 1);
+            event.preventDefault();
+            event.stopPropagation();
+        } else if (event.key === '[') {
+            insert_text('[]', get_cursor());
+            set_cursor(get_cursor() - 1);
+            event.preventDefault();
+            event.stopPropagation();
+        } else if (event.key === '{') {
+            insert_text('{}', get_cursor());
+            set_cursor(get_cursor() - 1);
+            event.preventDefault();
+            event.stopPropagation();
         }
         
     });
