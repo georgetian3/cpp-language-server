@@ -109,9 +109,10 @@ def process():
                                     suggestions.append({'full':member['full'],'complete':member['complete']})
             else:
                 if partial == k.split('@')[0][:len(partial)] and partial != k.split('@')[0]:
-                    if  'domain' in v and v['domain'] == now_domain:
-                        suggestions.append({'full':k.split('@')[0],'complete':k.split('@')[0][len(partial):]})
-                    else:                    
+                    if  'domain' in v :
+                        if v['domain'] == now_domain:
+                            suggestions.append({'full':k.split('@')[0],'complete':k.split('@')[0][len(partial):]})
+                    else:                   
                         suggestions.append({'full':k.split('@')[0],'complete':k.split('@')[0][len(partial):]})
 
     for token in tokens:
