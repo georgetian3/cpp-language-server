@@ -2,10 +2,10 @@
 from .keywords import keywords
 from .operators import operator_or_punctuators
 
-from .preprocessing import t_INCLUDE
 from .literals import t_LITERAL
-from .comments import t_COMMENT, t_WHITESPACE
+from .preprocessing import t_INCLUDE
 from .identifiers import t_IDENTIFIER
+from .comments import t_COMMENT, t_WHITESPACE
 
 """
 5.6 Tokens
@@ -16,13 +16,19 @@ There are five kinds of tokens: identifiers, keywords, literals, operators, and 
 
 
 tokens = [
+    'LITERAL',
     'COMMENT',
     'WHITESPACE',
     'INCLUDE',
-    'LITERAL',
     'IDENTIFIER',
 ]
 
+name_order = [
+    't_COMMENT',
+    't_LITERAL',
+    't_INCLUDE',
+    't_IDENTIFIER'
+]
 literals = r'{}[]();:?.~!+-*/%^&$|=<>,\#'
 tokens += [keyword.upper() for keyword in keywords]
 

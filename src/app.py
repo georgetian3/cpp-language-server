@@ -26,7 +26,7 @@ log.setLevel(logging.ERROR)
 app = Flask(__name__, static_folder='editor')
 CORS(app)
 
-lexer = lex.lex(debug=False)
+lexer = lex.lex(debug=True, name_order = name_order)
 parser = yacc(debug=False)
 
 
@@ -156,7 +156,7 @@ def process():
                         suggestions.append({'full':k.split('@')[0],'complete':k.split('@')[0][len(partial):]})
 
     for token in tokens:
-        #print(token.value.ljust(20, ' '), token.type)
+        print(token.value.ljust(20, ' '), token.type)
         index = src.find(token.value, prev_index)
         whitespace = src[prev_index : index]
         whitespace = whitespace.replace(' ', '&ensp;')

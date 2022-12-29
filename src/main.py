@@ -12,6 +12,8 @@ import re
 
 import json
 
+import lexer
+
 
 from parser.myast import traverse
 from parser.parser import *
@@ -42,17 +44,16 @@ def run_lexer():
 
     with open(test_file, encoding='utf8') as f:
         source = f.read()
-
-    lexer = lex.lex(debug=True)
-    lexer.input(source)
+    l = lex.lex(debug=True, name_order=name_order)
+    l.input(source)
 
     hg = LexHTMLGenerator()
-    tokens = list(lexer)
+    tokens = list(l)
     for token in tokens:
         hg.create_html_token(token)
 
     hg.write_html('output/output.html')
-    return lexer
+    return l
 
 def run_parser():
     args = parse_args()

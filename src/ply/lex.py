@@ -718,7 +718,7 @@ class LexerReflect(object):
 # Build all of the regular expression rules from definitions in the supplied module
 # -----------------------------------------------------------------------------
 def lex(*, module=None, object=None, debug=False, 
-        reflags=int(re.VERBOSE), debuglog=None, errorlog=None):
+        reflags=int(re.VERBOSE), debuglog=None, errorlog=None, name_order=[]):
 
     global lexer
 
@@ -747,6 +747,10 @@ def lex(*, module=None, object=None, debug=False,
             ldict['__file__'] = sys.modules[ldict['__module__']].__file__
     else:
         ldict = get_caller_module_dict(2)
+
+
+
+    #print(ldict)
 
     # Collect parser information from the dictionary
     linfo = LexerReflect(ldict, log=errorlog, reflags=reflags)
@@ -781,9 +785,20 @@ def lex(*, module=None, object=None, debug=False,
     for state in stateinfo:
         regex_list = []
 
+        found = {}
+
         # Add rules defined by functions first
         for fname, f in linfo.funcsym[state]:
+            if fname in name_order:
+                print('deferring', fname)
+                found[fname] = f
+                continue
             regex_list.append('(?P<%s>%s)' % (fname, _get_regex(f)))
+            if debug:
+                debuglog.info("lex: Adding rule %s -> '%s' (state '%s')", fname, _get_regex(f), state)
+
+        for fname in name_order:
+            regex_list.append('(?P<%s>%s)' % (fname, _get_regex(found[fname])))
             if debug:
                 debuglog.info("lex: Adding rule %s -> '%s' (state '%s')", fname, _get_regex(f), state)
 
