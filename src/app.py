@@ -156,7 +156,7 @@ def process():
                         suggestions.append({'full':k.split('@')[0],'complete':k.split('@')[0][len(partial):]})
 
     for token in tokens:
-        print(token.value.ljust(20, ' '), token.type)
+        #print(token.value.ljust(20, ' '), token.type)
         index = src.find(token.value, prev_index)
         whitespace = src[prev_index : index]
         whitespace = whitespace.replace(' ', '&ensp;')
@@ -277,7 +277,7 @@ def find_element(ast,result = None,table = None,domain = 'all'):
             flag = 0
             continue
         if isinstance(item,str):
-            if item == 'expression_statement' or item == 'expression':
+            if item == 'expression_statement' or item == 'expression' :
                 flag = 1
             if item == 'function_declaration_definition':
                 full , complete = process_function(ast[i+1][0][1])
@@ -289,12 +289,11 @@ def find_element(ast,result = None,table = None,domain = 'all'):
             if item == 'class_declaration_definition' or item == 'simple_declaration':
                 table = add_to_table(ast[i],ast[i+1],table,domain)
                 print(f'table is {table}')
-                flag = 1 
         elif isinstance(item,list):
             result,table = find_element(item,result,table,domain)
-        elif isinstance(item,dict):
-            if 'IDENTIFIER' in item:
-                result.append({'full':item['IDENTIFIER'],'complete':item['IDENTIFIER']})
+        # elif isinstance(item,dict):
+        #     if 'IDENTIFIER' in item:
+        #         result.append({'full':item['IDENTIFIER'],'complete':item['IDENTIFIER']})
     return result,table
 if __name__ == '__main__':
     app.run(debug=False, port='5000')
