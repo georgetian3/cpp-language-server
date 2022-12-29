@@ -4,6 +4,7 @@
 class Student{
 public:
     int a = 1;
+    long b = 2L;
     char s = 's';
     char t = u8't';
     char* str = "asjdfoa";
@@ -12,6 +13,11 @@ public:
     int add(int c, int d){
         int in_class_function = 0;
         return c+d;
+    }
+    bool checkOdd(int num){
+        if (num % 2 == 0){
+            return false;
+        }
     }
 };
 
@@ -34,6 +40,7 @@ int main(){
     if((in_main < fa) || (in_main >= 0)){
         in_main = in_main - fa;
     }
+    alpha.educated = alpha.checkOdd(in_main);
     int count = 0;
     for(int a=0; a<3; a++){
         count++;
