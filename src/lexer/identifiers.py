@@ -41,7 +41,6 @@ identifier = r'((?!%s)%s(%s|%s)*)' % (
 )
 
 print(identifier)
-exit()
 
 @TOKEN(identifier)
 def t_IDENTIFIER(t):
