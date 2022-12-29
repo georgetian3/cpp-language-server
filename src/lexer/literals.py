@@ -14,10 +14,10 @@ long_suffix = r'[lL]'
 long_long_suffix = r'(ll|LL)'
 
 integer_suffix = r'(%s%s?|%s%s?|%s%s?|%s%s?)' % (
-    unsigned_suffix, long_suffix,
     unsigned_suffix, long_long_suffix,
-    long_suffix, unsigned_suffix,
-    long_long_suffix, unsigned_suffix
+    unsigned_suffix, long_suffix,
+    long_long_suffix, unsigned_suffix,
+    long_suffix, unsigned_suffix   
 )
 
 binary_literal = r'(0[bB](\'?%s)+)' % binary_digit
