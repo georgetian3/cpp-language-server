@@ -78,3 +78,6 @@ span.include {
 span.function {
   color:yellow;
 }
+span.comment {
+  color: rgb(2, 85, 2);
+}
