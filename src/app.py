@@ -70,8 +70,8 @@ def process():
     while(i <= len(src) and i > 0 and  not ' ' in src[i-1] and not '\n' in src[i-1] and not ',' in src[i-1]):
         i -= 1
     partial = src[i:cursor]
-    if cursor == len(src) or (' ' not in src[cursor] and '\n' not in src[cursor]):
-        if cursor != len(src):
+    if cursor >= len(src) or (' ' not in src[cursor] and '\n' not in src[cursor]):
+        if cursor > len(src):
             partial = ''
     print(f'partial is {partial}')
     now_domain = find_now_domain(src,cursor,elements)
