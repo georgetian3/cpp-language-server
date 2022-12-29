@@ -58,8 +58,9 @@ def process():
     temp = run_parser(src)
 
     global ast
-    if temp != {None: None}:
+    if temp is not None:
         ast = temp
+    print(ast)
     formatted_tokens = []
     prev_index = 0
 
@@ -183,6 +184,7 @@ def process():
     print('Autocomplete:', suggestions)
     return {'formatting': res, 'suggestions': list(suggestions)}
 def find_now_domain(src,cursor,functions):
+    src = src[:cursor]
     src = src.replace(' ','')
     min = 10e9
     domain = ''
