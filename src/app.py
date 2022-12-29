@@ -35,9 +35,12 @@ def get_tokens(src):
     return list(lexer)
 
 def run_parser(src):
-    ast = parser.parse(src, debug=False, lexer=NoCommentsLexer(lex.lexer))
-    tree = traverse(ast)
-    return tree
+    try:
+        ast = parser.parse(src, debug=False, lexer=NoCommentsLexer(lex.lexer))
+        tree = traverse(ast)
+        return tree
+    except ValueError:
+        return None
 
 
 @app.get('/')
