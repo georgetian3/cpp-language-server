@@ -95,7 +95,7 @@ def process():
                     if partial[:-1] == k.split('@')[0]:
                         if isinstance(v,dict):
                             type_list = ['int','float','double','char','bool']
-                            if v['type'] not in type_list:
+                            if v['type'] not in type_list and v['type'] in table:
                                 members = table[v['type']]['member']
                                 for member in members:
                                     if isinstance(member,str):
@@ -109,7 +109,7 @@ def process():
                     if class_name == k.split('@')[0]:
                         if isinstance(v,dict):
                             type_list = ['int','float','double','char','bool']
-                            if v['type'] not in type_list:
+                            if v['type'] not in type_list and v['type'] in table:
                                 members = table[v['type']]['member']
                                 for member in members:
                                     if isinstance(member,str):
