@@ -91,6 +91,12 @@ def format():
 
 import re
 import lexer.literals
+import lexer.digits
 if __name__ == '__main__':
-    text = 'e4'
-    print(re.fullmatch(lexer.literals.exponent_part, text))
+    text = '1.1e4'
+    #print(lexer.literals.fractional_constant)
+    #print(re.fullmatch(lexer.digits.digit_sequence, text))
+    print(re.fullmatch(lexer.literals.fractional_constant, text))
+    #print(re.fullmatch(lexer.literals.exponent_part, text))
+    print(lexer.literals.floating_point_literal)
+    print(re.fullmatch(lexer.literals.floating_point_literal, text))
