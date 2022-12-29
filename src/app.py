@@ -72,7 +72,7 @@ def process():
     print(elements)
     suggestions = []
     i = cursor
-    while(i <= len(src) and i > 0 and  not ' ' in src[i-1] and not '\n' in src[i-1] and not ',' in src[i-1]):
+    while(i <= len(src) and i > 0 and src[i-1] not in [' ','\n',',','(',')','[',']','{','}']):
         i -= 1
     partial = src[i:cursor]
     if cursor >= len(src) or (' ' not in src[cursor] and '\n' not in src[cursor]):
