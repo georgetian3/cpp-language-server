@@ -1,5 +1,5 @@
 from .characters import basic_source_character
-from ply.lex import TOKEN
+from myply.lex import TOKEN
 """
 5.4 Proprocessing tokens
 """

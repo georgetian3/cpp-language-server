@@ -34,4 +34,4 @@ def p_error(p):
 
 start = 'start'
 
-from ply.yacc import yacc
+from myply.yacc import yacc

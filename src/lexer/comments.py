@@ -1,4 +1,4 @@
-from ply.lex import TOKEN
+from myply.lex import TOKEN
 
 """
 2.7 Comments

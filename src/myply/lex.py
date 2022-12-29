@@ -785,6 +785,10 @@ def lex(*, module=None, object=None, debug=False,
     for state in stateinfo:
         regex_list = []
 
+        #################################################################################################
+
+        # MODIFIED: allow user to explicitly define token precedence
+
         found = {}
 
         # Add rules defined by functions first
@@ -801,6 +805,8 @@ def lex(*, module=None, object=None, debug=False,
             regex_list.append('(?P<%s>%s)' % (fname, _get_regex(found[fname])))
             if debug:
                 debuglog.info("lex: Adding rule %s -> '%s' (state '%s')", fname, _get_regex(f), state)
+
+        #################################################################################################
 
         # Now add all of the simple rules
         for name, r in linfo.strsym[state]:

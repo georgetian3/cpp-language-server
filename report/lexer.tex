@@ -4,7 +4,18 @@
 
 标准中的第五章中定义了 C++ 的词法小组使用了Programming Languages — C++ Working Draft N4860作为参考书和辅助工具书进行了词法分析部分的开发。其中，对于C++20里四个重要的literals类型（整数Integer，浮点数Float，字符Characters（C++20支持MultiCharacters），字符串String），小组进行了tokens的编写。根据不同的tokens，用正则表达式和函数定义的方式编写了tokens的规则。
 
+开发过程中发现每种记号的规则顺序与这些规则定义的顺序可能不一样，因此导致 \code{char c = u8't'} 中的 \code{u8} 被识别为标识符，而正确的是整个 \code{u8't'} 是一个字符常量。因此改变了 \fileref{myply/lex.py} 中的 \code{lex} 函数，让用户明确地定义记号类型的识别顺序。因此此项目 \underline{必须使用 \code{myply} 下的 PLY 包}。
+
 \subsection{难点}
+
+阅读标准之前，我们以为 C++ 标识符可以简简单单地使用 \code{[_a-zA-Z][_a-zA-Z0-9]*} 的正则表达式匹配。但是 C++20 将可以作为标识符的符号大幅增加，甚至中文字与表情是合法的标识符字符。为了强调标准所允许的范围，以下显示的是符合标准的正则表达式：
+
+\begin{lstlisting}[basicstyle=\ttfamily\tiny]
+((?![\u0300-\u036F\u1DC0-\u1DFF\u20D0-\u20FF\uFE20-\uFE2F])([_a-zA-Z]|[\u00A8\u00AA\u00AD\u00AF\u00B2-\u00B5\u00B7-\u00BA\u00BC-\u00BE\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u00FF\u0100-\u167F\u1681-\u180D\u180F-\u1FFF\u200B-\u200D\u202A-\u202E\u203F-\u2040\u2054\u2060-\u206F\u2070-\u218F\u2460-\u24FF\u2776-\u2793\u2C00-\u2DFF\u2E80-\u2FFF\u3004-\u3007\u3021-\u302F\u3031-\uD7FF\uF900-\uFD3D\uFD40-\uFDCF\uFDF0-\uFE44\uFE47-\uFFFD\U00010000-\U0001FFFD\U00020000-\U0002FFFD\U00030000-\U0003FFFD\U00040000-\U0004FFFD\U00050000-\U0005FFFD\U00060000-\U0006FFFD\U00070000-\U0007FFFD\U00080000-\U0008FFFD\U00090000-\U0009FFFD\U000A0000-\U000AFFFD\U000B0000-\U000BFFFD\U000C0000-\U000CFFFD\U000D0000-\U000DFFFD\U000E0000-\U000EFFFD])(([_a-zA-Z]|[\u00A8\u00AA\u00AD\u00AF\u00B2-\u00B5\u00B7-\u00BA\u00BC-\u00BE\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u00FF\u0100-\u167F\u1681-\u180D\u180F-\u1FFF\u200B-\u200D\u202A-\u202E\u203F-\u2040\u2054\u2060-\u206F\u2070-\u218F\u2460-\u24FF\u2776-\u2793\u2C00-\u2DFF\u2E80-\u2FFF\u3004-\u3007\u3021-\u302F\u3031-\uD7FF\uF900-\uFD3D\uFD40-\uFDCF\uFDF0-\uFE44\uFE47-\uFFFD\U00010000-\U0001FFFD\U00020000-\U0002FFFD\U00030000-\U0003FFFD\U00040000-\U0004FFFD\U00050000-\U0005FFFD\U00060000-\U0006FFFD\U00070000-\U0007FFFD\U00080000-\U0008FFFD\U00090000-\U0009FFFD\U000A0000-\U000AFFFD\U000B0000-\U000BFFFD\U000C0000-\U000CFFFD\U000D0000-\U000DFFFD\U000E0000-\U000EFFFD])|[0-9])*)
+\end{lstlisting}
+
+除了标识符以外，标准定义了
+
 
 难点一：Literals中的各种符号问题以及各种括号问题
 正则表达式虽然是很直观的东西且编写时的思路是较为清晰的，我们在编写literals的时候，速度还算是较快的。但是由于正则表达式对于细节的把控，尤其是在针对括号的地方，导致经常会出现括号对不上号，或者是有的[]需要在外面加一层括号才能正常使用的情况，对小组成员造成了一定的影响。同时，因为转义字符的原因，对于一些正则表达式中不常见的但因为编译语言或者是编译器的原因需要转义字符才能正常表达的符号，需要在不断的调试过程中才能找出这些符号并加以处理。

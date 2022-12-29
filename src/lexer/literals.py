@@ -1,5 +1,5 @@
-from ply.lex import TOKEN
-import ply.lex as lex
+from myply.lex import TOKEN
+import myply.lex as lex
 
 from .characters import basic_source_character, universal_character_name
 from .digits import digit, binary_digit, octal_digit, hexadecimal_digit, hexadecimal_digit_sequence, nonzero_digit, digit_sequence

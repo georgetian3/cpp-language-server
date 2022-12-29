@@ -1,4 +1,4 @@
-from ply.lex import TOKEN
+from myply.lex import TOKEN
 from .keywords import keywords
 from .digits import digit
 
@@ -39,6 +39,9 @@ identifier = r'((?!%s)%s(%s|%s)*)' % (
     identifier_nondigit,
     digit
 )
+
+print(identifier)
+exit()
 
 @TOKEN(identifier)
 def t_IDENTIFIER(t):

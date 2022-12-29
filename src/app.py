@@ -1,7 +1,7 @@
 from flask import Flask, send_file, request
 from flask_cors import CORS
-import ply.lex as lex
-from ply.yacc import yacc
+import myply.lex as lex
+from myply.yacc import yacc
 from lexer.tokens import *
 from lexer.keywords import keywords
 from lexer.tokens import literals
@@ -11,7 +11,6 @@ from functools import reduce
 from parser.myast import traverse
 from parser.parser import *
 import html
-import time
 import logging
 from main import NoCommentsLexer
 
