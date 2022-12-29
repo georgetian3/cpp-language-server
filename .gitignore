@@ -8,3 +8,6 @@ parsetab.py
 main.aux
 main.log
 main.synctex.gz
+ast.json
+tokens.html
+tokens.txt
