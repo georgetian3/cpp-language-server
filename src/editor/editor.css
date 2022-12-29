@@ -60,7 +60,10 @@ span.keyword {
 span.identifier {
   color: lightblue;
 }
-span.literal {
+span.num_literal {
+  color: blue;
+}
+span.char_literal{
   color: orange;
 }
 span.operator {

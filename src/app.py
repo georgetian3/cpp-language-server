@@ -6,6 +6,7 @@ from lexer.tokens import *
 from lexer.keywords import keywords
 from lexer.tokens import literals
 from lexer.operators import operator_or_punctuators
+from lexer.literals import character_literal , string_literal
 from functools import reduce
 from parser.myast import traverse
 from parser.parser import *
@@ -150,7 +151,7 @@ def process():
                         suggestions.append({'full':k.split('@')[0],'complete':k.split('@')[0][len(partial):]})
 
     for token in tokens:
-        #print(token.value.ljust(20, ' '), token.type)
+        print(token.value.ljust(20, ' '), token.type)
         index = src.find(token.value, prev_index)
         whitespace = src[prev_index : index]
         whitespace = whitespace.replace(' ', '&ensp;')
@@ -158,15 +159,23 @@ def process():
         formatted_tokens.append(whitespace)
         prev_index = index + len(token.value)
         type = token.type.lower()
+    
         if type in keywords:
             type = 'keyword'
         elif type in literals or type in operator_or_punctuators or type in operator_or_punctuators.values():
             type = 'operator'
         if token.value in table and table[token.value]['type'] == 'class':
             type = 'class'
+        if type == 'literal':
+            print(token.value)
+            if re.match(r'(%s|%s)'%(string_literal,character_literal),token.value):
+                type = 'char_literal'
+            else:
+                type = 'num_literal'
         for element in elements:
             if token.value == element['complete'].split(' ')[0]:
                 type = 'function'
+        print(f'type is {type}')
         formatted_tokens.append(f'<span class="{type}">{html.escape(token.value)}</span>')
     res = ''.join(formatted_tokens)
     #print('Formatting:', res)
