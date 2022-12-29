@@ -4,7 +4,6 @@
 class Student{
 public:
     int a = 1;
-    long long b = 2LL;
     char s = 's';
     char t = u8't';
     char* str = "asjdfoa";
