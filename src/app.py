@@ -81,7 +81,7 @@ def process():
                 suggestions.append({'full':keyword,'complete':keyword[len(partial):]})
         for element in elements:
             if partial == element['complete'][:len(partial)] and partial != element['complete']:
-                suggestions.append({'full':element['full'],'complete':element['complete'][len(partial):]})
+                suggestions.append({'full':element['full'],'complete':element['complete'][len(partial):].replace(' ','')})
         
         for k,v in table.items():
             if partial[-1] == '.' :
@@ -187,7 +187,7 @@ def find_member(declarations,result=None):
             if item == 'function_declaration_definition' :
                 full,complete = process_function(declarations[i+1][0][1])
                 flag = 1
-                result.append({'full':full,'complete':complete})
+                result.append({'full':full,'complete':complete.replace(' ','')})
         elif isinstance(item,list):
             result = find_member(item,result)
         elif isinstance(item,dict):
