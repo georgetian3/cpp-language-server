@@ -1,13 +1,9 @@
-# CPP-Language-Server
+# C++ Lexer, Parser, and Text Editor
 
-## Lexer
+## Usage
 
-The lexer was implemented using PLY.
+Install dependencies:
 
-### Usage
+```pip install -r requirements.txt```
 
-No external dependencies need to be installed. PLY is saved under `/src/ply`.
-
-Under the `src` folder, execute: `py src/main.py -i source_file.cpp -o token_stream.txt`
-
-To visualize the tokens, open `/output/output.html` in your browser.
+Under the `src` folder, execute: `py main.py` to see usage help.

@@ -30,7 +30,7 @@ class LexHTMLGenerator:
         elif token.type == '<':
             token.type = 'LT'
             
-        self.__tokens.append(f'<span id="{len(self.__tokens)}" class={token.type} onmouseover="show_info({len(self.__tokens)})" onmouseleave="hide_info({len(self.__tokens)})">{value}</span>')
+        self.__tokens.append(f'<span id="{len(self.__tokens)}" class={token.type} onmouseover="show_info({len(self.__tokens)})" onmouseleave="hide_info({len(self.__tokens)})">{value}</span>&nbsp;')
 
 
     def write_html(self, filename):
@@ -38,7 +38,6 @@ class LexHTMLGenerator:
             html = f.read()
         html = html.replace('</code>', ''.join(self.__tokens) + '</code>')
 
-        with open('output/output.html', 'w', encoding='utf8') as f:
+        with open(filename, 'w', encoding='utf8') as f:
             f.write(html)
-        # '\n'.join(self.__classes.values()) + '''
 

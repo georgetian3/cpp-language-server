@@ -16,7 +16,6 @@ q_char_sequence = r'(%s+)' % q_char
 system_include = r'(\#include\s*\<%s\>)' % h_char_sequence
 local_include = r'(\#include\s*\"%s\")' % q_char_sequence
 
-print(system_include)
 
 include = r'(%s|%s)' % (system_include, local_include)
 

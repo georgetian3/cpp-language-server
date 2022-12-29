@@ -7,6 +7,8 @@ from .preprocessing import t_INCLUDE
 from .identifiers import t_IDENTIFIER
 from .comments import t_COMMENT, t_WHITESPACE
 
+import myply.lex
+
 """
 5.6 Tokens
 
@@ -40,3 +42,14 @@ for name, symbol in operator_or_punctuators.items():
 def t_error(t):
     print("Illegal character '%s'" % t.value[0])
     t.lexer.skip(1)
+
+class NoCommentsLexer(myply.lex.Lexer):
+    def __init__(self, parent):
+        self.__dict__ = parent.__dict__.copy()
+    def token(self):
+        while True:
+            token = super().token()
+            if token is None:
+                return None
+            elif token.type != 'comment':
+                return token

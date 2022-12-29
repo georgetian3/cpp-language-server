@@ -12,7 +12,8 @@ from parser.myast import traverse
 from parser.parser import *
 import html
 import logging
-from main import NoCommentsLexer
+
+from lexer.tokens import NoCommentsLexer
 
 def list_dict_duplicate_removal(data_list):
     run_function = lambda x, y: x if y in x else x + [y]

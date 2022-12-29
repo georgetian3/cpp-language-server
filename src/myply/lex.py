@@ -66,15 +66,15 @@ class PlyLogger(object):
         self.f = f
 
     def critical(self, msg, *args, **kwargs):
-        #return # MODIFIED
+        return # MODIFIED
         self.f.write((msg % args) + '\n')
 
     def warning(self, msg, *args, **kwargs):
-        #return # MODIFIED
+        return # MODIFIED
         self.f.write('WARNING: ' + (msg % args) + '\n')
 
     def error(self, msg, *args, **kwargs):
-        #return # MODIFIED
+        return # MODIFIED
         self.f.write('ERROR: ' + (msg % args) + '\n')
 
     info = critical
@@ -794,7 +794,6 @@ def lex(*, module=None, object=None, debug=False,
         # Add rules defined by functions first
         for fname, f in linfo.funcsym[state]:
             if fname in name_order:
-                print('deferring', fname)
                 found[fname] = f
                 continue
             regex_list.append('(?P<%s>%s)' % (fname, _get_regex(f)))
